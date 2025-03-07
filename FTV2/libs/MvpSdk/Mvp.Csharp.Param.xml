@@ -1,0 +1,621 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mvp.Csharp.Param</name>
+    </assembly>
+    <members>
+        <member name="F:Mvp.Csharp.Param.Enum.EImageDataType.MvsImgdtpU8">
+            <summary>
+            无符号8位  | unsigned 8 bytes
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EImageDataType.MvsImgdtpS8">
+            <summary>
+            有符号8位  | signed 8 bytes
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EImageDataType.MvsImgdtpS32">
+            <summary>
+            有符号32位 | signed 32 bytes
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EImageDataType.MvsImgdtpU32">
+            <summary>
+            无符号32位 | unsigned 32 bytes
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EImageDataType.MvsImgdtpS16">
+            <summary>
+            有符号16位 | signed 16 bytes
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EImageDataType.MvsImgdtpU16">
+            <summary>
+            无符号16位 | unsigned 16 bytes
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EImageDataType.MvsImgdtpU24">
+            <summary>
+            无符号24位 | unsigned 16 bytes
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EImageDataType.MvsImgdtpF32">
+            <summary>
+            浮点32位   | float 32 bytes
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EImageDataType.MvsImgdtpF64">
+            <summary>
+            浮点64位   | float 64 bytes
+            </summary>
+        </member>
+        <member name="T:Mvp.Csharp.Param.Enum.EMvpParamType">
+            <summary>
+            参数类型
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EMvpParamType.MvpInvalid">
+            <summary>
+            无效类型
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Enum.EMvpParamType.MvpPointer">
+            <summary>
+            指针
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Param.ImageHelper.CreateBitmap8Bybyte(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            使用比特流数据，生成8位色灰度　BMP 位图
+            </summary>
+            <param name="originalImageData"></param>
+            <param name="originalWidth"></param>
+            <param name="originalHeight"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mvp.Csharp.Param.ImageHelper.CreateBitmap24Bybyte(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            使用比特流数据，生成24位色彩度　BMP 位图
+            </summary>
+            <param name="originalImageData"></param>
+            <param name="originalWidth"></param>
+            <param name="originalHeight"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mvp.Csharp.Param.ImageHelper.mvpCreateEmptyImage(Mvp.Csharp.Param.Params.MvpImg@)">
+            <summary>
+            创建空图像
+            </summary>
+            <param name="img">输出图像</param>
+            <returns>调用成功返回0</returns>
+            <note>图像变量定义后，要调用该接口初始化</note>
+        </member>
+        <member name="M:Mvp.Csharp.Param.ImageHelper.mvpReadImage(System.String,Mvp.Csharp.Param.Params.MvpImg@)">
+            <summary>
+            读图
+            </summary>
+            <param name="fileName">图像文件名，支持bmp/jpg/png/tif等常用格式和.idat二进制格式</param>
+            <param name="img">输出图像： \n
+                              对于灰度图，默认输出channel为1的灰度图 \n
+                              对于彩图，默认输出channel为3的彩色图（bgrbgrbgrbgr...）\n</param>
+            <returns>调用成功返回0</returns>
+        </member>
+        <member name="M:Mvp.Csharp.Param.ImageHelper.MvpReadImage(System.String,Mvp.Csharp.Param.Params.VImage@)">
+            <summary>
+            读图
+            </summary>
+            <param name="fileName">图像文件名，支持bmp/jpg/png/tif等常用格式和.idat二进制格式</param>
+            <param name="vImg">输出图像</param>
+            <returns></returns>
+        </member>
+        <member name="M:Mvp.Csharp.Param.ImageHelper.mvpGrayToBgr(Mvp.Csharp.Param.Params.MvpImg@,Mvp.Csharp.Param.Params.MvpImg@)">
+            <summary>
+            灰度图像转彩色图像
+            </summary>
+            <param name="imgSrc">输入灰度图像</param>
+            <param name="imgDst">输出彩色图像，默认输出bgr图像： \n</param>
+            <returns>调用成功返回0</returns>
+        </member>
+        <member name="M:Mvp.Csharp.Param.ImageHelper.mvpBgrToGray(Mvp.Csharp.Param.Params.MvpImg@,Mvp.Csharp.Param.Params.MvpImg@)">
+            <summary>
+            彩色图像转灰度图像
+            </summary>
+            <param name="imgSrc">输入彩色图像，支持： \n
+                                 channel = 3，bgrbgrbgrbgr... \n</param>
+            <param name="imgDst">输出灰度图像</param>
+            <returns>调用成功返回0</returns>
+        </member>
+        <member name="M:Mvp.Csharp.Param.ImageHelper.mvpWriteImage(System.String,Mvp.Csharp.Param.Params.MvpImg@)">
+            <summary>
+            保存图像
+            </summary>
+            <param name="fileName">图像文件名，支持bmp/jpg/png/tif等常用格式和.idat二进制格式</param>
+            <param name="img">输入图像</param>
+            <returns>调用成功返回0</returns>
+        </member>
+        <member name="M:Mvp.Csharp.Param.ImageHelper.mvpReleaseImage(Mvp.Csharp.Param.Params.MvpImg@)">
+            <summary>
+            释放图像
+            </summary>
+            <param name="img">输入图像</param>
+            <returns>调用成功返回0</returns>
+            <note>图像不再使用时需调用该接口，否则内存泄露</note>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.ID">
+            <summary>
+            斑点ID
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.MinX">
+            <summary>
+            斑点外接矩形
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.MinY">
+            <summary>
+            斑点外接矩形
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.MaxX">
+            <summary>
+             斑点外接矩形
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.MaxY">
+            <summary>
+            斑点外接矩形
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.BoundWidth">
+            <summary>
+            斑点外接矩形宽度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.BoundHeight">
+            <summary>
+            斑点外接矩形高度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.IsHole">
+            <summary>
+            判断是斑点还是孔洞
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.Area">
+            <summary>
+             斑点面积
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.Perimeter">
+            <summary>
+             斑点周长
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.Circularity">
+            <summary>
+            斑点圆度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.Rectangularity">
+            <summary>
+            斑点矩形度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.BoundCenter">
+            <summary>
+            斑点中心
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.BlobPoint.MassCenter">
+            <summary>
+            斑点质心
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.CoorDinate.X">
+            <summary>
+            平移x轴坐标
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.CoorDinate.Y">
+            <summary>
+            平移y轴坐标
+            </summary> 
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.CoorDinate.Scale">
+            <summary>
+            缩放尺度
+            </summary> 
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.CoorDinate.Ratio">
+            <summary>
+            y轴单位与x轴单位的比率
+            </summary> 
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.CoorDinate.Ra">
+            <summary>
+            旋转角
+            </summary> 
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.CoorDinate.Ska">
+            <summary>
+            倾斜角	
+            </summary> 
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.CoorDinate.FirstProc">
+            <summary>
+            模板匹配之后的第一次执行	| First execution after template matching
+            </summary> 
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.DataCodeInfo.PixelPerModule">
+            <summary>
+            单模块像素
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.DataCodeInfo.Pos">
+            <summary>
+            码位置
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.DataCodeInfo.Content">
+            <summary>
+            码内容
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.DataCodeInfo.DataCodeType">
+            <summary>
+             码类型
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.DataCodeInfo.ISOQualityGrade">
+            <summary>
+            ISO评价标准等级
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.DataCodeInfo.QualityGrade">
+            <summary>
+            EMP评价标准等级
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.DetectLabelArr.LabelName">
+            <summary>
+            标签名称
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.DetectLabelArr.CheckAcceptThreshold">
+            <summary>
+            标签开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.DetectLabelArr.AcceptThreshold">
+            <summary>
+            接受阈值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.LabelName">
+            <summary>
+            标签名称
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.CheckLabel">
+            <summary>
+            标签开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.CheckArea">
+            <summary>
+            掩膜面积开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MinArea">
+            <summary>
+             最小掩膜面积
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MaxArea">
+            <summary>
+            最大掩膜面积
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.CheckLen">
+            <summary>
+            划痕长度开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MinLen">
+            <summary>
+             最小划痕长度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MaxLen">
+            <summary>
+            最大划痕长度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.CheckWidth">
+            <summary>
+            划痕宽度开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MinWidth">
+            <summary>
+             最小划痕宽度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MaxWidth">
+            <summary>
+            最大划痕宽度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.CheckGray">
+            <summary>
+            灰度值开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MinGray">
+            <summary>
+             最小灰度值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MaxGray">
+            <summary>
+            最大灰度值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.CheckMeanGray">
+            <summary>
+            平均灰度值开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MinMeanGray">
+            <summary>
+             最小平均灰度值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MaxMeanGray">
+            <summary>
+            最大平均灰度值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.CheckDiffGray">
+            <summary>
+            缺陷背景差值开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MinDiffGray">
+            <summary>
+             最小缺陷背景差值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MaxDiffGray">
+            <summary>
+            最大缺陷背景差值
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.CheckMinScore" -->
+        <member name="F:Mvp.Csharp.Param.Params.InstanceSegLabelArr.MinScore">
+            <summary>
+            最小分数
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.LineFlawInfo.FlawRect">
+            <summary>
+            缺陷外接矩形
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.LineFlawInfo.FlawArea">
+            <summary>
+            缺陷面积
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.LineFlawInfo.FlawLength">
+            <summary>
+            缺陷长度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.LineFlawInfo.FlawType">
+            <summary>
+            缺陷类型 (1.表示毛刺, 2.表示崩边, 3.表示遮挡)
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.LineFlawInfo.CpBeginIndex">
+            <summary>
+            缺陷包含的卡尺起始索引
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.LineFlawInfo.CpEndIndex">
+            <summary>
+            缺陷包含的卡尺结束索引
+            </summary>
+        </member>
+        <member name="T:Mvp.Csharp.Param.Params.LinePa">
+            <summary>
+            直线(点角式)
+            </summary>
+        </member>
+        <member name="T:Mvp.Csharp.Param.Params.MvpImg">
+            <summary>
+            图像结构体定义
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.MvpImg.channel">
+            <summary>
+            图像通道数1代表黑白图3代表彩图
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.MvpImg.dataType">
+            <summary>
+            图像数据类型，详见 MVPImgDataType
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.MvpImg.width">
+            <summary>
+            图像宽度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.MvpImg.height">
+            <summary>
+            图像高度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.MvpImg.imageData">
+            <summary>
+            图像数据指针
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.MvpImg.reserved">
+            <summary>
+            预留字段
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.PatternMatchInfo.Score">
+            <summary>
+            目标匹配信息(匹配分数 范围 0 - 1)
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.PatternMatchInfo.Angle">
+            <summary>
+            目标匹配信息(匹配角度)
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.PatternMatchInfo.Scale">
+             <summary>
+            目标匹配信息(匹配尺度)
+             </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.PatternMatchInfo.PCenter">
+            <summary>
+            目标匹配信息(匹配质心位置)
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.PatternMatchInfo.PCoordinate">
+            <summary>
+            输出坐标
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.LabelName">
+            <summary>
+            标签名称
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.CheckLabel">
+            <summary>
+            标签开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.CheckArea">
+            <summary>
+            掩膜面积开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MinArea">
+            <summary>
+             最小掩膜面积
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MaxArea">
+            <summary>
+            最大掩膜面积
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.CheckLen">
+            <summary>
+            划痕长度开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MinLen">
+            <summary>
+             最小划痕长度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MaxLen">
+            <summary>
+            最大划痕长度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.CheckWidth">
+            <summary>
+            划痕宽度开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MinWidth">
+            <summary>
+             最小划痕宽度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MaxWidth">
+            <summary>
+            最大划痕宽度
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.CheckGray">
+            <summary>
+            灰度值开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MinGray">
+            <summary>
+             最小灰度值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MaxGray">
+            <summary>
+            最大灰度值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.CheckMeanGray">
+            <summary>
+            平均灰度值开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MinMeanGray">
+            <summary>
+             最小平均灰度值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MaxMeanGray">
+            <summary>
+            最大平均灰度值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.CheckDiffGray">
+            <summary>
+            缺陷背景差值开关
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MinDiffGray">
+            <summary>
+             最小缺陷背景差值
+            </summary>
+        </member>
+        <member name="F:Mvp.Csharp.Param.Params.SegLabelArr.MaxDiffGray">
+            <summary>
+            最大缺陷背景差值
+            </summary>
+        </member>
+        <member name="T:Mvp.Csharp.Param.Params.VImage">
+            <summary>
+            图片类
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.VImage.DataType">
+            <summary>
+            图像数据类型，详见MvSImgDataType | VImage data type, see MvSImgDataType
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.VImage.Width">
+            <summary>
+            图像宽度| image width
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.VImage.Height">
+            <summary>
+            图像高度| image height
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Param.Params.VImage.ImageData">
+            <summary>
+            图像数据指针| VImage data pointer
+            </summary>
+        </member>
+    </members>
+</doc>

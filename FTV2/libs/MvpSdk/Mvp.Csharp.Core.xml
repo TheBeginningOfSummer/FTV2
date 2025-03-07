@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mvp.Csharp.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Mvp.Csharp.Core.Base.Enum.EToolIdType">
+            <summary>
+            MVP中算子工具的名称（定义必须保持和mvp一致，不一致可能导致创建算子对象失败）
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Base.MvpModule.RunOnceSync">
+            <summary>
+            主线程等待MVP运行子线程发送信号,子线程会同步更新com组件UI,由于主线程已经卡住,导致程序整个卡死.
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Base.MvpModule.OnModuleRunStateChanged(System.UInt32,Mvp.Csharp.Sdk.Enum.ERunStateType)">
+            <summary>
+            
+            </summary>
+            <param name="moduleId"></param>
+            <param name="runState"></param>
+        </member>
+        <member name="P:Mvp.Csharp.Core.Base.MvpObject.ModuleId">
+            <summary>
+            模块ID
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Base.MvpObject.IsMyAncestor(System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="ancestorModuleId">祖先模块ID(查找到流程级)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Configurations.Configuration.UseLog4net(System.Int32)">
+            <summary>
+            Off=0,Info=1,Debug=2,Error=3,All=4
+            </summary>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Configurations.Configuration.FindDllPath(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dllName">dll文件名称   示例 : xxxx.dll </param>
+            <returns>完整路径</returns>
+        </member>
+        <member name="P:Mvp.Csharp.Core.Interfaces.IMvpProject.ProjectPath">
+            <summary>
+            工程路径
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpProject.Load(System.String)">
+            <summary>
+            加载工程
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpProject.Load(System.String,System.String)">
+            <summary>
+            加载工程
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpProject.Unload">
+            <summary>
+            卸载工程
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpProject.Save">
+            <summary>
+            保存工程
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpProject.SaveAs(System.String)">
+            <summary>
+            另存工程
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpProject.SaveAs(System.String,System.String)">
+            <summary>
+            另存工程
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="T:Mvp.Csharp.Core.Interfaces.IMvpIO`2">
+            <summary>
+            获取输入输出
+            </summary>
+            <typeparam name="TInput">模块输入</typeparam>
+            <typeparam name="TOutput">模块输出</typeparam>
+        </member>
+        <member name="P:Mvp.Csharp.Core.Interfaces.IMvpIO`2.Input">
+            <summary>
+            输入参数
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Core.Interfaces.IMvpIO`2.Output">
+            <summary>
+            输出参数
+            </summary>
+        </member>
+        <member name="T:Mvp.Csharp.Core.Interfaces.IMvpRun">
+            <summary>
+            工程运行控制接口
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpRun.RunAsync">
+            <summary>
+            连续运行
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpRun.RunOnceAsync">
+            <summary>
+            异步运行
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpRun.StopAsync">
+            <summary>
+            停止工程
+            </summary>
+        </member>
+        <member name="M:Mvp.Csharp.Core.Interfaces.IMvpRun.RunOnceSync">
+            <summary>
+            同步运行
+            </summary>
+        </member>
+        <member name="T:Mvp.Csharp.Core.Interfaces.IRender">
+            <summary>
+            渲染接口
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Core.Interfaces.IRender.ProjectPtr">
+            <summary>
+            工程句柄
+            </summary>
+        </member>
+        <member name="P:Mvp.Csharp.Core.Interfaces.IRender.ModuleName">
+            <summary>
+            模块名称
+            </summary>
+        </member>
+    </members>
+</doc>
