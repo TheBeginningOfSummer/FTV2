@@ -38,6 +38,7 @@
             this.TP测试 = new System.Windows.Forms.TabPage();
             this.TP手动电机2 = new System.Windows.Forms.TabPage();
             this.TP示教 = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.HTP主界面.SuspendLayout();
             this.TP主界面.SuspendLayout();
             this.CTS菜单.SuspendLayout();
@@ -72,6 +73,7 @@
             // 
             // TP主界面
             // 
+            this.TP主界面.Controls.Add(this.richTextBox1);
             this.TP主界面.Controls.Add(this.CTS菜单);
             this.TP主界面.Location = new System.Drawing.Point(0, 40);
             this.TP主界面.Name = "TP主界面";
@@ -158,6 +160,14 @@
             this.TP示教.Text = "示教";
             this.TP示教.UseVisualStyleBackColor = true;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(263, 133);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(470, 319);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = "";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -187,6 +197,7 @@
         private System.Windows.Forms.TabPage TP测试;
         private System.Windows.Forms.TabPage TP手动电机2;
         private System.Windows.Forms.TabPage TP示教;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 

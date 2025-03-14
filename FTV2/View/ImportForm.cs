@@ -87,7 +87,15 @@ namespace FTV2.View
 
         private void BTN位置保存_Click(object sender, EventArgs e)
         {
-            
+            try
+            {
+                JsonManager.Save("Config", $"{TB文件名.Text}.json", LoadButtons);
+                MessageBox.Show("保存完成", "提示");
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
     }

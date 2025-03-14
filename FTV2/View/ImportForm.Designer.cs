@@ -39,10 +39,10 @@
             this.ATP控件设置 = new ReaLTaiizor.Controls.AirTabPage();
             this.TP控件信息导入 = new System.Windows.Forms.TabPage();
             this.TP控件位置设置 = new System.Windows.Forms.TabPage();
+            this.PN控件预览 = new System.Windows.Forms.Panel();
             this.BTN位置保存 = new System.Windows.Forms.Button();
             this.PFM菜单 = new ReaLTaiizor.Controls.ParrotFlatMenuStrip();
             this.OFD打开 = new System.Windows.Forms.OpenFileDialog();
-            this.PN控件预览 = new System.Windows.Forms.Panel();
             this.CMS右键.SuspendLayout();
             this.ATP控件设置.SuspendLayout();
             this.TP控件信息导入.SuspendLayout();
@@ -174,6 +174,18 @@
             this.TP控件位置设置.TabIndex = 1;
             this.TP控件位置设置.Text = "控件位置设置";
             // 
+            // PN控件预览
+            // 
+            this.PN控件预览.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PN控件预览.AutoScroll = true;
+            this.PN控件预览.Location = new System.Drawing.Point(4, 4);
+            this.PN控件预览.Margin = new System.Windows.Forms.Padding(1);
+            this.PN控件预览.Name = "PN控件预览";
+            this.PN控件预览.Size = new System.Drawing.Size(895, 513);
+            this.PN控件预览.TabIndex = 6;
+            // 
             // BTN位置保存
             // 
             this.BTN位置保存.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -204,18 +216,6 @@
             // OFD打开
             // 
             this.OFD打开.FileName = "openFileDialog1";
-            // 
-            // PN控件预览
-            // 
-            this.PN控件预览.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.PN控件预览.AutoScroll = true;
-            this.PN控件预览.Location = new System.Drawing.Point(4, 4);
-            this.PN控件预览.Margin = new System.Windows.Forms.Padding(1);
-            this.PN控件预览.Name = "PN控件预览";
-            this.PN控件预览.Size = new System.Drawing.Size(895, 513);
-            this.PN控件预览.TabIndex = 6;
             // 
             // ImportForm
             // 

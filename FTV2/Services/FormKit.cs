@@ -16,6 +16,10 @@ namespace Services
         public object Tag { get; set; }
 
         public T Control;
+        public Control ParentControl;
+        private bool isDragging = false;
+        private Point offset;
+        private const int gridSize = 10;
 
         [JsonConstructor]
         public ControlConfig(string name, Point location, object tag)
@@ -37,6 +41,41 @@ namespace Services
                 Control.Name = $"TB[{Name}]";
             if (Control is RichTextBox)
                 Control.Name = $"RTB[{Name}]";
+            Control.MouseDown += Control_MouseDown;
+            Control.MouseMove += Control_MouseMove;
+            Control.MouseUp += Control_MouseUp;
+        }
+
+        private void Control_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                offset = e.Location;//相对于按钮左上角的位置
+            }
+        }
+
+        private void Control_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Point newLocation = Control.PointToScreen(e.Location);
+                newLocation = ParentControl.PointToClient(newLocation);
+                newLocation.Offset(-offset.X, -offset.Y);
+                Control.Location = newLocation;
+            }
+        }
+
+        private void Control_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                isDragging = false;
+                int alignedX = (Control.Left + gridSize / 2) / gridSize * gridSize;
+                int alignedY = (Control.Top + gridSize / 2) / gridSize * gridSize;
+                Location = new Point(alignedX, alignedY);
+                Control.Location = Location;
+            }
         }
 
         public ControlConfig()
@@ -50,7 +89,9 @@ namespace Services
                 Control.Size = size;
             if (font != null)
                 Control.Font = font;
+            ParentControl = parent;
             parent.Controls.Add(Control);
         }
+
     }
 }

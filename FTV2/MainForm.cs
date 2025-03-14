@@ -55,5 +55,6 @@ namespace FTV2
             foreach (var Button in Buttons2)
                 Button.AddControl(TP上料, new System.Drawing.Size(110, 24), new System.Drawing.Font("Times New Roman", 8));
         }
+
     }
 }
