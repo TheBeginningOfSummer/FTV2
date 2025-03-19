@@ -11,8 +11,9 @@ namespace Services
 
     public class ControlConfig<T> where T : Control, new()
     {
-        public string Name { get; set; }
         public Point Location { get; set; }
+        public string CtrlName { get; set; }
+        public string Text { get; set; }
         public object Tag { get; set; }
 
         public T Control;
@@ -22,25 +23,27 @@ namespace Services
         private const int gridSize = 10;
 
         [JsonConstructor]
-        public ControlConfig(string name, Point location, object tag)
+        public ControlConfig(Point location, string ctrlName, string text, object tag)
         {
-            Name = name;
             Location = location;
+            CtrlName = ctrlName;
+            Text = text;
             Tag = tag;
+
             Control = new T
             {
                 Location = Location,
                 Tag = Tag,
-                Text = Name
+                Text = Text
             };
             if (Control is Button)
-                Control.Name = $"BTN[{Name}]";
+                Control.Name = $"BTN[{CtrlName}]";
             if (Control is Label)
-                Control.Name = $"LB[{Name}]";
+                Control.Name = $"LB[{CtrlName}]";
             if (Control is TextBox)
-                Control.Name = $"TB[{Name}]";
+                Control.Name = $"TB[{CtrlName}]";
             if (Control is RichTextBox)
-                Control.Name = $"RTB[{Name}]";
+                Control.Name = $"RTB[{CtrlName}]";
             Control.MouseDown += Control_MouseDown;
             Control.MouseMove += Control_MouseMove;
             Control.MouseUp += Control_MouseUp;

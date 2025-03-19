@@ -43,6 +43,7 @@
             this.BTN位置保存 = new System.Windows.Forms.Button();
             this.PFM菜单 = new ReaLTaiizor.Controls.ParrotFlatMenuStrip();
             this.OFD打开 = new System.Windows.Forms.OpenFileDialog();
+            this.LB信息 = new System.Windows.Forms.Label();
             this.CMS右键.SuspendLayout();
             this.ATP控件设置.SuspendLayout();
             this.TP控件信息导入.SuspendLayout();
@@ -163,6 +164,7 @@
             // TP控件位置设置
             // 
             this.TP控件位置设置.BackColor = System.Drawing.Color.White;
+            this.TP控件位置设置.Controls.Add(this.LB信息);
             this.TP控件位置设置.Controls.Add(this.PN控件预览);
             this.TP控件位置设置.Controls.Add(this.BTN位置保存);
             this.TP控件位置设置.Cursor = System.Windows.Forms.Cursors.Default;
@@ -217,6 +219,16 @@
             // 
             this.OFD打开.FileName = "openFileDialog1";
             // 
+            // LB信息
+            // 
+            this.LB信息.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LB信息.AutoSize = true;
+            this.LB信息.Location = new System.Drawing.Point(6, 526);
+            this.LB信息.Name = "LB信息";
+            this.LB信息.Size = new System.Drawing.Size(29, 12);
+            this.LB信息.TabIndex = 7;
+            this.LB信息.Text = "信息";
+            // 
             // ImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -233,6 +245,7 @@
             this.ATP控件设置.ResumeLayout(false);
             this.TP控件信息导入.ResumeLayout(false);
             this.TP控件位置设置.ResumeLayout(false);
+            this.TP控件位置设置.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,5 +266,6 @@
         private ReaLTaiizor.Controls.ParrotFlatMenuStrip PFM菜单;
         private System.Windows.Forms.OpenFileDialog OFD打开;
         private System.Windows.Forms.Panel PN控件预览;
+        private System.Windows.Forms.Label LB信息;
     }
 }

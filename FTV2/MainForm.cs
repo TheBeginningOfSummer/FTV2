@@ -21,19 +21,19 @@ namespace FTV2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Task.Run(async () =>
-            {
-                for (int i = 0; i < 100; i++)
-                {
-                    Message<object> d1 = new Message<object>() { Key = i.ToString(), Value = rnd.Next(0, 100), Date = DateTime.Now.ToString() };
-                    await dataRepeater.WriteDataAsync(d1);
-                    Thread.Sleep(1000);
-                }
-            });
-            Task.Run(async () =>
-            {
-                await dataRepeater.ParseMessageAsync(Display);
-            });
+            //Task.Run(async () =>
+            //{
+            //    for (int i = 0; i < 100; i++)
+            //    {
+            //        Message<object> d1 = new Message<object>() { Key = i.ToString(), Value = rnd.Next(0, 100), Date = DateTime.Now.ToString() };
+            //        await dataRepeater.WriteDataAsync(d1);
+            //        Thread.Sleep(1000);
+            //    }
+            //});
+            //Task.Run(async () =>
+            //{
+            //    await dataRepeater.ParseMessageAsync(Display);
+            //});
         }
 
         public void Display(Message<object> data)

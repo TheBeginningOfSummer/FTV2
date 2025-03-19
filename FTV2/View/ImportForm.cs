@@ -40,13 +40,15 @@ namespace FTV2.View
                             var buttonInfo = stringItem.Split('\t');
                             if (buttonInfo[1] == "") continue;
                             if (buttonInfo[1] == "备用") continue;
-                            
+                            if (buttonInfo[2] == "") continue;
+                            if (buttonInfo[2] == "备用") continue;
+
                             if (count % 15 == 0 && count != 0)
                             {
                                 x += 150;
                                 y = 20;
                             }
-                            Buttons.Add(new ControlConfig<Button>(buttonInfo[1], new System.Drawing.Point(x, y), buttonInfo[0]));
+                            Buttons.Add(new ControlConfig<Button>(new System.Drawing.Point(x, y), buttonInfo[2], buttonInfo[1], buttonInfo[0]));
                             y += 30;
                             count++;
                         }
@@ -76,7 +78,10 @@ namespace FTV2.View
                     var buttons = JsonManager.Load<List<ControlConfig<Button>>>(path, name);
                     if (buttons != null && buttons.Count > 0) LoadButtons.AddRange(buttons);
                     foreach (var button in LoadButtons)
+                    {
                         button.AddControl(PN控件预览, new System.Drawing.Size(110, 24), new System.Drawing.Font("Times New Roman", 8));
+                        button.Control.Click += BTN按钮测试_Click;
+                    }  
                 }
             }
             catch (Exception ex)
@@ -91,6 +96,21 @@ namespace FTV2.View
             {
                 JsonManager.Save("Config", $"{TB文件名.Text}.json", LoadButtons);
                 MessageBox.Show("保存完成", "提示");
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void BTN按钮测试_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(sender is Button button)
+                {
+                    LB信息.Text = $"{button.Name};{button.Tag}";
+                }
             }
             catch (Exception)
             {

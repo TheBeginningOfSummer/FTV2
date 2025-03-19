@@ -24,7 +24,7 @@ namespace Services
             try
             {
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                path += "/" + fileName;
+                path += "\\" + fileName;
                 FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 StreamReader stream = new StreamReader(file);
                 T jsonData = JsonSerializer.Deserialize<T>(stream.ReadToEnd());
