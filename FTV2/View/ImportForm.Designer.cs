@@ -31,20 +31,20 @@
             this.components = new System.ComponentModel.Container();
             this.BTN保存 = new System.Windows.Forms.Button();
             this.RTB数据 = new System.Windows.Forms.RichTextBox();
+            this.CMS右键 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.TMI清除 = new System.Windows.Forms.ToolStripMenuItem();
             this.CCB类型 = new ReaLTaiizor.Controls.CrownComboBox();
             this.BTN加载 = new System.Windows.Forms.Button();
             this.TB文件名 = new System.Windows.Forms.TextBox();
-            this.CMS右键 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.TMI清除 = new System.Windows.Forms.ToolStripMenuItem();
             this.ATP控件设置 = new ReaLTaiizor.Controls.AirTabPage();
             this.TP控件信息导入 = new System.Windows.Forms.TabPage();
             this.TP控件位置设置 = new System.Windows.Forms.TabPage();
+            this.BTN添加 = new System.Windows.Forms.Button();
             this.LB信息 = new System.Windows.Forms.Label();
             this.PN控件预览 = new System.Windows.Forms.Panel();
             this.BTN位置保存 = new System.Windows.Forms.Button();
             this.PFM菜单 = new ReaLTaiizor.Controls.ParrotFlatMenuStrip();
             this.OFD打开 = new System.Windows.Forms.OpenFileDialog();
-            this.BTN添加 = new System.Windows.Forms.Button();
             this.CMS右键.SuspendLayout();
             this.ATP控件设置.SuspendLayout();
             this.TP控件信息导入.SuspendLayout();
@@ -76,6 +76,20 @@
             this.RTB数据.Size = new System.Drawing.Size(897, 515);
             this.RTB数据.TabIndex = 2;
             this.RTB数据.Text = "";
+            // 
+            // CMS右键
+            // 
+            this.CMS右键.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TMI清除});
+            this.CMS右键.Name = "CMS右键";
+            this.CMS右键.Size = new System.Drawing.Size(101, 26);
+            // 
+            // TMI清除
+            // 
+            this.TMI清除.Name = "TMI清除";
+            this.TMI清除.Size = new System.Drawing.Size(100, 22);
+            this.TMI清除.Text = "清除";
+            this.TMI清除.Click += new System.EventHandler(this.TMI清除_Click);
             // 
             // CCB类型
             // 
@@ -110,20 +124,6 @@
             this.TB文件名.Size = new System.Drawing.Size(120, 21);
             this.TB文件名.TabIndex = 5;
             this.TB文件名.Text = "文件名";
-            // 
-            // CMS右键
-            // 
-            this.CMS右键.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TMI清除});
-            this.CMS右键.Name = "CMS右键";
-            this.CMS右键.Size = new System.Drawing.Size(101, 26);
-            // 
-            // TMI清除
-            // 
-            this.TMI清除.Name = "TMI清除";
-            this.TMI清除.Size = new System.Drawing.Size(100, 22);
-            this.TMI清除.Text = "清除";
-            this.TMI清除.Click += new System.EventHandler(this.TMI清除_Click);
             // 
             // ATP控件设置
             // 
@@ -180,6 +180,17 @@
             this.TP控件位置设置.TabIndex = 1;
             this.TP控件位置设置.Text = "控件位置设置";
             // 
+            // BTN添加
+            // 
+            this.BTN添加.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN添加.Location = new System.Drawing.Point(658, 521);
+            this.BTN添加.Name = "BTN添加";
+            this.BTN添加.Size = new System.Drawing.Size(75, 22);
+            this.BTN添加.TabIndex = 8;
+            this.BTN添加.Text = "添加";
+            this.BTN添加.UseVisualStyleBackColor = true;
+            this.BTN添加.Click += new System.EventHandler(this.BTN添加_Click);
+            // 
             // LB信息
             // 
             this.LB信息.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -232,17 +243,6 @@
             // OFD打开
             // 
             this.OFD打开.FileName = "openFileDialog1";
-            // 
-            // BTN添加
-            // 
-            this.BTN添加.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN添加.Location = new System.Drawing.Point(658, 521);
-            this.BTN添加.Name = "BTN添加";
-            this.BTN添加.Size = new System.Drawing.Size(75, 22);
-            this.BTN添加.TabIndex = 8;
-            this.BTN添加.Text = "添加";
-            this.BTN添加.UseVisualStyleBackColor = true;
-            this.BTN添加.Click += new System.EventHandler(this.BTN添加_Click);
             // 
             // ImportForm
             // 

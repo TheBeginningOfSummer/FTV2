@@ -39,6 +39,7 @@
             this.TP测试 = new System.Windows.Forms.TabPage();
             this.TP手动电机2 = new System.Windows.Forms.TabPage();
             this.TP示教 = new System.Windows.Forms.TabPage();
+            this.FSB状态 = new ReaLTaiizor.Controls.ForeverStatusBar();
             this.HTP主界面.SuspendLayout();
             this.TP主界面.SuspendLayout();
             this.CTS菜单.SuspendLayout();
@@ -87,7 +88,7 @@
             // 
             this.RTB信息.BackColor = System.Drawing.Color.Gainsboro;
             this.RTB信息.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.RTB信息.Location = new System.Drawing.Point(746, 53);
+            this.RTB信息.Location = new System.Drawing.Point(758, 43);
             this.RTB信息.Name = "RTB信息";
             this.RTB信息.Size = new System.Drawing.Size(329, 98);
             this.RTB信息.TabIndex = 1;
@@ -170,11 +171,29 @@
             this.TP示教.Text = "示教";
             this.TP示教.UseVisualStyleBackColor = true;
             // 
+            // FSB状态
+            // 
+            this.FSB状态.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(47)))), ((int)(((byte)(49)))));
+            this.FSB状态.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.FSB状态.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.FSB状态.ForeColor = System.Drawing.Color.White;
+            this.FSB状态.Location = new System.Drawing.Point(0, 600);
+            this.FSB状态.Name = "FSB状态";
+            this.FSB状态.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(168)))), ((int)(((byte)(109)))));
+            this.FSB状态.ShowTimeDate = true;
+            this.FSB状态.Size = new System.Drawing.Size(1099, 23);
+            this.FSB状态.TabIndex = 1;
+            this.FSB状态.Text = "状态";
+            this.FSB状态.TextColor = System.Drawing.Color.White;
+            this.FSB状态.TimeColor = System.Drawing.Color.White;
+            this.FSB状态.TimeFormat = "yyyy.MM.dd - HH:mm:ss";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1099, 623);
+            this.Controls.Add(this.FSB状态);
             this.Controls.Add(this.HTP主界面);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -200,6 +219,7 @@
         private System.Windows.Forms.TabPage TP手动电机2;
         private System.Windows.Forms.TabPage TP示教;
         private System.Windows.Forms.RichTextBox RTB信息;
+        private ReaLTaiizor.Controls.ForeverStatusBar FSB状态;
     }
 }
 
