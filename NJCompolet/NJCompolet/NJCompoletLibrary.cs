@@ -142,22 +142,6 @@ namespace CIPCommunication
         /// <summary>
         /// 读多个数据的变量值(按变量名中的数字排序)
         /// </summary>
-        /// <param name="variableNames">变量名数组</param>
-        /// <returns></returns>
-        public object[] ReadVariablesValueArray(string[] variableNames)
-        {
-            if (!portCompolet.IsOpened(LocalPort)) return null;
-            Hashtable hashtable = this.compolet.ReadVariableMultiple(variableNames);
-            string[] keys = new string[hashtable.Count];
-            object[] values = new object[hashtable.Count];
-            hashtable.Keys.CopyTo(keys, 0);
-            hashtable.Values.CopyTo(values, 0);
-            Array.Sort(keys, values, stringValueComparer);
-            return values;
-        }
-        /// <summary>
-        /// 读多个数据的变量值(按变量名中的数字排序)
-        /// </summary>
         /// <typeparam name="T">给定的类型</typeparam>
         /// <param name="variableNames">变量名数组</param>
         /// <returns></returns>
