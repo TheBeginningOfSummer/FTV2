@@ -3,8 +3,6 @@ using Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FTV2
@@ -12,11 +10,14 @@ namespace FTV2
     public partial class MainForm : Form
     {
         DataRepeater<Message<object>> dataRepeater = new DataRepeater<Message<object>>();
-        Random rnd = new Random();
+        readonly Communication com = Communication.Singleton;
+        List<ControlConfig<Button>> 上料Buttons;
 
         public MainForm()
         {
             InitializeComponent();
+
+            LoadControls();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,6 +37,34 @@ namespace FTV2
             //});
         }
 
+        public void LoadControls()
+        {
+            上料Buttons = JsonManager.Load<List<ControlConfig<Button>>>("Config", "上料界面bak.json");
+            foreach (var button in 上料Buttons)
+            {
+                button.AddControl(TP主界面, new System.Drawing.Size(100, 24), new System.Drawing.Font("Times New Roman", 8));
+                button.ControlInstance.MouseDown += Output_MouseDown;
+                button.ControlInstance.MouseUp += Output_MouseUp;
+            }
+        }
+
+        private void Output_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                RTB信息.Text = button.Tag.ToString();
+                com.WriteVariable(true, button.Tag.ToString());
+            }
+        }
+
+        private void Output_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                com.WriteVariable(false, button.Tag.ToString());
+            }
+        }
+
         public void Display(Message<object> data)
         {
             Debug.WriteLine(data.ToString());
@@ -48,12 +77,14 @@ namespace FTV2
 
         private void TSB测试_Click(object sender, EventArgs e)
         {
-            var Buttons1 = JsonManager.Load<List<ControlConfig<Button>>>("Config", "[Buttons]示教.json");
-            foreach (var Button in Buttons1)
-                Button.AddControl(TP示教, new System.Drawing.Size(100, 24), new System.Drawing.Font("Times New Roman", 7));
-            var Buttons2 = JsonManager.Load<List<ControlConfig<Button>>>("Config", "[Buttons]手动气缸.json");
-            foreach (var Button in Buttons2)
-                Button.AddControl(TP上料, new System.Drawing.Size(110, 24), new System.Drawing.Font("Times New Roman", 8));
+            try
+            {
+                com.Compolet.Open();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
     }

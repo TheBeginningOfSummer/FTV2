@@ -16,7 +16,7 @@ namespace Services
         public string Text { get; set; }
         public object Tag { get; set; }
 
-        public T Control;
+        public T ControlInstance;
         public Control ParentControl;
         private bool isDragging = false;
         private Point offset;
@@ -30,23 +30,27 @@ namespace Services
             Text = text;
             Tag = tag;
 
-            Control = new T
+            ControlInstance = new T
             {
                 Location = Location,
                 Tag = Tag,
                 Text = Text
             };
-            if (Control is Button)
-                Control.Name = $"BTN[{CtrlName}]";
-            if (Control is Label)
-                Control.Name = $"LB[{CtrlName}]";
-            if (Control is TextBox)
-                Control.Name = $"TB[{CtrlName}]";
-            if (Control is RichTextBox)
-                Control.Name = $"RTB[{CtrlName}]";
-            Control.MouseDown += Control_MouseDown;
-            Control.MouseMove += Control_MouseMove;
-            Control.MouseUp += Control_MouseUp;
+            if (ControlInstance is Button)
+                ControlInstance.Name = $"BTN[{CtrlName}]";
+            if (ControlInstance is Label)
+                ControlInstance.Name = $"LB[{CtrlName}]";
+            if (ControlInstance is TextBox)
+                ControlInstance.Name = $"TB[{CtrlName}]";
+            if (ControlInstance is RichTextBox)
+                ControlInstance.Name = $"RTB[{CtrlName}]";
+        }
+
+        public void BindingEvent()
+        {
+            ControlInstance.MouseDown += Control_MouseDown;
+            ControlInstance.MouseMove += Control_MouseMove;
+            ControlInstance.MouseUp += Control_MouseUp;
         }
 
         private void Control_MouseDown(object sender, MouseEventArgs e)
@@ -62,10 +66,10 @@ namespace Services
         {
             if (isDragging)
             {
-                Point newLocation = Control.PointToScreen(e.Location);
+                Point newLocation = ControlInstance.PointToScreen(e.Location);
                 newLocation = ParentControl.PointToClient(newLocation);
                 newLocation.Offset(-offset.X, -offset.Y);
-                Control.Location = newLocation;
+                ControlInstance.Location = newLocation;
             }
         }
 
@@ -74,26 +78,21 @@ namespace Services
             if (isDragging)
             {
                 isDragging = false;
-                int alignedX = (Control.Left + gridSize / 2) / gridSize * gridSize;
-                int alignedY = (Control.Top + gridSize / 2) / gridSize * gridSize;
+                int alignedX = (ControlInstance.Left + gridSize / 2) / gridSize * gridSize;
+                int alignedY = (ControlInstance.Top + gridSize / 2) / gridSize * gridSize;
                 Location = new Point(alignedX, alignedY);
-                Control.Location = Location;
+                ControlInstance.Location = Location;
             }
-        }
-
-        public ControlConfig()
-        {
-
         }
 
         public void AddControl(Control parent, Size size, Font font)
         {
             if (size != null)
-                Control.Size = size;
+                ControlInstance.Size = size;
             if (font != null)
-                Control.Font = font;
+                ControlInstance.Font = font;
             ParentControl = parent;
-            parent.Controls.Add(Control);
+            parent.Controls.Add(ControlInstance);
         }
 
     }

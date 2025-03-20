@@ -39,11 +39,11 @@
             this.ATP控件设置 = new ReaLTaiizor.Controls.AirTabPage();
             this.TP控件信息导入 = new System.Windows.Forms.TabPage();
             this.TP控件位置设置 = new System.Windows.Forms.TabPage();
+            this.LB信息 = new System.Windows.Forms.Label();
             this.PN控件预览 = new System.Windows.Forms.Panel();
             this.BTN位置保存 = new System.Windows.Forms.Button();
             this.PFM菜单 = new ReaLTaiizor.Controls.ParrotFlatMenuStrip();
             this.OFD打开 = new System.Windows.Forms.OpenFileDialog();
-            this.LB信息 = new System.Windows.Forms.Label();
             this.CMS右键.SuspendLayout();
             this.ATP控件设置.SuspendLayout();
             this.TP控件信息导入.SuspendLayout();
@@ -90,8 +90,8 @@
             // 
             // BTN加载
             // 
-            this.BTN加载.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BTN加载.Location = new System.Drawing.Point(813, 2);
+            this.BTN加载.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN加载.Location = new System.Drawing.Point(739, 521);
             this.BTN加载.Name = "BTN加载";
             this.BTN加载.Size = new System.Drawing.Size(75, 22);
             this.BTN加载.TabIndex = 4;
@@ -166,6 +166,7 @@
             this.TP控件位置设置.BackColor = System.Drawing.Color.White;
             this.TP控件位置设置.Controls.Add(this.LB信息);
             this.TP控件位置设置.Controls.Add(this.PN控件预览);
+            this.TP控件位置设置.Controls.Add(this.BTN加载);
             this.TP控件位置设置.Controls.Add(this.BTN位置保存);
             this.TP控件位置设置.Cursor = System.Windows.Forms.Cursors.Default;
             this.TP控件位置设置.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -175,6 +176,16 @@
             this.TP控件位置设置.Size = new System.Drawing.Size(903, 548);
             this.TP控件位置设置.TabIndex = 1;
             this.TP控件位置设置.Text = "控件位置设置";
+            // 
+            // LB信息
+            // 
+            this.LB信息.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LB信息.AutoSize = true;
+            this.LB信息.Location = new System.Drawing.Point(6, 526);
+            this.LB信息.Name = "LB信息";
+            this.LB信息.Size = new System.Drawing.Size(29, 12);
+            this.LB信息.TabIndex = 7;
+            this.LB信息.Text = "信息";
             // 
             // PN控件预览
             // 
@@ -219,23 +230,12 @@
             // 
             this.OFD打开.FileName = "openFileDialog1";
             // 
-            // LB信息
-            // 
-            this.LB信息.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.LB信息.AutoSize = true;
-            this.LB信息.Location = new System.Drawing.Point(6, 526);
-            this.LB信息.Name = "LB信息";
-            this.LB信息.Size = new System.Drawing.Size(29, 12);
-            this.LB信息.TabIndex = 7;
-            this.LB信息.Text = "信息";
-            // 
             // ImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1026, 580);
             this.Controls.Add(this.ATP控件设置);
-            this.Controls.Add(this.BTN加载);
             this.Controls.Add(this.TB文件名);
             this.Controls.Add(this.PFM菜单);
             this.Name = "ImportForm";

@@ -80,7 +80,8 @@ namespace FTV2.View
                     foreach (var button in LoadButtons)
                     {
                         button.AddControl(PN控件预览, new System.Drawing.Size(110, 24), new System.Drawing.Font("Times New Roman", 8));
-                        button.Control.Click += BTN按钮测试_Click;
+                        button.BindingEvent();
+                        button.ControlInstance.Click += BTN按钮测试_Click;
                     }  
                 }
             }

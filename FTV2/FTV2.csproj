@@ -29,7 +29,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -50,14 +50,6 @@
   <ItemGroup>
     <Reference Include="CIPCommunication">
       <HintPath>libs\CIPCommunication.dll</HintPath>
-    </Reference>
-    <Reference Include="CIPCompolet, Version=1.7.1.0, Culture=neutral, PublicKeyToken=f3505d5782c23c5d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\CIPCompolet.dll</HintPath>
-    </Reference>
-    <Reference Include="CIPPortCompolet, Version=1.7.1.0, Culture=neutral, PublicKeyToken=4708ecb14a494255, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\CIPPortCompolet.dll</HintPath>
     </Reference>
     <Reference Include="Mvp.Csharp.Core">
       <HintPath>libs\MvpSdk\Mvp.Csharp.Core.dll</HintPath>
@@ -172,20 +164,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /s /i /y "$(MVP_BIN)\Picture\*" "$(TargetDir)\Picture"
-xcopy /s /i /y "$(MVP_BIN)\Lib\*" "$(TargetDir)\Lib"
-xcopy /s /i /y "$(MVP_BIN)\Language\*" "$(TargetDir)\Language"
-xcopy /s /i /y "$(MVP_BIN)\Conf\*" "$(TargetDir)\Conf"
-xcopy /s /i /y "$(MVP_BIN)\CSharp3rdDll\*" "$(TargetDir)\CSharp3rdDll"
-xcopy /s /i /y "$(MVP_BIN)\Skins\*" "$(TargetDir)\Skins"
-xcopy /s /i /y "$(MVP_BIN)\Lib\*" "$(TargetDir)\Lib"
-xcopy /s /i /y "$(MVP_BIN)\platforms\*" "$(TargetDir)\platforms"
-copy "$(MVP_BIN)\Qt*.dll" "$(TargetDir)\" /Y
-copy "$(MVP_BIN)\Dahua.Mvp.Script.dll" "$(TargetDir)\Dahua.Mvp.Script.dll" /Y
-copy "$(MVP_BIN)\ICSharpCode.AvalonEdit.dll" "$(TargetDir)\ICSharpCode.AvalonEdit.dll" /Y
-copy "$(MVP_BIN)\Newtonsoft.Json.dll" "$(TargetDir)\Newtonsoft.Json.dll" /Y
-copy "$(MVP_BIN)\Dahua.Mvp.Script.Gui.dll" "$(TargetDir)\Dahua.Mvp.Script.Gui.dll" /Y
-copy "$(MVP_BIN)\MvpLogger.properties" "$(TargetDir)\MvpLogger.properties" /Y
-copy "$(MVP_BIN)\MVSDKmd.dll" "$(TargetDir)\MVSDKmd.dll" /Y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
