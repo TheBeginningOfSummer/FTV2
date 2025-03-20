@@ -87,9 +87,9 @@
             // 
             this.RTB信息.BackColor = System.Drawing.Color.Gainsboro;
             this.RTB信息.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.RTB信息.Location = new System.Drawing.Point(898, 53);
+            this.RTB信息.Location = new System.Drawing.Point(746, 53);
             this.RTB信息.Name = "RTB信息";
-            this.RTB信息.Size = new System.Drawing.Size(177, 117);
+            this.RTB信息.Size = new System.Drawing.Size(329, 98);
             this.RTB信息.TabIndex = 1;
             this.RTB信息.Text = "";
             // 

@@ -1,4 +1,5 @@
-﻿using Services;
+﻿using Microsoft.VisualBasic;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +65,24 @@ namespace FTV2.View
             }
         }
 
+        private void BTN添加_Click(object sender, EventArgs e)
+        {
+            string input = Interaction.InputBox($"请输入要添加的控件信息：", "提示", "Button;name;text;PlcInIO[31]");
+            if (input == "") return;
+            string[] strings = input.Split(';');
+            switch (strings[0])
+            {
+                case "Button":
+                    ControlConfig<Button> button = new ControlConfig<Button>(new System.Drawing.Point(0, 0), strings[1], strings[2], strings[3]);
+                    LoadButtons.Add(button);
+                    button.AddControl(PN控件预览, new System.Drawing.Size(110, 24), new System.Drawing.Font("Times New Roman", 8));
+                    button.BindingEvent();
+                    button.ControlInstance.Click += BTN按钮测试_Click;
+                    break;
+                default: MessageBox.Show("数据结构未知", "提示"); break;
+            }
+        }
+
         private void BTN加载_Click(object sender, EventArgs e)
         {
             try
@@ -119,5 +138,6 @@ namespace FTV2.View
             }
         }
 
+        
     }
 }

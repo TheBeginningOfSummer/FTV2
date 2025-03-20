@@ -52,7 +52,7 @@ namespace FTV2
         {
             if (sender is Button button)
             {
-                RTB信息.Text = button.Tag.ToString();
+                RTB信息.Text = $"{button.Name}:{button.Tag}";
                 com.WriteVariable(true, button.Tag.ToString());
             }
         }

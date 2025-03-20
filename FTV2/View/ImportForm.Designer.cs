@@ -44,6 +44,7 @@
             this.BTN位置保存 = new System.Windows.Forms.Button();
             this.PFM菜单 = new ReaLTaiizor.Controls.ParrotFlatMenuStrip();
             this.OFD打开 = new System.Windows.Forms.OpenFileDialog();
+            this.BTN添加 = new System.Windows.Forms.Button();
             this.CMS右键.SuspendLayout();
             this.ATP控件设置.SuspendLayout();
             this.TP控件信息导入.SuspendLayout();
@@ -68,10 +69,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RTB数据.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.RTB数据.Location = new System.Drawing.Point(3, 5);
+            this.RTB数据.ContextMenuStrip = this.CMS右键;
+            this.RTB数据.Location = new System.Drawing.Point(3, 3);
             this.RTB数据.Margin = new System.Windows.Forms.Padding(0);
             this.RTB数据.Name = "RTB数据";
-            this.RTB数据.Size = new System.Drawing.Size(897, 513);
+            this.RTB数据.Size = new System.Drawing.Size(897, 515);
             this.RTB数据.TabIndex = 2;
             this.RTB数据.Text = "";
             // 
@@ -103,7 +105,7 @@
             // 
             this.TB文件名.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TB文件名.ForeColor = System.Drawing.Color.Gray;
-            this.TB文件名.Location = new System.Drawing.Point(894, 3);
+            this.TB文件名.Location = new System.Drawing.Point(902, 3);
             this.TB文件名.Name = "TB文件名";
             this.TB文件名.Size = new System.Drawing.Size(120, 21);
             this.TB文件名.TabIndex = 5;
@@ -164,6 +166,7 @@
             // TP控件位置设置
             // 
             this.TP控件位置设置.BackColor = System.Drawing.Color.White;
+            this.TP控件位置设置.Controls.Add(this.BTN添加);
             this.TP控件位置设置.Controls.Add(this.LB信息);
             this.TP控件位置设置.Controls.Add(this.PN控件预览);
             this.TP控件位置设置.Controls.Add(this.BTN加载);
@@ -230,6 +233,17 @@
             // 
             this.OFD打开.FileName = "openFileDialog1";
             // 
+            // BTN添加
+            // 
+            this.BTN添加.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN添加.Location = new System.Drawing.Point(658, 521);
+            this.BTN添加.Name = "BTN添加";
+            this.BTN添加.Size = new System.Drawing.Size(75, 22);
+            this.BTN添加.TabIndex = 8;
+            this.BTN添加.Text = "添加";
+            this.BTN添加.UseVisualStyleBackColor = true;
+            this.BTN添加.Click += new System.EventHandler(this.BTN添加_Click);
+            // 
             // ImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -267,5 +281,6 @@
         private System.Windows.Forms.OpenFileDialog OFD打开;
         private System.Windows.Forms.Panel PN控件预览;
         private System.Windows.Forms.Label LB信息;
+        private System.Windows.Forms.Button BTN添加;
     }
 }
