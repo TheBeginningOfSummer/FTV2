@@ -115,6 +115,7 @@ namespace FTV2.View
                     Loads.Add(label);
                     label.AddControl(PN控件预览, new System.Drawing.Size(110, 24), new System.Drawing.Font("Times New Roman", 8));
                     label.BindingEvent();
+                    label.ControlInstance.Click += BTN按钮测试_Click;
                     label.ControlInstance.ContextMenuStrip = CMS设置右键;
                     break;
                 default: MessageBox.Show("未知控件", "提示"); break;
@@ -168,10 +169,10 @@ namespace FTV2.View
         {
             try
             {
-                if(sender is Button button)
-                {
+                if (sender is Button button)
                     LB信息.Text = $"{button.Name};{button.Tag}";
-                }
+                if (sender is Label label)
+                    LB信息.Text = $"{label.Name};{label.Tag}";
             }
             catch (Exception)
             {

@@ -3,6 +3,8 @@ using Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FTV2
@@ -35,6 +37,7 @@ namespace FTV2
             //{
             //    await dataRepeater.ParseMessageAsync(Display);
             //});
+            
         }
 
         public void LoadControls()
@@ -45,6 +48,22 @@ namespace FTV2
                 control.AddControl(TP上料, null, new System.Drawing.Font("Times New Roman", 8));
                 control.ControlInstance.MouseDown += Output_MouseDown;
                 control.ControlInstance.MouseUp += Output_MouseUp;
+            }
+        }
+
+        public void UpdateData()
+        {
+            while (true)
+            {
+                try
+                {
+                    Thread.Sleep(50);
+                    com.RefreshData();
+                }
+                catch (Exception)
+                {
+
+                }
             }
         }
 
@@ -80,6 +99,7 @@ namespace FTV2
             try
             {
                 com.Compolet.Open();
+                Task.Run(UpdateData);
             }
             catch (Exception ex)
             {
