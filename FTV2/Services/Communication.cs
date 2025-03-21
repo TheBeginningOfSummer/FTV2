@@ -13,23 +13,12 @@ namespace Services
 
         #region 要读取的变量名
         readonly string[] plcOutIOName;
-        readonly string[] plcOutLocationName;
+        readonly string[] plcOutPOSName;
         readonly string[] plcOutAlarmName;
         readonly string[] plcInPmtName;
         readonly string[] plcOutFlagName = new string[] { "PLC标志位[0]", "PLC标志位[1]", "PLC标志位[2]" };
         readonly string[] plcTestInfoName;
-        readonly string[] plcOutFWName;
-        readonly string[] plcOutMonitor = new string[] {
-            "PCwrite[2]", "PCwrite[3]", "PCwrite[4]", "PCwrite[5]", "PCwrite[14]", "PCwrite[15]" };
-        readonly string[] plcOutCalState = new string[] {
-            "PlcInIO1[30]", "PlcInIO1[190]", "PlcInIO1[44]", "PlcInIO1[38]", "PlcInIO1[795]", "PlcInIO1[31]",
-            "PlcInIO1[33]", "PlcInIO1[41]", "PlcInIO1[43]", "PlcInIO1[191]", "PlcInIO1[193]", "PlcInIO1[55]",
-            "PlcInIO1[111]", "PlcInIO1[117]", "PlcInIO1[114]", "PlcInIO1[116]", "PlcInIO1[113]", "PlcInIO1[112]",
-            "PlcInIO1[76]", "PlcInIO1[79]", "PlcInIO1[80]", "PlcInIO1[81]", "PlcInIO1[82]", "PlcInIO1[83]",
-            "PlcInIO1[84]", "PlcInIO1[85]", "PlcInIO1[86]", "PlcInIO1[100]", "PlcInIO1[108]", "PlcInIO1[103]",
-            "PlcInIO1[104]", "PlcInIO1[95]", "PlcInIO1[96]", "PlcInIO1[97]", "PlcInIO1[648]", "PlcInIO1[56]",
-            "PlcInIO1[61]", "PlcInIO1[63]", "PlcInIO1[121]", "PlcInIO1[131]", "PlcInIO1[141]", "PlcInIO1[151]"
-        };
+        
         #endregion
 
         #region 读取到的键值对
@@ -39,9 +28,6 @@ namespace Services
         public ConcurrentDictionary<string, double> PLCPmt { get; private set; }
         public ConcurrentDictionary<string, bool> FlagBits { get; private set; }
         public ConcurrentDictionary<string, string> TestInformation { get; private set; }
-        public ConcurrentDictionary<string, bool> PLCFW { get; private set; }
-        public ConcurrentDictionary<string, int> MonitorValue { get; private set; }
-        public ConcurrentDictionary<string, bool> CalState { get; private set; }
         #endregion
 
         private Communication()
@@ -52,7 +38,7 @@ namespace Services
             //PLC Out IO
             plcOutIOName = InitializeNameArray("PlcOutIO", 0, 299);
             //位置信息
-            plcOutLocationName = InitializeNameArray("PlcOutLocation", 0, 199);
+            plcOutPOSName = InitializeNameArray("POS", 0, 199);
             //报警信息
             plcOutAlarmName = InitializeNameArray("PlcOutAlarm", 0, 249);
             //参数信息
@@ -61,8 +47,6 @@ namespace Services
             plcOutFlagName = InitializeNameArray("PLC标志位", 0, 2);
             //字符串信息
             plcTestInfoName = InitializeNameArray("PLC测试信息", 0, 59);
-            //复位信号
-            plcOutFWName = InitializeNameArray("FW", 100, 150);
             #endregion
         }
 
@@ -87,15 +71,11 @@ namespace Services
             {
                 #region 更新数据
                 UpdateValue<bool>(Compolet.GetHashtable(plcOutIOName), PLCOutput);
-                UpdateValue<double>(Compolet.GetHashtable(plcOutLocationName), Location);
-                UpdateValue<bool>(Compolet.GetHashtable(plcOutAlarmName), Alarm);
-                UpdateValue<bool>(Compolet.GetHashtable(plcOutFWName), PLCFW);
-                UpdateValue(Compolet.GetHashtable(plcInPmtName), PLCPmt);
-                UpdateValue(Compolet.GetHashtable(plcOutFlagName), FlagBits);
-                UpdateValue<string>(Compolet.GetHashtable(plcTestInfoName), TestInformation);//测试信息
-
-                UpdateValue<int>(Compolet.GetHashtable(plcOutMonitor), MonitorValue);
-                UpdateValue<bool>(Compolet.GetHashtable(plcOutCalState), CalState);
+                UpdateValue<double>(Compolet.GetHashtable(plcOutPOSName), Location);
+                //UpdateValue<bool>(Compolet.GetHashtable(plcOutAlarmName), Alarm);
+                //UpdateValue(Compolet.GetHashtable(plcInPmtName), PLCPmt);
+                //UpdateValue(Compolet.GetHashtable(plcOutFlagName), FlagBits);
+                //UpdateValue<string>(Compolet.GetHashtable(plcTestInfoName), TestInformation);//测试信息
                 #endregion
 
                 #region 从PLC读取标志位

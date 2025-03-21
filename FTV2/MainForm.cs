@@ -11,7 +11,7 @@ namespace FTV2
     {
         DataRepeater<Message<object>> dataRepeater = new DataRepeater<Message<object>>();
         readonly Communication com = Communication.Singleton;
-        List<ControlConfig<Button>> 上料Buttons;
+        List<ControlConfig> 上料Controls;
 
         public MainForm()
         {
@@ -39,12 +39,12 @@ namespace FTV2
 
         public void LoadControls()
         {
-            上料Buttons = JsonManager.Load<List<ControlConfig<Button>>>("Config", "上料界面bak.json");
-            foreach (var button in 上料Buttons)
+            上料Controls = JsonManager.Load<List<ControlConfig>>("Config", "上料界面.json");
+            foreach (var control in 上料Controls)
             {
-                button.AddControl(TP主界面, new System.Drawing.Size(100, 24), new System.Drawing.Font("Times New Roman", 8));
-                button.ControlInstance.MouseDown += Output_MouseDown;
-                button.ControlInstance.MouseUp += Output_MouseUp;
+                control.AddControl(TP上料, null, new System.Drawing.Font("Times New Roman", 8));
+                control.ControlInstance.MouseDown += Output_MouseDown;
+                control.ControlInstance.MouseUp += Output_MouseUp;
             }
         }
 

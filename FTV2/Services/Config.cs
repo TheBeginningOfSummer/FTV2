@@ -25,8 +25,6 @@ namespace FTV2.Services
 
         public string ConfigPath { get; private set; } = "Config";
 
-        public List<ControlConfig<Button>> Buttons { get; private set; } = new List<ControlConfig<Button>>();
-
         public Config()
         {
             

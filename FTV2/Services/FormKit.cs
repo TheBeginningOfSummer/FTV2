@@ -9,43 +9,38 @@ namespace Services
 
     }
 
-    public class ControlConfig<T> where T : Control, new()
+    [JsonDerivedType(typeof(ButtonConfig), typeDiscriminator: "button")]
+    [JsonDerivedType(typeof(LabelConfig), typeDiscriminator: "label")]
+    public class ControlConfig
     {
+        #region 控件的属性
         public Point Location { get; set; }
         public string CtrlName { get; set; }
         public string Text { get; set; }
         public object Tag { get; set; }
+        public int Width { get; set; } = 110;
+        public int Height { get; set; } = 24;
+        #endregion
 
-        public T ControlInstance;
+        public Control ControlInstance;
         public Control ParentControl;
         private bool isDragging = false;
         private Point offset;
         private const int gridSize = 10;
 
         [JsonConstructor]
-        public ControlConfig(Point location, string ctrlName, string text, object tag)
+        public ControlConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24)
         {
             Location = location;
             CtrlName = ctrlName;
             Text = text;
             Tag = tag;
-
-            ControlInstance = new T
-            {
-                Location = Location,
-                Tag = Tag,
-                Text = Text
-            };
-            if (ControlInstance is Button)
-                ControlInstance.Name = $"BTN[{CtrlName}]";
-            if (ControlInstance is Label)
-                ControlInstance.Name = $"LB[{CtrlName}]";
-            if (ControlInstance is TextBox)
-                ControlInstance.Name = $"TB[{CtrlName}]";
-            if (ControlInstance is RichTextBox)
-                ControlInstance.Name = $"RTB[{CtrlName}]";
+            Width = width;
+            Height = height;
+            Initialize();
         }
 
+        #region 控件移动事件
         public void BindingEvent()
         {
             ControlInstance.MouseDown += Control_MouseDown;
@@ -84,16 +79,85 @@ namespace Services
                 ControlInstance.Location = Location;
             }
         }
+        #endregion
 
-        public void AddControl(Control parent, Size size, Font font)
+        public virtual void Initialize()
         {
-            if (size != null)
-                ControlInstance.Size = size;
-            if (font != null)
-                ControlInstance.Font = font;
-            ParentControl = parent;
-            parent.Controls.Add(ControlInstance);
+            ControlInstance = new Button
+            {
+                Location = Location,
+                Tag = Tag,
+                Text = Text,
+                Size = new Size(Width, Height),
+                Name = $"[{CtrlName}]"
+            };
         }
 
+        public void AddControl(Control parent, Size? size, Font font)
+        {
+            if (size != null)
+                ControlInstance.Size = (Size)size;
+            else
+            {
+                if (Width != 0 && Height != 0)
+                    ControlInstance.Size = new Size(Width, Height);
+                else
+                    ControlInstance.Size = new Size(110, 24);
+            }
+            if (font != null)
+                ControlInstance.Font = font;
+
+            ParentControl = parent;
+            ParentControl.Controls.Add(ControlInstance);
+        }
+
+        public void SyncControl()
+        {
+            Width = ControlInstance.Width;
+            Height = ControlInstance.Height;
+            Text = ControlInstance.Text;
+        }
+
+    }
+
+    public class ButtonConfig : ControlConfig
+    {
+        public ButtonConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24) : base(location, ctrlName, text, tag, width, height)
+        {
+            Initialize();
+        }
+
+        public override void Initialize()
+        {
+            ControlInstance = new Button
+            {
+                Location = Location,
+                Tag = Tag,
+                Text = Text,
+                Size = new Size(Width, Height),
+                Name = $"BTN[{CtrlName}]"
+            };
+        }
+    }
+
+    public class LabelConfig : ControlConfig
+    {
+        public LabelConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24) : base(location, ctrlName, text, tag, width, height)
+        {
+            Initialize();
+        }
+
+        public override void Initialize()
+        {
+            ControlInstance = new Label
+            {
+                Location = Location,
+                Tag = Tag,
+                Text = Text,
+                Size = new Size(Width, Height),
+                Name = $"LB[{CtrlName}]",
+                AutoSize = true
+            };
+        }
     }
 }
