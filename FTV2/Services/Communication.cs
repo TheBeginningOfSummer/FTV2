@@ -18,16 +18,16 @@ namespace Services
         readonly string[] plcInPmtName;
         readonly string[] plcOutFlagName = new string[] { "PLC标志位[0]", "PLC标志位[1]", "PLC标志位[2]" };
         readonly string[] plcTestInfoName;
-        
+
         #endregion
 
         #region 读取到的键值对
-        public ConcurrentDictionary<string, bool> PLCOutput { get; private set; }
-        public ConcurrentDictionary<string, double> Location { get; private set; }
-        public ConcurrentDictionary<string, bool> Alarm { get; private set; }
-        public ConcurrentDictionary<string, double> PLCPmt { get; private set; }
-        public ConcurrentDictionary<string, bool> FlagBits { get; private set; }
-        public ConcurrentDictionary<string, string> TestInformation { get; private set; }
+        public ConcurrentDictionary<string, bool> PLCOutput { get; private set; } = new ConcurrentDictionary<string, bool>();
+        public ConcurrentDictionary<string, double> Location { get; private set; } = new ConcurrentDictionary<string, double>();
+        public ConcurrentDictionary<string, bool> Alarm { get; private set; } = new ConcurrentDictionary<string, bool>();
+        public ConcurrentDictionary<string, double> PLCPmt { get; private set; } = new ConcurrentDictionary<string, double>();
+        public ConcurrentDictionary<string, bool> FlagBits { get; private set; } = new ConcurrentDictionary<string, bool>();
+        public ConcurrentDictionary<string, string> TestInformation { get; private set; } = new ConcurrentDictionary<string, string>();
         #endregion
 
         private Communication()
@@ -37,10 +37,13 @@ namespace Services
             #region 初始化变量名
             //PLC Out IO
             plcOutIOName = InitializeNameArray("PlcOutIO", 0, 299);
+            foreach (var name in plcOutIOName) PLCOutput.TryAdd(name, false);
             //位置信息
             plcOutPOSName = InitializeNameArray("POS", 0, 199);
+            foreach (var name in plcOutPOSName) Location.TryAdd(name, 0);
             //报警信息
             plcOutAlarmName = InitializeNameArray("PlcOutAlarm", 0, 249);
+            foreach (var name in plcOutAlarmName) Alarm.TryAdd(name, false);
             //参数信息
             plcInPmtName = InitializeNameArray("PlcInPmt", 0, 149);
             //标志位

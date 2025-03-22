@@ -1,6 +1,7 @@
 ﻿using FTV2.View;
 using Services;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -13,13 +14,14 @@ namespace FTV2
     {
         DataRepeater<Message<object>> dataRepeater = new DataRepeater<Message<object>>();
         readonly Communication com = Communication.Singleton;
-        List<ControlConfig> 上料Controls;
+        readonly ConcurrentDictionary<string, ControlConfig> ControlDic = new ConcurrentDictionary<string, ControlConfig>();
 
         public MainForm()
         {
             InitializeComponent();
 
             LoadControls();
+            Task.Run(UpdateInterface);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -42,9 +44,10 @@ namespace FTV2
 
         public void LoadControls()
         {
-            上料Controls = JsonManager.Load<List<ControlConfig>>("Config", "上料界面.json");
+            List<ControlConfig>  上料Controls = JsonManager.Load<List<ControlConfig>>("Config", "上料界面.json");
             foreach (var control in 上料Controls)
             {
+                ControlDic.TryAdd(control.Tag.ToString(), control);
                 control.AddControl(TP上料, null, new System.Drawing.Font("Times New Roman", 8));
                 control.ControlInstance.MouseDown += Output_MouseDown;
                 control.ControlInstance.MouseUp += Output_MouseUp;
@@ -59,6 +62,26 @@ namespace FTV2
                 {
                     Thread.Sleep(50);
                     com.RefreshData();
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+        }
+
+        public void UpdateInterface()
+        {
+            while (true)
+            {
+                try
+                {
+                    Thread.Sleep(100);
+                    foreach (var pos in com.Location)
+                    {
+                        ControlDic.AddOrUpdate(pos.Key, new ControlConfig(new System.Drawing.Point(0, 0), pos.Key, pos.Key, pos.Key),
+                            (key, oldValue) => { oldValue.SetText(pos.Value.ToString()); return oldValue; });
+                    }
                 }
                 catch (Exception)
                 {

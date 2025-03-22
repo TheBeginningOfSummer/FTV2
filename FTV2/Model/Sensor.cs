@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Model
@@ -18,9 +17,9 @@ namespace Model
             {
                 sensorCode = value;
                 if (sensorCode == "null")
-                    WinformTool.InvokeOnThread(Display, () => Display.BackColor = Color.White);
+                    FormKit.InvokeOnThread(Display, () => Display.BackColor = Color.White);
                 if (sensorCode == "noData")
-                    WinformTool.InvokeOnThread(Display, () => Display.BackColor = Color.Gray);
+                    FormKit.InvokeOnThread(Display, () => Display.BackColor = Color.Gray);
             }
         }
         //探测器类型
@@ -39,19 +38,19 @@ namespace Model
                 {
                     if (sensorQuality == 0)
                     {
-                        WinformTool.InvokeOnThread(Display, new Action(() => { Display.BackColor = Color.LightGray; }));
+                        FormKit.InvokeOnThread(Display, new Action(() => { Display.BackColor = Color.LightGray; }));
                     }
                     else if (sensorQuality == 1)
                     {
-                        WinformTool.InvokeOnThread(Display, new Action(() => { Display.BackColor = Color.Lime; }));
+                        FormKit.InvokeOnThread(Display, new Action(() => { Display.BackColor = Color.Lime; }));
                     }
                     else if (sensorQuality == 2)
                     {
-                        WinformTool.InvokeOnThread(Display, new Action(() => { Display.BackColor = Color.OrangeRed; }));
+                        FormKit.InvokeOnThread(Display, new Action(() => { Display.BackColor = Color.OrangeRed; }));
                     }
                     else if (sensorQuality == 3)
                     {
-                        WinformTool.InvokeOnThread(Display, new Action(() => { Display.BackColor = Color.Yellow; }));
+                        FormKit.InvokeOnThread(Display, new Action(() => { Display.BackColor = Color.Yellow; }));
                     }
                 }
             }
@@ -217,7 +216,7 @@ namespace Model
             //设置托盘编号显示控件的位置
             SetLabel(canvasControl, new Point(PosOnPanel.X, PosOnPanel.Y - 25));
             //计算控件位置
-            List<Point> location = WinformTool.SetLocation(PosOnPanel.X, PosOnPanel.Y, Sensors.Count, TrayLength, 25, 25);
+            List<Point> location = FormKit.SetLocation(PosOnPanel.X, PosOnPanel.Y, Sensors.Count, TrayLength, 25, 25);
             //传感器信息显示
             for (int i = 0; i < Sensors.Count; i++)
                 Sensors[(i + 1).ToString()].SetLabel(canvasControl, location[i]);
@@ -367,109 +366,8 @@ namespace Model
         /// <param name="canvasControl">显示托盘的控件</param>
         public void UpdateTrayLabels(Control canvasControl)
         {
-            WinformTool.InvokeOnThread(canvasControl, () => canvasControl.Controls.Clear());
+            FormKit.InvokeOnThread(canvasControl, () => canvasControl.Controls.Clear());
             foreach (var tray in Trays) tray.UpdateTrayLabel(canvasControl);
-        }
-    }
-
-    public static class WinformTool
-    {
-        public static void DrawToBitmap(Control control, string path, string name)
-        {
-            Bitmap bitmap = new Bitmap(control.Width, control.Height);
-            control.DrawToBitmap(bitmap, new Rectangle(0, 0, control.Width, control.Height));
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            bitmap.Save(path + "\\" + name + ".bmp");
-        }
-
-        public static void InvokeOnThread(Control control, Action method)
-        {
-            if (control.IsHandleCreated)
-            {
-                control.Invoke(method);
-            }
-            else
-            {
-                method();
-            }
-        }
-        /// <summary>
-        /// 得到一个矩形阵列的坐标
-        /// </summary>
-        /// <param name="x">阵列起始X坐标</param>
-        /// <param name="y">阵列起始Y坐标</param>
-        /// <param name="count">阵列元素个数</param>
-        /// <param name="length">每行的元素个数</param>
-        /// <param name="xInterval">阵列坐标x方向间距</param>
-        /// <param name="yInterval">阵列坐标y方向间距</param>
-        /// <returns>阵列坐标列表</returns>
-        public static List<Point> SetLocation(int x, int y, int count, int length, int xInterval, int yInterval)
-        {
-            int o = x;
-            List<Point> locationList = new List<Point>();
-            for (int i = 0; i < count; i++)
-            {
-                locationList.Add(new Point(x, y));
-                x = x + xInterval;
-                if ((i + 1) % length == 0)
-                {
-                    x = o;
-                    y = y + yInterval;
-                }
-            }
-            return locationList;
-        }
-        /// <summary>
-        /// 设置一个Label组成的矩形阵列
-        /// </summary>
-        /// <param name="labelsLocation">阵列坐标列表</param>
-        /// <param name="labelSize">Label大小（方形）</param>
-        /// <param name="code">每个阵列的标记</param>
-        /// <param name="offset">标记相对于起始坐标的偏移</param>
-        /// <returns>包含标记的Label阵列列表</returns>
-        public static List<Label> SetLabel(List<Point> labelsLocation, int labelSize, string code, Point offset)
-        {
-            List<Label> labelList = new List<Label>();
-            Label title = new Label();
-            title.Name = code;
-            title.Width = 150;
-            title.ForeColor = Color.OrangeRed;
-            title.Text = code;
-            title.Location = new Point(labelsLocation[0].X, labelsLocation[0].Y - offset.Y);
-            labelList.Add(title);
-            for (int i = 0; i < labelsLocation.Count; i++)
-            {
-                Label slot = new Label();
-                slot.Name = code + i.ToString();
-                slot.Width = labelSize;
-                slot.Height = labelSize;
-                slot.ForeColor = Color.Blue;
-                slot.BackColor = Color.LightSkyBlue;
-                slot.Text = (i + 1).ToString();
-                slot.Location = labelsLocation[i];
-                labelList.Add(slot);
-            }
-            return labelList;
-        }
-        /// <summary>
-        /// 在控件上绘制Label列表
-        /// </summary>
-        /// <param name="canvasControl">需要绘制的控件</param>
-        /// <param name="labels">Label列表</param>
-        public static void DrawLabel(Control canvasControl, List<Label> labels)
-        {
-            for (int i = 0; i < labels.Count; i++)
-            {
-                canvasControl.Controls.Add(labels[i]);
-            }
-        }
-
-        public static void ClearLabel(Control canvasControl, List<Label> labels)
-        {
-            foreach (var item in labels)
-            {
-                canvasControl.Controls.Remove(item);
-            }
         }
     }
 
@@ -489,7 +387,7 @@ namespace Model
 
         public void SetLabel(Control canvasControl, Point location)
         {
-            WinformTool.InvokeOnThread(canvasControl, () =>
+            FormKit.InvokeOnThread(canvasControl, () =>
             {
                 Display.Location = location;
                 canvasControl.Controls.Add(Display);
