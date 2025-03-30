@@ -106,6 +106,8 @@ namespace Services
 
     [JsonDerivedType(typeof(ButtonConfig), typeDiscriminator: "button")]
     [JsonDerivedType(typeof(LabelConfig), typeDiscriminator: "label")]
+    [JsonDerivedType(typeof(TextBoxConfig), typeDiscriminator: "textbox")]
+    [JsonDerivedType(typeof(GroupConfig), typeDiscriminator: "group")]
     public class ControlConfig
     {
         #region 控件属性
@@ -125,8 +127,10 @@ namespace Services
         private const int gridSize = 10;
         #endregion
 
+        public List<ControlConfig> Configs { get; set; } = new List<ControlConfig>();
+
         [JsonConstructor]
-        public ControlConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24)
+        public ControlConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, List<ControlConfig> configs = null)
         {
             Location = location;
             CtrlName = ctrlName;
@@ -134,6 +138,7 @@ namespace Services
             Tag = tag;
             Width = width;
             Height = height;
+            if (configs != null) Configs = configs;
             Initialize();
         }
 
@@ -266,4 +271,50 @@ namespace Services
             };
         }
     }
+
+    public class TextBoxConfig : ControlConfig
+    {
+        public TextBoxConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24) : base(location, ctrlName, text, tag, width, height)
+        {
+            Initialize();
+        }
+
+        public override void Initialize()
+        {
+            ControlInstance = new TextBox
+            {
+                Location = Location,
+                Tag = Tag,
+                Text = Text,
+                Size = new Size(Width, Height),
+                Name = $"TXB[{CtrlName}]",
+            };
+        }
+    }
+
+    public class GroupConfig : ControlConfig
+    {
+        public GroupConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, List<ControlConfig> configs = null) : base(location, ctrlName, text, tag, width, height, configs)
+        {
+            Initialize();
+        }
+
+        public override void Initialize()
+        {
+            ControlInstance = new GroupBox
+            {
+                Location = Location,
+                Tag = Tag,
+                Text = Text,
+                Size = new Size(Width, Height),
+                Name = $"GPB[{CtrlName}]"
+            };
+            if (Configs != null)
+            {
+                foreach (var item in Configs)
+                    ControlInstance.Controls.Add(item.ControlInstance);
+            }
+        }
+    }
+
 }

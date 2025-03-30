@@ -17,6 +17,20 @@ namespace FTV2.View
             InitializeComponent();
         }
 
+        public Dictionary<string, T> GetControls<T>(params Control[] mainControl)
+        {
+            Dictionary<string, T> controlDic = new Dictionary<string, T>();
+            foreach (Control item in mainControl)
+            {
+                foreach (Control child in item.Controls)
+                {
+                    if (child is T control)
+                        controlDic.Add(child.Name, control);
+                }
+            }
+            return controlDic;
+        }
+
         #region 导入
         private void TMI清除_Click(object sender, EventArgs e)
         {
@@ -218,6 +232,41 @@ namespace FTV2.View
             }
         }
         #endregion
+
+        private void BTN测试_Click(object sender, EventArgs e)
+        {
+            List<ControlConfig> L = new List<ControlConfig>();
+            var v = JsonManager.Load<Dictionary<string, string>>("Config", "TextBoxInfo.json");
+            var caliGroups = GetControls<GroupBox>(PN控件预览);
+            foreach (var item in caliGroups.Values)
+            {
+                var g = new GroupConfig(item.Location, item.Text, item.Text, item.Text, item.Size.Width, item.Size.Height);
+                var tb = GetControls<TextBox>(item);
+                foreach (var citem in tb.Values)
+                {
+                    v.TryGetValue(citem.Name, out var c);
+                    if (c == null) c = citem.Name;
+                    var ttb = new TextBoxConfig(citem.Location, $"TXB[{citem.Name.Substring(3)}]", citem.Text, c, citem.Size.Width, citem.Size.Height);
+                    g.Configs.Add(ttb);
+                }
+                var bn = GetControls<Button>(item);
+                foreach (var citem in bn.Values)
+                {
+                    var bttn = new ButtonConfig(citem.Location, $"BTN[{citem.Name.Substring(3)}]", citem.Text, citem.Tag, citem.Size.Width, citem.Size.Height);
+                    g.Configs.Add(bttn);
+                }
+                var lb = GetControls<Label>(item);
+                foreach (var citem in lb.Values)
+                {
+                    var lab = new LabelConfig(citem.Location, $"LB[{citem.Text}]", citem.Text, citem.Tag, citem.Size.Width, citem.Size.Height);
+                    g.Configs.Add(lab);
+                }
+                L.Add(g);
+            }
+
+            JsonManager.Save("Config", $"{TB文件名.Text}.json", L);
+            MessageBox.Show("保存完成", "提示");
+        }
 
     }
 }

@@ -19,6 +19,18 @@ namespace Services
         readonly string[] plcOutFlagName = new string[] { "PLC标志位[0]", "PLC标志位[1]", "PLC标志位[2]" };
         readonly string[] plcTestInfoName;
 
+        readonly string[] plcOutFWName;
+        readonly string[] plcOutMonitor = new string[] {
+            "PCwrite[2]", "PCwrite[3]", "PCwrite[4]", "PCwrite[5]", "PCwrite[14]", "PCwrite[15]" };
+        readonly string[] plcOutCalState = new string[] {
+            "PlcInIO1[30]", "PlcInIO1[190]", "PlcInIO1[44]", "PlcInIO1[38]", "PlcInIO1[795]", "PlcInIO1[31]",
+            "PlcInIO1[33]", "PlcInIO1[41]", "PlcInIO1[43]", "PlcInIO1[191]", "PlcInIO1[193]", "PlcInIO1[55]",
+            "PlcInIO1[111]", "PlcInIO1[117]", "PlcInIO1[114]", "PlcInIO1[116]", "PlcInIO1[113]", "PlcInIO1[112]",
+            "PlcInIO1[76]", "PlcInIO1[79]", "PlcInIO1[80]", "PlcInIO1[81]", "PlcInIO1[82]", "PlcInIO1[83]",
+            "PlcInIO1[84]", "PlcInIO1[85]", "PlcInIO1[86]", "PlcInIO1[100]", "PlcInIO1[108]", "PlcInIO1[103]",
+            "PlcInIO1[104]", "PlcInIO1[95]", "PlcInIO1[96]", "PlcInIO1[97]", "PlcInIO1[648]", "PlcInIO1[56]",
+            "PlcInIO1[61]", "PlcInIO1[63]", "PlcInIO1[121]", "PlcInIO1[131]", "PlcInIO1[141]", "PlcInIO1[151]"
+        };
         #endregion
 
         #region 读取到的键值对
@@ -28,28 +40,41 @@ namespace Services
         public ConcurrentDictionary<string, double> PLCPmt { get; private set; } = new ConcurrentDictionary<string, double>();
         public ConcurrentDictionary<string, bool> FlagBits { get; private set; } = new ConcurrentDictionary<string, bool>();
         public ConcurrentDictionary<string, string> TestInformation { get; private set; } = new ConcurrentDictionary<string, string>();
+        public ConcurrentDictionary<string, bool> PLCFW { get; private set; } = new ConcurrentDictionary<string, bool>();
+        public ConcurrentDictionary<string, int> MonitorValue { get; private set; } = new ConcurrentDictionary<string, int>();
+        public ConcurrentDictionary<string, bool> CalState { get; private set; } = new ConcurrentDictionary<string, bool>();
         #endregion
 
         private Communication()
         {
             Compolet = new NJCompoletLibrary();
 
-            #region 初始化变量名
+            #region 初始化变量
             //PLC Out IO
             plcOutIOName = InitializeNameArray("PlcOutIO", 0, 299);
             foreach (var name in plcOutIOName) PLCOutput.TryAdd(name, false);
             //位置信息
-            plcOutPOSName = InitializeNameArray("POS", 0, 199);
+            plcOutPOSName = InitializeNameArray("PlcOutLocation", 0, 199);
             foreach (var name in plcOutPOSName) Location.TryAdd(name, 0);
             //报警信息
             plcOutAlarmName = InitializeNameArray("PlcOutAlarm", 0, 249);
             foreach (var name in plcOutAlarmName) Alarm.TryAdd(name, false);
             //参数信息
             plcInPmtName = InitializeNameArray("PlcInPmt", 0, 149);
+            foreach (var name in plcInPmtName) PLCPmt.TryAdd(name, 0);
             //标志位
             plcOutFlagName = InitializeNameArray("PLC标志位", 0, 2);
+            foreach (var name in plcOutFlagName) FlagBits.TryAdd(name, false);
             //字符串信息
             plcTestInfoName = InitializeNameArray("PLC测试信息", 0, 59);
+            foreach (var name in plcTestInfoName) TestInformation.TryAdd(name, "noData");
+            //复位
+            plcOutFWName = InitializeNameArray("FW", 100, 150);
+            foreach (var name in plcOutFWName) PLCFW.TryAdd(name, false);
+            //信息监测
+            foreach (var name in plcOutMonitor) MonitorValue.TryAdd(name, 0);
+            //示教按钮状态
+            foreach (var name in plcOutCalState) CalState.TryAdd(name, false);
             #endregion
         }
 
@@ -75,10 +100,13 @@ namespace Services
                 #region 更新数据
                 UpdateValue<bool>(Compolet.GetHashtable(plcOutIOName), PLCOutput);
                 UpdateValue<double>(Compolet.GetHashtable(plcOutPOSName), Location);
-                //UpdateValue<bool>(Compolet.GetHashtable(plcOutAlarmName), Alarm);
-                //UpdateValue(Compolet.GetHashtable(plcInPmtName), PLCPmt);
-                //UpdateValue(Compolet.GetHashtable(plcOutFlagName), FlagBits);
-                //UpdateValue<string>(Compolet.GetHashtable(plcTestInfoName), TestInformation);//测试信息
+                UpdateValue<bool>(Compolet.GetHashtable(plcOutAlarmName), Alarm);
+                UpdateValue(Compolet.GetHashtable(plcInPmtName), PLCPmt);
+                UpdateValue(Compolet.GetHashtable(plcOutFlagName), FlagBits);
+                UpdateValue<string>(Compolet.GetHashtable(plcTestInfoName), TestInformation);//测试信息
+
+                UpdateValue<int>(Compolet.GetHashtable(plcOutMonitor), MonitorValue);
+                UpdateValue<bool>(Compolet.GetHashtable(plcOutCalState), CalState);
                 #endregion
 
                 #region 从PLC读取标志位
