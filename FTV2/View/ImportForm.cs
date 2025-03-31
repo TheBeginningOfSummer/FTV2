@@ -2,7 +2,9 @@
 using Services;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace FTV2.View
@@ -118,19 +120,13 @@ namespace FTV2.View
                     if (controlInfo.Length != 4) return;
                     ButtonConfig button = new ButtonConfig(new System.Drawing.Point(0, 0), controlInfo[1], controlInfo[2], controlInfo[3]);
                     Loads.Add(button);
-                    button.AddControl(PN控件预览, new System.Drawing.Size(110, 24), new System.Drawing.Font("Times New Roman", 8));
-                    button.BindingEvent();
-                    button.ControlInstance.Click += BTN按钮测试_Click;
-                    button.ControlInstance.ContextMenuStrip = CMS设置右键;
+                    button.AddTo(PN控件预览, CMS设置右键, BTN按钮测试_Click, true);
                     break;
                 case "Label":
                     if (controlInfo.Length < 3) return;
                     LabelConfig label = new LabelConfig(new System.Drawing.Point(0, 0), controlInfo[1], controlInfo[2], controlInfo[3]);
                     Loads.Add(label);
-                    label.AddControl(PN控件预览, new System.Drawing.Size(110, 24), new System.Drawing.Font("Times New Roman", 8));
-                    label.BindingEvent();
-                    label.ControlInstance.Click += BTN按钮测试_Click;
-                    label.ControlInstance.ContextMenuStrip = CMS设置右键;
+                    label.AddTo(PN控件预览, CMS设置右键, BTN按钮测试_Click, true);
                     break;
                 default: MessageBox.Show("未知控件", "提示"); break;
             }
@@ -151,10 +147,12 @@ namespace FTV2.View
                     if (controls != null && controls.Count > 0) Loads.AddRange(controls);
                     foreach (var control in Loads)
                     {
-                        control.AddControl(PN控件预览, null, new System.Drawing.Font("Times New Roman", 8));
-                        control.BindingEvent();
-                        control.ControlInstance.Click += BTN按钮测试_Click;
-                        control.ControlInstance.ContextMenuStrip = CMS设置右键;
+                        foreach (var config in control.Configs)
+                        {
+                            if (config is ButtonConfig bnConfig)
+                                bnConfig.DataProcessed += BnConfig_DataProcessed;
+                        }
+                        control.AddTo(PN控件预览, CMS设置右键, BTN按钮测试_Click, true);
                     }
                 }
             }
@@ -173,30 +171,15 @@ namespace FTV2.View
                 JsonManager.Save("Config", $"{TB文件名.Text}.json", Loads);
                 MessageBox.Show("保存完成", "提示");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-            }
-        }
-
-        private void BTN按钮测试_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (sender is Button button)
-                    LB信息.Text = $"{button.Name};{button.Tag}";
-                if (sender is Label label)
-                    LB信息.Text = $"{label.Name};{label.Tag}";
-            }
-            catch (Exception)
-            {
-
+                MessageBox.Show($"保存失败。{ex.Message}", "提示");
             }
         }
 
         private void TMI控件设置_Click(object sender, EventArgs e)
         {
-            if(sender is ToolStripMenuItem tmi)
+            if (sender is ToolStripMenuItem tmi)
             {
                 switch (tmi.Tag)
                 {
@@ -209,7 +192,7 @@ namespace FTV2.View
                             if (strings.Length != 2) return;
                             if (int.TryParse(strings[0], out int x) && int.TryParse(strings[1], out int y))
                             {
-                                buttonSize.Size = new System.Drawing.Size(x, y);
+                                buttonSize.Size = new Size(x, y);
                             }
                         }
                         break;
@@ -220,52 +203,127 @@ namespace FTV2.View
                             if (input == "") return;
                             buttonText.Text = input;
                         }
-                        else if(CMS设置右键.SourceControl is Label label)
+                        else if (CMS设置右键.SourceControl is Label labelText)
                         {
                             string input = Interaction.InputBox($"请输入要更改的文本：", "提示", "标签的Text");
                             if (input == "") return;
-                            label.Text = input;
+                            labelText.Text = input;
                         }
                         break;
-                    default:break;
+                    case "fontsize":
+                        if (CMS设置右键.SourceControl is Button buttonFont)
+                        {
+                            string input = Interaction.InputBox($"请输入要更改的大小：", "提示", "7");
+                            if (input == "") return;
+                            if (float.TryParse(input, out float bfsize))
+                                buttonFont.Font = new Font(buttonFont.Font.Name, bfsize);
+                        }
+                        else if (CMS设置右键.SourceControl is Label labelFont)
+                        {
+                            string input = Interaction.InputBox($"请输入要更改的大小：", "提示", "7");
+                            if (input == "") return;
+                            if (float.TryParse(input, out float lfsize))
+                                labelFont.Font = new Font(labelFont.Font.Name, lfsize);
+                        }
+                        break;
+                    default: break;
                 }
+            }
+        }
+
+        private void BTN按钮测试_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is Button button)
+                {
+                    LB信息.Text = $"{button.Name};{button.Tag}";
+                }
+                if (sender is Label label)
+                    LB信息.Text = $"{label.Name};{label.Tag}";
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void BnConfig_DataProcessed(object sender, DataEventArgs e)
+        {
+            foreach (ControlConfig config in e.MyControlList)
+            {
+                MessageBox.Show($"{config.SourceControl.Name}:{config.SourceControl.Tag}");
             }
         }
         #endregion
 
         private void BTN测试_Click(object sender, EventArgs e)
         {
-            List<ControlConfig> L = new List<ControlConfig>();
-            var v = JsonManager.Load<Dictionary<string, string>>("Config", "TextBoxInfo.json");
-            var caliGroups = GetControls<GroupBox>(PN控件预览);
-            foreach (var item in caliGroups.Values)
-            {
-                var g = new GroupConfig(item.Location, item.Text, item.Text, item.Text, item.Size.Width, item.Size.Height);
-                var tb = GetControls<TextBox>(item);
-                foreach (var citem in tb.Values)
-                {
-                    v.TryGetValue(citem.Name, out var c);
-                    if (c == null) c = citem.Name;
-                    var ttb = new TextBoxConfig(citem.Location, $"TXB[{citem.Name.Substring(3)}]", citem.Text, c, citem.Size.Width, citem.Size.Height);
-                    g.Configs.Add(ttb);
-                }
-                var bn = GetControls<Button>(item);
-                foreach (var citem in bn.Values)
-                {
-                    var bttn = new ButtonConfig(citem.Location, $"BTN[{citem.Name.Substring(3)}]", citem.Text, citem.Tag, citem.Size.Width, citem.Size.Height);
-                    g.Configs.Add(bttn);
-                }
-                var lb = GetControls<Label>(item);
-                foreach (var citem in lb.Values)
-                {
-                    var lab = new LabelConfig(citem.Location, $"LB[{citem.Text}]", citem.Text, citem.Tag, citem.Size.Width, citem.Size.Height);
-                    g.Configs.Add(lab);
-                }
-                L.Add(g);
-            }
+            //List<ControlConfig> L = new List<ControlConfig>();
+            //var v = JsonManager.Load<Dictionary<string, string>>("Config", "TextBoxInfo.json");
+            //var caliGroups = GetControls<GroupBox>(PN控件预览);
+            //foreach (var item in caliGroups.Values)
+            //{
+            //    var g = new GroupConfig(item.Location, item.Text, item.Text, item.Text, item.Size.Width, item.Size.Height);
+            //    var tb = GetControls<TextBox>(item);
+            //    foreach (var citem in tb.Values)
+            //    {
+            //        v.TryGetValue(citem.Name, out var c);
+            //        if (c == null) c = citem.Name;
+            //        var ttb = new TextBoxConfig(citem.Location, citem.Name.Substring(3), citem.Text, c, citem.Size.Width, citem.Size.Height);
+            //        g.Configs.Add(ttb);
+            //    }
+            //    var bn = GetControls<Button>(item);
+            //    foreach (var citem in bn.Values)
+            //    {
+            //        var bttn = new ButtonConfig(citem.Location, citem.Name.Substring(3), citem.Text, citem.Tag, citem.Size.Width, citem.Size.Height);
+            //        g.Configs.Add(bttn);
+            //    }
+            //    var lb = GetControls<Label>(item);
+            //    foreach (var citem in lb.Values)
+            //    {
+            //        var lab = new LabelConfig(citem.Location, citem.Text, citem.Text, citem.Tag, citem.Size.Width, citem.Size.Height);
+            //        g.Configs.Add(lab);
+            //    }
+            //    L.Add(g);
+            //}
 
-            JsonManager.Save("Config", $"{TB文件名.Text}.json", L);
-            MessageBox.Show("保存完成", "提示");
+            //JsonManager.Save("Config", $"{TB文件名.Text}.json", L);
+            //MessageBox.Show("保存完成", "提示");
+            try
+            {
+                if (OFD打开.ShowDialog() == DialogResult.OK)
+                {
+                    PN控件预览.Controls.Clear();
+                    Loads.Clear();
+                    string path = OFD打开.FileName.Replace($"\\{OFD打开.FileName.Split('\\').Last()}", "");
+                    string name = OFD打开.FileName.Split('\\').Last();
+                    TB文件名.Text = name.Split('.')[0];
+                    var controls = JsonManager.Load<List<ControlConfig>>(path, name);
+                    if (controls != null && controls.Count > 0) Loads.AddRange(controls);
+                    foreach (var control in Loads)
+                    {
+                        if (control.Configs != null)
+                        {
+                            foreach (var config in control.Configs)
+                            {
+                                config.BindingEvent();
+                                config.CtrlName = Regex.Match(config.CtrlName, @"\[(.*?)\]").Groups[1].Value;
+                            }
+                        }
+                        if (control is GroupConfig)
+                            control.CtrlName = control.CtrlName;
+                        else
+                            control.CtrlName = Regex.Match(control.CtrlName, @"\[(.*?)\]").Groups[1].Value;
+                        //control.AddControl(PN控件预览, null, new Font("Times New Roman", 8));
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "提示");
+            }
         }
 
     }

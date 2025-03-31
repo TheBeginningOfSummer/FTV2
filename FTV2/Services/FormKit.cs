@@ -104,6 +104,16 @@ namespace Services
         }
     }
 
+    public class DataEventArgs : EventArgs
+    {
+        public List<ControlConfig> MyControlList { get; set; } = new List<ControlConfig>();
+
+        public DataEventArgs(List<ControlConfig> controls)
+        {
+            MyControlList = controls;
+        }
+    }
+
     [JsonDerivedType(typeof(ButtonConfig), typeDiscriminator: "button")]
     [JsonDerivedType(typeof(LabelConfig), typeDiscriminator: "label")]
     [JsonDerivedType(typeof(TextBoxConfig), typeDiscriminator: "textbox")]
@@ -117,20 +127,23 @@ namespace Services
         public object Tag { get; set; }
         public int Width { get; set; } = 110;
         public int Height { get; set; } = 24;
+        public string FontName { get; set; } = "Times New Roman";
+        public float FontSize { get; set; } = 8;
         #endregion
 
         #region 控件管理
-        public Control ControlInstance;
+        public Control SourceControl;
         public Control ParentControl;
         private bool isDragging = false;
         private Point offset;
-        private const int gridSize = 10;
+        private const int gridSize = 1;
         #endregion
 
         public List<ControlConfig> Configs { get; set; } = new List<ControlConfig>();
 
         [JsonConstructor]
-        public ControlConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, List<ControlConfig> configs = null)
+        public ControlConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24,
+           string fontName = "Times New Roman", float fontSize = 8, List<ControlConfig> configs = null)
         {
             Location = location;
             CtrlName = ctrlName;
@@ -138,6 +151,8 @@ namespace Services
             Tag = tag;
             Width = width;
             Height = height;
+            FontName = fontName;
+            FontSize = fontSize;
             if (configs != null) Configs = configs;
             Initialize();
         }
@@ -145,9 +160,9 @@ namespace Services
         #region 控件移动事件
         public void BindingEvent()
         {
-            ControlInstance.MouseDown += Control_MouseDown;
-            ControlInstance.MouseMove += Control_MouseMove;
-            ControlInstance.MouseUp += Control_MouseUp;
+            SourceControl.MouseDown += Control_MouseDown;
+            SourceControl.MouseMove += Control_MouseMove;
+            SourceControl.MouseUp += Control_MouseUp;
         }
 
         private void Control_MouseDown(object sender, MouseEventArgs e)
@@ -163,10 +178,10 @@ namespace Services
         {
             if (isDragging)
             {
-                Point newLocation = ControlInstance.PointToScreen(e.Location);
+                Point newLocation = SourceControl.PointToScreen(e.Location);
                 newLocation = ParentControl.PointToClient(newLocation);
                 newLocation.Offset(-offset.X, -offset.Y);
-                ControlInstance.Location = newLocation;
+                SourceControl.Location = newLocation;
             }
         }
 
@@ -175,17 +190,17 @@ namespace Services
             if (isDragging)
             {
                 isDragging = false;
-                int alignedX = (ControlInstance.Left + gridSize / 2) / gridSize * gridSize;
-                int alignedY = (ControlInstance.Top + gridSize / 2) / gridSize * gridSize;
+                int alignedX = (SourceControl.Left + gridSize / 2) / gridSize * gridSize;
+                int alignedY = (SourceControl.Top + gridSize / 2) / gridSize * gridSize;
                 Location = new Point(alignedX, alignedY);
-                ControlInstance.Location = Location;
+                SourceControl.Location = Location;
             }
         }
         #endregion
 
         public virtual void Initialize()
         {
-            ControlInstance = new Button
+            SourceControl = new Button
             {
                 Location = Location,
                 Tag = Tag,
@@ -195,125 +210,175 @@ namespace Services
             };
         }
 
-        public void AddControl(Control parent, Size? size, Font font)
+        public virtual void AddTo(Control parent, ContextMenuStrip menuStrip, EventHandler click, bool isMove = false)
         {
-            if (size != null)
-                ControlInstance.Size = (Size)size;
-            else
-            {
-                if (Width != 0 && Height != 0)
-                    ControlInstance.Size = new Size(Width, Height);
-                else
-                    ControlInstance.Size = new Size(110, 24);
-            }
-            if (font != null)
-                ControlInstance.Font = font;
-
             ParentControl = parent;
-            ParentControl.Controls.Add(ControlInstance);
+            ParentControl.Controls.Add(SourceControl);
+            if (menuStrip != null)
+                SourceControl.ContextMenuStrip = menuStrip;
+            if (click != null)
+                SourceControl.Click += click;
+            if (isMove)
+                BindingEvent();
         }
 
         public void SyncControl()
         {
-            Width = ControlInstance.Width;
-            Height = ControlInstance.Height;
-            Text = ControlInstance.Text;
+            Text = SourceControl.Text;
+            Tag = SourceControl.Tag;
+            Width = SourceControl.Width;
+            Height = SourceControl.Height;
+            FontName = SourceControl.Font.Name;
+            FontSize = SourceControl.Font.Size;
+            if (Configs != null)
+            {
+                foreach (var config in Configs)
+                    config.SyncControl();
+            }
         }
 
         public void SetText(string message)
         {
-            FormKit.InvokeOnThread(ControlInstance, () => ControlInstance.Text = message);
+            FormKit.InvokeOnThread(SourceControl, () => SourceControl.Text = message);
         }
 
         public void SetColor(Color color)
         {
-            FormKit.InvokeOnThread(ControlInstance, () => ControlInstance.BackColor = color);
+            FormKit.InvokeOnThread(SourceControl, () => SourceControl.BackColor = color);
         }
     }
 
     public class ButtonConfig : ControlConfig
     {
-        public ButtonConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24) : base(location, ctrlName, text, tag, width, height)
+        public event EventHandler<DataEventArgs> DataProcessed;
+        public event MouseEventHandler MouseDown;
+        public event MouseEventHandler MouseUp;
+
+        public ButtonConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "Times New Roman", float fontSize = 8, List<ControlConfig> configs = null)
+            : base(location, ctrlName, text, tag, width, height, fontName, fontSize, configs)
         {
             Initialize();
         }
 
         public override void Initialize()
         {
-            ControlInstance = new Button
+            SourceControl = new Button
             {
                 Location = Location,
                 Tag = Tag,
                 Text = Text,
                 Size = new Size(Width, Height),
-                Name = $"BTN[{CtrlName}]"
+                Name = $"BTN[{CtrlName}]",
+                Font = new Font(FontName, FontSize)
             };
         }
+
+        public override void AddTo(Control parent, ContextMenuStrip menuStrip, EventHandler click, bool isMove = false)
+        {
+            base.AddTo(parent, menuStrip, click, isMove);//此控件添加到指定控件
+            for (int i = 0; i < Configs.Count; i++)
+            {
+                if (Configs[i] is TextBoxConfig)//子控件如果是textBox类型
+                    Configs[i].AddTo(parent, menuStrip, null, isMove);//还是添加到指定控件
+            }
+            SourceControl.Click += SourceControl_Click;//此按钮绑定一个事件用来传出子控件数据
+            SourceControl.MouseDown += SourceControl_MouseDown;
+            SourceControl.MouseUp += SourceControl_MouseUp;
+        }
+
+        private void SourceControl_Click(object sender, EventArgs e)
+        {
+            DataProcessed?.Invoke(this, new DataEventArgs(Configs));
+        }
+
+        private void SourceControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            MouseDown?.Invoke(this, e);
+        }
+
+        private void SourceControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            MouseUp?.Invoke(this, e);
+        }
+
     }
 
     public class LabelConfig : ControlConfig
     {
-        public LabelConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24) : base(location, ctrlName, text, tag, width, height)
+        public LabelConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "Times New Roman", float fontSize = 8)
+            : base(location, ctrlName, text, tag, width, height, fontName, fontSize)
         {
             Initialize();
         }
 
         public override void Initialize()
         {
-            ControlInstance = new Label
+            SourceControl = new Label
             {
                 Location = Location,
                 Tag = Tag,
                 Text = Text,
                 Size = new Size(Width, Height),
                 Name = $"LB[{CtrlName}]",
-                AutoSize = true
+                AutoSize = true,
+                Font = new Font(FontName, FontSize)
             };
         }
     }
 
     public class TextBoxConfig : ControlConfig
     {
-        public TextBoxConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24) : base(location, ctrlName, text, tag, width, height)
+        public TextBoxConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "Times New Roman", float fontSize = 8)
+            : base(location, ctrlName, text, tag, width, height, fontName, fontSize)
         {
             Initialize();
         }
 
         public override void Initialize()
         {
-            ControlInstance = new TextBox
+            SourceControl = new TextBox
             {
                 Location = Location,
                 Tag = Tag,
                 Text = Text,
                 Size = new Size(Width, Height),
                 Name = $"TXB[{CtrlName}]",
+                Font = new Font(FontName, FontSize)
             };
+        }
+
+        public void SendValue<T>(Action<T, string> action)
+        {
+            action?.Invoke((T)Convert.ChangeType(SourceControl.Text, typeof(T)), SourceControl.Tag.ToString());
         }
     }
 
     public class GroupConfig : ControlConfig
     {
-        public GroupConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, List<ControlConfig> configs = null) : base(location, ctrlName, text, tag, width, height, configs)
+        public GroupConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "Times New Roman", float fontSize = 8, List<ControlConfig> configs = null)
+            : base(location, ctrlName, text, tag, width, height, fontName, fontSize, configs)
         {
             Initialize();
         }
 
         public override void Initialize()
         {
-            ControlInstance = new GroupBox
+            SourceControl = new GroupBox
             {
                 Location = Location,
                 Tag = Tag,
                 Text = Text,
                 Size = new Size(Width, Height),
-                Name = $"GPB[{CtrlName}]"
+                Name = $"GPB[{CtrlName}]",
+                Font = new Font(FontName, FontSize)
             };
-            if (Configs != null)
-            {
-                foreach (var item in Configs)
-                    ControlInstance.Controls.Add(item.ControlInstance);
-            }
+        }
+
+        public override void AddTo(Control parent, ContextMenuStrip menuStrip, EventHandler click, bool isMove = false)
+        {
+            base.AddTo(parent, menuStrip, click, isMove);//此控件添加到指定的控件上
+            for (int i = 0; i < Configs.Count; i++)
+                Configs[i].AddTo(SourceControl, menuStrip, click, isMove);//子控件添加到此控件本身上
         }
     }
 

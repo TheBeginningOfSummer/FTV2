@@ -57,6 +57,7 @@
             this.CMS设置右键 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TMI设置大小 = new System.Windows.Forms.ToolStripMenuItem();
             this.TMI设置显示文本 = new System.Windows.Forms.ToolStripMenuItem();
+            this.TMI设置字体大小 = new System.Windows.Forms.ToolStripMenuItem();
             this.CMS导入右键.SuspendLayout();
             this.ATP控件设置.SuspendLayout();
             this.TP控件信息导入.SuspendLayout();
@@ -364,14 +365,15 @@
             // 
             this.CMS设置右键.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TMI设置大小,
-            this.TMI设置显示文本});
+            this.TMI设置显示文本,
+            this.TMI设置字体大小});
             this.CMS设置右键.Name = "CMS设置右键";
-            this.CMS设置右键.Size = new System.Drawing.Size(149, 48);
+            this.CMS设置右键.Size = new System.Drawing.Size(181, 92);
             // 
             // TMI设置大小
             // 
             this.TMI设置大小.Name = "TMI设置大小";
-            this.TMI设置大小.Size = new System.Drawing.Size(148, 22);
+            this.TMI设置大小.Size = new System.Drawing.Size(180, 22);
             this.TMI设置大小.Tag = "size";
             this.TMI设置大小.Text = "设置大小";
             this.TMI设置大小.Click += new System.EventHandler(this.TMI控件设置_Click);
@@ -379,10 +381,18 @@
             // TMI设置显示文本
             // 
             this.TMI设置显示文本.Name = "TMI设置显示文本";
-            this.TMI设置显示文本.Size = new System.Drawing.Size(148, 22);
+            this.TMI设置显示文本.Size = new System.Drawing.Size(180, 22);
             this.TMI设置显示文本.Tag = "text";
             this.TMI设置显示文本.Text = "设置显示文本";
             this.TMI设置显示文本.Click += new System.EventHandler(this.TMI控件设置_Click);
+            // 
+            // TMI设置字体大小
+            // 
+            this.TMI设置字体大小.Name = "TMI设置字体大小";
+            this.TMI设置字体大小.Size = new System.Drawing.Size(180, 22);
+            this.TMI设置字体大小.Tag = "fontsize";
+            this.TMI设置字体大小.Text = "设置字体大小";
+            this.TMI设置字体大小.Click += new System.EventHandler(this.TMI控件设置_Click);
             // 
             // ImportForm
             // 
@@ -436,5 +446,6 @@
         private System.Windows.Forms.TextBox TB宽高;
         private System.Windows.Forms.Label LB宽高;
         private System.Windows.Forms.Button BTN测试;
+        private System.Windows.Forms.ToolStripMenuItem TMI设置字体大小;
     }
 }
