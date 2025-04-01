@@ -108,8 +108,8 @@
             this.TP测试 = new System.Windows.Forms.TabPage();
             this.TPIO信息 = new System.Windows.Forms.TabPage();
             this.TP示教 = new System.Windows.Forms.TabPage();
-            this.FSB状态 = new ReaLTaiizor.Controls.ForeverStatusBar();
             this.TP示教2 = new System.Windows.Forms.TabPage();
+            this.FSB状态 = new ReaLTaiizor.Controls.ForeverStatusBar();
             this.HTP主界面.SuspendLayout();
             this.TP主界面.SuspendLayout();
             this.groupBox74.SuspendLayout();
@@ -522,7 +522,7 @@
             this.label245.AutoSize = true;
             this.label245.Location = new System.Drawing.Point(11, 92);
             this.label245.Name = "label245";
-            this.label245.Size = new System.Drawing.Size(112, 21);
+            this.label245.Size = new System.Drawing.Size(99, 21);
             this.label245.TabIndex = 16;
             this.label245.Text = "初始化状态：";
             // 
@@ -531,7 +531,7 @@
             this.LB_ConnectionStatus.AutoSize = true;
             this.LB_ConnectionStatus.Location = new System.Drawing.Point(11, 47);
             this.LB_ConnectionStatus.Name = "LB_ConnectionStatus";
-            this.LB_ConnectionStatus.Size = new System.Drawing.Size(95, 21);
+            this.LB_ConnectionStatus.Size = new System.Drawing.Size(85, 21);
             this.LB_ConnectionStatus.TabIndex = 12;
             this.LB_ConnectionStatus.Text = "设备连接：";
             // 
@@ -540,7 +540,7 @@
             this.label249.AutoSize = true;
             this.label249.Location = new System.Drawing.Point(11, 182);
             this.label249.Name = "label249";
-            this.label249.Size = new System.Drawing.Size(95, 21);
+            this.label249.Size = new System.Drawing.Size(83, 21);
             this.label249.TabIndex = 22;
             this.label249.Text = "运行状态：";
             // 
@@ -549,7 +549,7 @@
             this.label248.AutoSize = true;
             this.label248.Location = new System.Drawing.Point(11, 137);
             this.label248.Name = "label248";
-            this.label248.Size = new System.Drawing.Size(95, 21);
+            this.label248.Size = new System.Drawing.Size(84, 21);
             this.label248.TabIndex = 18;
             this.label248.Text = "设备模式：";
             // 
@@ -631,7 +631,7 @@
             this.label266.AutoSize = true;
             this.label266.Location = new System.Drawing.Point(11, 47);
             this.label266.Name = "label266";
-            this.label266.Size = new System.Drawing.Size(115, 21);
+            this.label266.Size = new System.Drawing.Size(110, 21);
             this.label266.TabIndex = 16;
             this.label266.Text = "托盘上料个数:";
             // 
@@ -647,7 +647,7 @@
             this.label255.AutoSize = true;
             this.label255.Location = new System.Drawing.Point(11, 92);
             this.label255.Name = "label255";
-            this.label255.Size = new System.Drawing.Size(115, 21);
+            this.label255.Size = new System.Drawing.Size(110, 21);
             this.label255.TabIndex = 18;
             this.label255.Text = "托盘下料个数:";
             // 
@@ -663,7 +663,7 @@
             this.label253.AutoSize = true;
             this.label253.Location = new System.Drawing.Point(11, 137);
             this.label253.Name = "label253";
-            this.label253.Size = new System.Drawing.Size(115, 21);
+            this.label253.Size = new System.Drawing.Size(109, 21);
             this.label253.TabIndex = 20;
             this.label253.Text = "工装上料个数:";
             // 
@@ -679,7 +679,7 @@
             this.label251.AutoSize = true;
             this.label251.Location = new System.Drawing.Point(11, 182);
             this.label251.Name = "label251";
-            this.label251.Size = new System.Drawing.Size(115, 21);
+            this.label251.Size = new System.Drawing.Size(109, 21);
             this.label251.TabIndex = 22;
             this.label251.Text = "工装下料个数:";
             // 
@@ -701,7 +701,7 @@
             this.label101.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label101.Location = new System.Drawing.Point(438, 52);
             this.label101.Name = "label101";
-            this.label101.Size = new System.Drawing.Size(363, 23);
+            this.label101.Size = new System.Drawing.Size(337, 23);
             this.label101.TabIndex = 31;
             this.label101.Text = "TZC-05A型非制冷探测器自动测试设备";
             // 
@@ -727,7 +727,7 @@
             this.LB工作盘数.AutoSize = true;
             this.LB工作盘数.Location = new System.Drawing.Point(11, 182);
             this.LB工作盘数.Name = "LB工作盘数";
-            this.LB工作盘数.Size = new System.Drawing.Size(81, 21);
+            this.LB工作盘数.Size = new System.Drawing.Size(78, 21);
             this.LB工作盘数.TabIndex = 222;
             this.LB工作盘数.Text = "工作盘数:";
             // 
@@ -765,7 +765,7 @@
             this.LB工位.AutoSize = true;
             this.LB工位.Location = new System.Drawing.Point(11, 137);
             this.LB工位.Name = "LB工位";
-            this.LB工位.Size = new System.Drawing.Size(81, 21);
+            this.LB工位.Size = new System.Drawing.Size(77, 21);
             this.LB工位.TabIndex = 220;
             this.LB工位.Text = "工作工位:";
             // 
@@ -798,7 +798,7 @@
             this.LBTypeOfTray.AutoSize = true;
             this.LBTypeOfTray.Location = new System.Drawing.Point(11, 47);
             this.LBTypeOfTray.Name = "LBTypeOfTray";
-            this.LBTypeOfTray.Size = new System.Drawing.Size(81, 21);
+            this.LBTypeOfTray.Size = new System.Drawing.Size(80, 21);
             this.LBTypeOfTray.TabIndex = 6;
             this.LBTypeOfTray.Text = "产品选择:";
             // 
@@ -807,7 +807,7 @@
             this.LBSocket类.AutoSize = true;
             this.LBSocket类.Location = new System.Drawing.Point(11, 92);
             this.LBSocket类.Name = "LBSocket类";
-            this.LBSocket类.Size = new System.Drawing.Size(81, 21);
+            this.LBSocket类.Size = new System.Drawing.Size(79, 21);
             this.LBSocket类.TabIndex = 218;
             this.LBSocket类.Text = "工装选择:";
             // 
@@ -860,20 +860,24 @@
             // BTN报警复位
             // 
             this.BTN报警复位.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN报警复位.BackColor = System.Drawing.Color.Red;
+            this.BTN报警复位.ForeColor = System.Drawing.Color.White;
             this.BTN报警复位.Location = new System.Drawing.Point(247, 471);
             this.BTN报警复位.Margin = new System.Windows.Forms.Padding(2);
             this.BTN报警复位.Name = "BTN报警复位";
             this.BTN报警复位.Size = new System.Drawing.Size(120, 55);
             this.BTN报警复位.TabIndex = 5;
             this.BTN报警复位.Tag = "reset";
-            this.BTN报警复位.Text = "复位";
-            this.BTN报警复位.UseVisualStyleBackColor = true;
+            this.BTN报警复位.Text = "报警复位";
+            this.BTN报警复位.UseVisualStyleBackColor = false;
             this.BTN报警复位.Click += new System.EventHandler(this.BTN主界面_Click);
             // 
             // BTN蜂鸣停止
             // 
             this.BTN蜂鸣停止.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.BTN蜂鸣停止.BackColor = System.Drawing.Color.Yellow;
+            this.BTN蜂鸣停止.ForeColor = System.Drawing.Color.Black;
             this.BTN蜂鸣停止.Location = new System.Drawing.Point(129, 471);
             this.BTN蜂鸣停止.Margin = new System.Windows.Forms.Padding(2);
             this.BTN蜂鸣停止.Name = "BTN蜂鸣停止";
@@ -881,7 +885,7 @@
             this.BTN蜂鸣停止.TabIndex = 4;
             this.BTN蜂鸣停止.Tag = "ringstop";
             this.BTN蜂鸣停止.Text = "蜂鸣停止";
-            this.BTN蜂鸣停止.UseVisualStyleBackColor = true;
+            this.BTN蜂鸣停止.UseVisualStyleBackColor = false;
             this.BTN蜂鸣停止.Click += new System.EventHandler(this.BTN主界面_Click);
             // 
             // BTN报警历史
@@ -1074,6 +1078,15 @@
             this.TP示教.Text = "示教";
             this.TP示教.UseVisualStyleBackColor = true;
             // 
+            // TP示教2
+            // 
+            this.TP示教2.Location = new System.Drawing.Point(0, 40);
+            this.TP示教2.Name = "TP示教2";
+            this.TP示教2.Size = new System.Drawing.Size(1432, 741);
+            this.TP示教2.TabIndex = 5;
+            this.TP示教2.Text = "示教2";
+            this.TP示教2.UseVisualStyleBackColor = true;
+            // 
             // FSB状态
             // 
             this.FSB状态.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(47)))), ((int)(((byte)(49)))));
@@ -1090,15 +1103,6 @@
             this.FSB状态.TextColor = System.Drawing.Color.White;
             this.FSB状态.TimeColor = System.Drawing.Color.White;
             this.FSB状态.TimeFormat = "yyyy.MM.dd - HH:mm:ss";
-            // 
-            // TP示教2
-            // 
-            this.TP示教2.Location = new System.Drawing.Point(0, 40);
-            this.TP示教2.Name = "TP示教2";
-            this.TP示教2.Size = new System.Drawing.Size(1432, 741);
-            this.TP示教2.TabIndex = 5;
-            this.TP示教2.Text = "示教2";
-            this.TP示教2.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

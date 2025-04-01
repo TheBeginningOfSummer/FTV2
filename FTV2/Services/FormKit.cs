@@ -136,14 +136,14 @@ namespace Services
         public Control ParentControl;
         private bool isDragging = false;
         private Point offset;
-        private const int gridSize = 1;
+        public int GridSize = 10;
         #endregion
 
         public List<ControlConfig> Configs { get; set; } = new List<ControlConfig>();
 
         [JsonConstructor]
         public ControlConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24,
-           string fontName = "Times New Roman", float fontSize = 8, List<ControlConfig> configs = null)
+           string fontName = "宋体", float fontSize = 9, List<ControlConfig> configs = null)
         {
             Location = location;
             CtrlName = ctrlName;
@@ -190,8 +190,8 @@ namespace Services
             if (isDragging)
             {
                 isDragging = false;
-                int alignedX = (SourceControl.Left + gridSize / 2) / gridSize * gridSize;
-                int alignedY = (SourceControl.Top + gridSize / 2) / gridSize * gridSize;
+                int alignedX = (SourceControl.Left + GridSize / 2) / GridSize * GridSize;
+                int alignedY = (SourceControl.Top + GridSize / 2) / GridSize * GridSize;
                 Location = new Point(alignedX, alignedY);
                 SourceControl.Location = Location;
             }
@@ -209,7 +209,13 @@ namespace Services
                 Name = $"[{CtrlName}]"
             };
         }
-
+        /// <summary>
+        /// 将此控件添加到界面上
+        /// </summary>
+        /// <param name="parent">父控件</param>
+        /// <param name="menuStrip">右键是否绑定</param>
+        /// <param name="click">点击事件</param>
+        /// <param name="isMove">是否可以移动</param>
         public virtual void AddTo(Control parent, ContextMenuStrip menuStrip, EventHandler click, bool isMove = false)
         {
             ParentControl = parent;
@@ -254,7 +260,7 @@ namespace Services
         public event MouseEventHandler MouseDown;
         public event MouseEventHandler MouseUp;
 
-        public ButtonConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "Times New Roman", float fontSize = 8, List<ControlConfig> configs = null)
+        public ButtonConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "宋体", float fontSize = 9, List<ControlConfig> configs = null)
             : base(location, ctrlName, text, tag, width, height, fontName, fontSize, configs)
         {
             Initialize();
@@ -305,7 +311,7 @@ namespace Services
 
     public class LabelConfig : ControlConfig
     {
-        public LabelConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "Times New Roman", float fontSize = 8)
+        public LabelConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "宋体", float fontSize = 9)
             : base(location, ctrlName, text, tag, width, height, fontName, fontSize)
         {
             Initialize();
@@ -328,7 +334,7 @@ namespace Services
 
     public class TextBoxConfig : ControlConfig
     {
-        public TextBoxConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "Times New Roman", float fontSize = 8)
+        public TextBoxConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "宋体", float fontSize = 9)
             : base(location, ctrlName, text, tag, width, height, fontName, fontSize)
         {
             Initialize();
@@ -355,7 +361,7 @@ namespace Services
 
     public class GroupConfig : ControlConfig
     {
-        public GroupConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "Times New Roman", float fontSize = 8, List<ControlConfig> configs = null)
+        public GroupConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "宋体", float fontSize = 9, List<ControlConfig> configs = null)
             : base(location, ctrlName, text, tag, width, height, fontName, fontSize, configs)
         {
             Initialize();

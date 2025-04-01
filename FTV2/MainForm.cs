@@ -19,6 +19,7 @@ namespace FTV2
         #region 加载的控件
         readonly ConcurrentDictionary<string, ControlConfig> UploadInterface = new ConcurrentDictionary<string, ControlConfig>();
         readonly ConcurrentDictionary<string, ControlConfig> CalibInterface = new ConcurrentDictionary<string, ControlConfig>();
+        readonly ConcurrentDictionary<string, ControlConfig> TestInterface = new ConcurrentDictionary<string, ControlConfig>();
         #endregion
 
         public MainForm()
@@ -229,6 +230,21 @@ namespace FTV2
                 }
                 control.AddTo(TP示教, null, null);
                 //CalibInterface.TryAdd(control.ControlInstance.Name, control);
+            }
+
+            List<ControlConfig> 测试Controls = JsonManager.Load<List<ControlConfig>>("Config", "测试界面.json");
+            foreach (var control in 测试Controls)
+            {
+                foreach (var child in control.Configs)
+                {
+                    if (child is ButtonConfig button)
+                    {
+                        child.SourceControl.MouseDown += Output_MouseDown;
+                        child.SourceControl.MouseUp += Output_MouseUp;
+                    }
+                    TestInterface.TryAdd(child.SourceControl.Name, child);
+                }
+                control.AddTo(TP测试, null, null);
             }
         }
 
