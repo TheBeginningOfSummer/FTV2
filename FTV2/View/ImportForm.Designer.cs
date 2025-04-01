@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportForm));
             this.RTB数据 = new System.Windows.Forms.RichTextBox();
+            this.CMS导入数据 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.TMI清除导入数据 = new System.Windows.Forms.ToolStripMenuItem();
             this.CMS设置右键 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TMI清除 = new System.Windows.Forms.ToolStripMenuItem();
             this.TMI选择 = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,18 +61,16 @@
             this.TSL偏移量 = new System.Windows.Forms.ToolStripLabel();
             this.TTB偏移量 = new System.Windows.Forms.ToolStripTextBox();
             this.TSL宽高 = new System.Windows.Forms.ToolStripLabel();
+            this.TCB宽高 = new System.Windows.Forms.ToolStripComboBox();
             this.TSL行数 = new System.Windows.Forms.ToolStripLabel();
             this.TTB行数 = new System.Windows.Forms.ToolStripTextBox();
             this.TSB导入 = new System.Windows.Forms.ToolStripButton();
-            this.TCB宽高 = new System.Windows.Forms.ToolStripComboBox();
-            this.CMS导入数据 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.TMI清除导入数据 = new System.Windows.Forms.ToolStripMenuItem();
+            this.CMS导入数据.SuspendLayout();
             this.CMS设置右键.SuspendLayout();
             this.ATP控件设置.SuspendLayout();
             this.TP控件信息导入.SuspendLayout();
             this.TP控件位置设置.SuspendLayout();
             this.CTS菜单.SuspendLayout();
-            this.CMS导入数据.SuspendLayout();
             this.SuspendLayout();
             // 
             // RTB数据
@@ -84,6 +84,20 @@
             this.RTB数据.Size = new System.Drawing.Size(1284, 681);
             this.RTB数据.TabIndex = 2;
             this.RTB数据.Text = "";
+            // 
+            // CMS导入数据
+            // 
+            this.CMS导入数据.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TMI清除导入数据});
+            this.CMS导入数据.Name = "CMS导入数据";
+            this.CMS导入数据.Size = new System.Drawing.Size(101, 26);
+            // 
+            // TMI清除导入数据
+            // 
+            this.TMI清除导入数据.Name = "TMI清除导入数据";
+            this.TMI清除导入数据.Size = new System.Drawing.Size(100, 22);
+            this.TMI清除导入数据.Text = "清除";
+            this.TMI清除导入数据.Click += new System.EventHandler(this.TMI清除导入数据_Click);
             // 
             // CMS设置右键
             // 
@@ -124,7 +138,7 @@
             // TMI添加按钮
             // 
             this.TMI添加按钮.Name = "TMI添加按钮";
-            this.TMI添加按钮.Size = new System.Drawing.Size(180, 22);
+            this.TMI添加按钮.Size = new System.Drawing.Size(100, 22);
             this.TMI添加按钮.Tag = "button";
             this.TMI添加按钮.Text = "按钮";
             this.TMI添加按钮.Click += new System.EventHandler(this.TMI添加_Click);
@@ -132,7 +146,7 @@
             // TMI添加标签
             // 
             this.TMI添加标签.Name = "TMI添加标签";
-            this.TMI添加标签.Size = new System.Drawing.Size(180, 22);
+            this.TMI添加标签.Size = new System.Drawing.Size(100, 22);
             this.TMI添加标签.Tag = "label";
             this.TMI添加标签.Text = "标签";
             this.TMI添加标签.Click += new System.EventHandler(this.TMI添加_Click);
@@ -140,7 +154,7 @@
             // TMI添加文本
             // 
             this.TMI添加文本.Name = "TMI添加文本";
-            this.TMI添加文本.Size = new System.Drawing.Size(180, 22);
+            this.TMI添加文本.Size = new System.Drawing.Size(100, 22);
             this.TMI添加文本.Tag = "textbox";
             this.TMI添加文本.Text = "文本";
             this.TMI添加文本.Click += new System.EventHandler(this.TMI添加_Click);
@@ -148,7 +162,7 @@
             // TMI添加分组
             // 
             this.TMI添加分组.Name = "TMI添加分组";
-            this.TMI添加分组.Size = new System.Drawing.Size(180, 22);
+            this.TMI添加分组.Size = new System.Drawing.Size(100, 22);
             this.TMI添加分组.Tag = "group";
             this.TMI添加分组.Text = "分组";
             this.TMI添加分组.Click += new System.EventHandler(this.TMI添加_Click);
@@ -167,7 +181,7 @@
             // TMI宽高
             // 
             this.TMI宽高.Name = "TMI宽高";
-            this.TMI宽高.Size = new System.Drawing.Size(180, 22);
+            this.TMI宽高.Size = new System.Drawing.Size(124, 22);
             this.TMI宽高.Tag = "size";
             this.TMI宽高.Text = "宽高";
             this.TMI宽高.Click += new System.EventHandler(this.TMI设置_Click);
@@ -175,7 +189,7 @@
             // TMI文本
             // 
             this.TMI文本.Name = "TMI文本";
-            this.TMI文本.Size = new System.Drawing.Size(180, 22);
+            this.TMI文本.Size = new System.Drawing.Size(124, 22);
             this.TMI文本.Tag = "text";
             this.TMI文本.Text = "文本";
             this.TMI文本.Click += new System.EventHandler(this.TMI设置_Click);
@@ -183,14 +197,14 @@
             // TMItag
             // 
             this.TMItag.Name = "TMItag";
-            this.TMItag.Size = new System.Drawing.Size(180, 22);
+            this.TMItag.Size = new System.Drawing.Size(124, 22);
             this.TMItag.Text = "Tag";
             this.TMItag.Click += new System.EventHandler(this.TMI设置_Click);
             // 
             // TMI字体大小
             // 
             this.TMI字体大小.Name = "TMI字体大小";
-            this.TMI字体大小.Size = new System.Drawing.Size(180, 22);
+            this.TMI字体大小.Size = new System.Drawing.Size(124, 22);
             this.TMI字体大小.Tag = "fontsize";
             this.TMI字体大小.Text = "字体大小";
             this.TMI字体大小.Click += new System.EventHandler(this.TMI设置_Click);
@@ -382,6 +396,19 @@
             this.TSL宽高.Size = new System.Drawing.Size(32, 25);
             this.TSL宽高.Text = "宽高";
             // 
+            // TCB宽高
+            // 
+            this.TCB宽高.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.TCB宽高.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.TCB宽高.Items.AddRange(new object[] {
+            "40:24",
+            "100:24",
+            "230:220",
+            "230:330"});
+            this.TCB宽高.Name = "TCB宽高";
+            this.TCB宽高.Size = new System.Drawing.Size(100, 28);
+            this.TCB宽高.Text = "40:24";
+            // 
             // TSL行数
             // 
             this.TSL行数.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
@@ -411,33 +438,6 @@
             this.TSB导入.Text = "导入";
             this.TSB导入.Click += new System.EventHandler(this.BTN导入_Click);
             // 
-            // TCB宽高
-            // 
-            this.TCB宽高.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.TCB宽高.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.TCB宽高.Items.AddRange(new object[] {
-            "40:24",
-            "100:24",
-            "230:220",
-            "230:330"});
-            this.TCB宽高.Name = "TCB宽高";
-            this.TCB宽高.Size = new System.Drawing.Size(100, 28);
-            this.TCB宽高.Text = "40:24";
-            // 
-            // CMS导入数据
-            // 
-            this.CMS导入数据.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TMI清除导入数据});
-            this.CMS导入数据.Name = "CMS导入数据";
-            this.CMS导入数据.Size = new System.Drawing.Size(101, 26);
-            // 
-            // TMI清除导入数据
-            // 
-            this.TMI清除导入数据.Name = "TMI清除导入数据";
-            this.TMI清除导入数据.Size = new System.Drawing.Size(180, 22);
-            this.TMI清除导入数据.Text = "清除";
-            this.TMI清除导入数据.Click += new System.EventHandler(this.TMI清除导入数据_Click);
-            // 
             // ImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -449,13 +449,13 @@
             this.Name = "ImportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ImportForm";
+            this.CMS导入数据.ResumeLayout(false);
             this.CMS设置右键.ResumeLayout(false);
             this.ATP控件设置.ResumeLayout(false);
             this.TP控件信息导入.ResumeLayout(false);
             this.TP控件位置设置.ResumeLayout(false);
             this.CTS菜单.ResumeLayout(false);
             this.CTS菜单.PerformLayout();
-            this.CMS导入数据.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

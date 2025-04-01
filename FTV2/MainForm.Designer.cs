@@ -145,7 +145,7 @@
             this.HTP主界面.Name = "HTP主界面";
             this.HTP主界面.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             this.HTP主界面.SelectedIndex = 0;
-            this.HTP主界面.Size = new System.Drawing.Size(1432, 781);
+            this.HTP主界面.Size = new System.Drawing.Size(1484, 811);
             this.HTP主界面.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.HTP主界面.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             this.HTP主界面.TabIndex = 0;
@@ -175,7 +175,7 @@
             this.TP主界面.Location = new System.Drawing.Point(0, 40);
             this.TP主界面.Name = "TP主界面";
             this.TP主界面.Padding = new System.Windows.Forms.Padding(3);
-            this.TP主界面.Size = new System.Drawing.Size(1432, 741);
+            this.TP主界面.Size = new System.Drawing.Size(1484, 771);
             this.TP主界面.TabIndex = 0;
             this.TP主界面.Text = "主界面";
             this.TP主界面.UseVisualStyleBackColor = true;
@@ -840,7 +840,7 @@
             this.TC报警.Location = new System.Drawing.Point(1040, 52);
             this.TC报警.Name = "TC报警";
             this.TC报警.SelectedIndex = 0;
-            this.TC报警.Size = new System.Drawing.Size(380, 565);
+            this.TC报警.Size = new System.Drawing.Size(432, 595);
             this.TC报警.TabIndex = 7;
             // 
             // TP报警
@@ -852,7 +852,7 @@
             this.TP报警.Location = new System.Drawing.Point(4, 30);
             this.TP报警.Name = "TP报警";
             this.TP报警.Padding = new System.Windows.Forms.Padding(3);
-            this.TP报警.Size = new System.Drawing.Size(372, 531);
+            this.TP报警.Size = new System.Drawing.Size(424, 561);
             this.TP报警.TabIndex = 0;
             this.TP报警.Text = "报警";
             this.TP报警.UseVisualStyleBackColor = true;
@@ -862,7 +862,7 @@
             this.BTN报警复位.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN报警复位.BackColor = System.Drawing.Color.Red;
             this.BTN报警复位.ForeColor = System.Drawing.Color.White;
-            this.BTN报警复位.Location = new System.Drawing.Point(247, 471);
+            this.BTN报警复位.Location = new System.Drawing.Point(299, 501);
             this.BTN报警复位.Margin = new System.Windows.Forms.Padding(2);
             this.BTN报警复位.Name = "BTN报警复位";
             this.BTN报警复位.Size = new System.Drawing.Size(120, 55);
@@ -878,10 +878,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN蜂鸣停止.BackColor = System.Drawing.Color.Yellow;
             this.BTN蜂鸣停止.ForeColor = System.Drawing.Color.Black;
-            this.BTN蜂鸣停止.Location = new System.Drawing.Point(129, 471);
+            this.BTN蜂鸣停止.Location = new System.Drawing.Point(129, 501);
             this.BTN蜂鸣停止.Margin = new System.Windows.Forms.Padding(2);
             this.BTN蜂鸣停止.Name = "BTN蜂鸣停止";
-            this.BTN蜂鸣停止.Size = new System.Drawing.Size(114, 55);
+            this.BTN蜂鸣停止.Size = new System.Drawing.Size(166, 55);
             this.BTN蜂鸣停止.TabIndex = 4;
             this.BTN蜂鸣停止.Tag = "ringstop";
             this.BTN蜂鸣停止.Text = "蜂鸣停止";
@@ -891,7 +891,7 @@
             // BTN报警历史
             // 
             this.BTN报警历史.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BTN报警历史.Location = new System.Drawing.Point(5, 471);
+            this.BTN报警历史.Location = new System.Drawing.Point(5, 501);
             this.BTN报警历史.Margin = new System.Windows.Forms.Padding(2);
             this.BTN报警历史.Name = "BTN报警历史";
             this.BTN报警历史.Size = new System.Drawing.Size(120, 55);
@@ -908,7 +908,7 @@
             this.RTB信息.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RTB信息.Location = new System.Drawing.Point(3, 3);
             this.RTB信息.Name = "RTB信息";
-            this.RTB信息.Size = new System.Drawing.Size(366, 463);
+            this.RTB信息.Size = new System.Drawing.Size(418, 493);
             this.RTB信息.TabIndex = 1;
             this.RTB信息.Text = "";
             // 
@@ -939,7 +939,7 @@
             // BTN初始化
             // 
             this.BTN初始化.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.BTN初始化.Location = new System.Drawing.Point(966, 640);
+            this.BTN初始化.Location = new System.Drawing.Point(992, 670);
             this.BTN初始化.Margin = new System.Windows.Forms.Padding(20);
             this.BTN初始化.Name = "BTN初始化";
             this.BTN初始化.Size = new System.Drawing.Size(120, 55);
@@ -952,7 +952,7 @@
             // BTN自动停止
             // 
             this.BTN自动停止.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.BTN自动停止.Location = new System.Drawing.Point(806, 640);
+            this.BTN自动停止.Location = new System.Drawing.Point(832, 670);
             this.BTN自动停止.Margin = new System.Windows.Forms.Padding(20);
             this.BTN自动停止.Name = "BTN自动停止";
             this.BTN自动停止.Size = new System.Drawing.Size(120, 55);
@@ -965,7 +965,7 @@
             // BTN自动运行
             // 
             this.BTN自动运行.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.BTN自动运行.Location = new System.Drawing.Point(646, 640);
+            this.BTN自动运行.Location = new System.Drawing.Point(672, 670);
             this.BTN自动运行.Margin = new System.Windows.Forms.Padding(20);
             this.BTN自动运行.Name = "BTN自动运行";
             this.BTN自动运行.Size = new System.Drawing.Size(120, 55);
@@ -978,7 +978,7 @@
             // BTN自动模式
             // 
             this.BTN自动模式.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.BTN自动模式.Location = new System.Drawing.Point(486, 640);
+            this.BTN自动模式.Location = new System.Drawing.Point(512, 670);
             this.BTN自动模式.Margin = new System.Windows.Forms.Padding(20);
             this.BTN自动模式.Name = "BTN自动模式";
             this.BTN自动模式.Size = new System.Drawing.Size(120, 55);
@@ -991,7 +991,7 @@
             // BTN手动模式
             // 
             this.BTN手动模式.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.BTN手动模式.Location = new System.Drawing.Point(326, 640);
+            this.BTN手动模式.Location = new System.Drawing.Point(352, 670);
             this.BTN手动模式.Margin = new System.Windows.Forms.Padding(20);
             this.BTN手动模式.Name = "BTN手动模式";
             this.BTN手动模式.Size = new System.Drawing.Size(120, 55);
@@ -1012,7 +1012,7 @@
             this.CTS菜单.Location = new System.Drawing.Point(3, 3);
             this.CTS菜单.Name = "CTS菜单";
             this.CTS菜单.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
-            this.CTS菜单.Size = new System.Drawing.Size(1426, 28);
+            this.CTS菜单.Size = new System.Drawing.Size(1478, 28);
             this.CTS菜单.TabIndex = 0;
             this.CTS菜单.Text = "菜单";
             // 
@@ -1093,11 +1093,11 @@
             this.FSB状态.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.FSB状态.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.FSB状态.ForeColor = System.Drawing.Color.White;
-            this.FSB状态.Location = new System.Drawing.Point(0, 758);
+            this.FSB状态.Location = new System.Drawing.Point(0, 788);
             this.FSB状态.Name = "FSB状态";
             this.FSB状态.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(168)))), ((int)(((byte)(109)))));
             this.FSB状态.ShowTimeDate = true;
-            this.FSB状态.Size = new System.Drawing.Size(1432, 23);
+            this.FSB状态.Size = new System.Drawing.Size(1484, 23);
             this.FSB状态.TabIndex = 1;
             this.FSB状态.Text = "状态";
             this.FSB状态.TextColor = System.Drawing.Color.White;
@@ -1108,7 +1108,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1432, 781);
+            this.ClientSize = new System.Drawing.Size(1484, 811);
             this.Controls.Add(this.FSB状态);
             this.Controls.Add(this.HTP主界面);
             this.Name = "MainForm";

@@ -16,7 +16,7 @@ namespace FTV2
         //DataRepeater<Message<object>> dataRepeater = new DataRepeater<Message<object>>();
         readonly Communication com = Communication.Singleton;
 
-        #region 加载的控件
+        #region 加载的控件(地址作为键值更新数据)
         readonly ConcurrentDictionary<string, ControlConfig> UploadInterface = new ConcurrentDictionary<string, ControlConfig>();
         readonly ConcurrentDictionary<string, ControlConfig> CalibInterface = new ConcurrentDictionary<string, ControlConfig>();
         readonly ConcurrentDictionary<string, ControlConfig> TestInterface = new ConcurrentDictionary<string, ControlConfig>();
@@ -207,7 +207,7 @@ namespace FTV2
                 control.AddTo(TP上料, null, null);
                 control.SourceControl.MouseDown += Output_MouseDown;
                 control.SourceControl.MouseUp += Output_MouseUp;
-                UploadInterface.TryAdd(control.CtrlName, control);
+                UploadInterface.TryAdd(control.SourceControl.Tag.ToString(), control);
             }
 
             List<ControlConfig> 示教Controls = JsonManager.Load<List<ControlConfig>>("Config", "示教界面.json");
@@ -226,7 +226,7 @@ namespace FTV2
                         }
                     }
                     else if (child is LabelConfig) continue;
-                    CalibInterface.TryAdd(child.SourceControl.Name, child);
+                    CalibInterface.TryAdd(child.SourceControl.Tag.ToString(), child);
                 }
                 control.AddTo(TP示教, null, null);
                 //CalibInterface.TryAdd(control.ControlInstance.Name, control);
@@ -242,7 +242,7 @@ namespace FTV2
                         child.SourceControl.MouseDown += Output_MouseDown;
                         child.SourceControl.MouseUp += Output_MouseUp;
                     }
-                    TestInterface.TryAdd(child.SourceControl.Name, child);
+                    TestInterface.TryAdd(child.SourceControl.Tag.ToString(), child);
                 }
                 control.AddTo(TP测试, null, null);
             }
@@ -264,6 +264,13 @@ namespace FTV2
             }
         }
 
+        public void UpdateInterface(KeyValuePair<string, double> pair, ConcurrentDictionary<string, ControlConfig> Interface)
+        {
+            if (!Interface.ContainsKey(pair.Key)) return;
+            Interface.AddOrUpdate(pair.Key, new ControlConfig(new Point(0, 0), pair.Key, pair.Key, pair.Key),
+                            (key, oldValue) => { oldValue.SetText(pair.Value.ToString()); return oldValue; });
+        }
+
         public void UpdateInterface()
         {
             while (true)
@@ -273,8 +280,8 @@ namespace FTV2
                     Thread.Sleep(100);
                     foreach (var pos in com.Location)
                     {
-                        UploadInterface.AddOrUpdate(pos.Key, new ControlConfig(new Point(0, 0), pos.Key, pos.Key, pos.Key),
-                            (key, oldValue) => { oldValue.SetText(pos.Value.ToString()); return oldValue; });
+                        UpdateInterface(pos, UploadInterface);
+                        UpdateInterface(pos, TestInterface);
                     }
                 }
                 catch (Exception)
@@ -374,7 +381,7 @@ namespace FTV2
             if (sender is ButtonConfig button)
             {
                 FSB状态.Text = $"{button.SourceControl.Name}:{button.SourceControl.Tag}";
-                if (CalibInterface.TryGetValue($"TXB[{button.CtrlName}]", out ControlConfig controlConfig))
+                if (CalibInterface.TryGetValue($"TXB[{button.CtrlName}]", out ControlConfig controlConfig))//此处有问题，考虑示教控件的键如何设置
                     await CaliButtonAsync((Button)button.SourceControl, message: $"示教 [{button.CtrlName}] 按下，当前值:{controlConfig.SourceControl.Text}");
                 else
                     await CaliButtonAsync((Button)button.SourceControl, message: $"示教 [{button.CtrlName}] 按下");
