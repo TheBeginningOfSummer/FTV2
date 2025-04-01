@@ -244,6 +244,11 @@ namespace FTV2
                     }
                     TestInterface.TryAdd(child.SourceControl.Tag.ToString(), child);
                 }
+                if (control is ButtonConfig)
+                {
+                    control.SourceControl.MouseDown += Output_MouseDown;
+                    control.SourceControl.MouseUp += Output_MouseUp;
+                }
                 control.AddTo(TP测试, null, null);
             }
         }
