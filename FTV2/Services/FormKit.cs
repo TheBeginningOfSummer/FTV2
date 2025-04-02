@@ -117,6 +117,7 @@ namespace Services
     [JsonDerivedType(typeof(ButtonConfig), typeDiscriminator: "button")]
     [JsonDerivedType(typeof(LabelConfig), typeDiscriminator: "label")]
     [JsonDerivedType(typeof(TextBoxConfig), typeDiscriminator: "textbox")]
+    [JsonDerivedType(typeof(ComboBoxConfig), typeDiscriminator: "combobox")]
     [JsonDerivedType(typeof(GroupConfig), typeDiscriminator: "group")]
     public class ControlConfig
     {
@@ -359,6 +360,48 @@ namespace Services
         }
     }
 
+    public class ComboBoxConfig : ControlConfig
+    {
+        public event EventHandler DataProcessed;
+        public string Address;
+
+        public ComboBoxConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "宋体", float fontSize = 9, List<ControlConfig> configs = null)
+            : base(location, ctrlName, text, tag, width, height, fontName, fontSize, configs)
+        {
+            Initialize();
+        }
+
+        public override void Initialize()
+        {
+            SourceControl = new ComboBox
+            {
+                Location = Location,
+                Tag = Tag,
+                Text = Text,
+                Size = new Size(Width, Height),
+                Name = $"COB[{CtrlName}]",
+                Font = new Font(FontName, FontSize)
+            };
+            string info = SourceControl.Tag.ToString();
+            string[] items = info.Split(';');
+            Address = items[0];
+            if (items.Length > 1)
+            {
+                if (SourceControl is ComboBox comboBox)
+                {
+                    for (int i = 1; i < items.Length; i++)
+                        comboBox.Items.Add(items[i]);
+                    comboBox.SelectedIndexChanged += ComboBox_SelectedIndexChanged;
+                }
+            }
+        }
+
+        private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataProcessed?.Invoke(this, e);
+        }
+    }
+
     public class GroupConfig : ControlConfig
     {
         public GroupConfig(Point location, string ctrlName, string text, object tag, int width = 110, int height = 24, string fontName = "宋体", float fontSize = 9, List<ControlConfig> configs = null)
@@ -387,5 +430,7 @@ namespace Services
                 Configs[i].AddTo(SourceControl, menuStrip, click, isMove);//子控件添加到此控件本身上
         }
     }
+
+    
 
 }

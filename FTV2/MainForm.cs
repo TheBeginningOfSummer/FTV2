@@ -113,6 +113,89 @@ namespace FTV2
                 LogManager.WriteLog($"参数写入失败。请检查连接状态。State:{message}", LogType.Error);
             }
         }
+
+        public int GetPlcInID(string info)
+        {
+            switch (info)
+            {
+                case "单目SK1位置": return 3;
+                case "单目SK2位置": return 4;
+                case "单目SK3位置": return 5;
+                case "单目SK4位置": return 6;
+
+                case "四目SK1-1位置": return 7;
+                case "四目SK1-2位置": return 8;
+                case "四目SK2-1位置": return 9;
+                case "四目SK2-2位置": return 10;
+                case "四目SK3-1位置": return 11;
+                case "四目SK3-2位置": return 12;
+                case "四目SK4-1位置": return 13;
+                case "四目SK4-2位置": return 14;
+
+                case "单目sk1激光点X1": return 15;
+                case "单目sk1激光点X2": return 16;
+                case "单目sk2激光点X1": return 17;
+                case "单目sk2激光点X2": return 18;
+                case "单目sk3激光点X1": return 19;
+                case "单目sk3激光点X2": return 20;
+                case "单目sk4激光点X1": return 21;
+                case "单目sk4激光点X2": return 22;
+
+                case "四目sk1激光点X1": return 23;
+                case "四目sk1激光点X2": return 24;
+                case "四目sk1激光点X3": return 25;
+                case "四目sk1激光点X4": return 26;
+                case "四目sk2激光点X1": return 27;
+                case "四目sk2激光点X2": return 28;
+                case "四目sk2激光点X3": return 29;
+                case "四目sk2激光点X4": return 30;
+                case "四目sk3激光点X1": return 31;
+                case "四目sk3激光点X2": return 32;
+                case "四目sk3激光点X3": return 33;
+                case "四目sk3激光点X4": return 34;
+                case "四目sk4激光点X1": return 35;
+                case "四目sk4激光点X2": return 36;
+                case "四目sk4激光点X3": return 37;
+                case "四目sk4激光点X4": return 38;
+
+                case "BYY_下视觉夹爪1=3": return 2;
+                case "BYY_下视觉夹爪2=4": return 3;
+                case "BYY_下视觉夹爪3=5": return 4;
+                case "BYY_下视觉夹爪4=6": return 5;
+
+                case "BYY_夹爪1相对视觉移动PB": return 1;
+                case "BYY_夹爪2相对视觉移动PB": return 2;
+                case "BYY_夹爪3相对视觉移动PB": return 3;
+                case "BYY_夹爪4相对视觉移动PB": return 4;
+
+                case "单目sk1激光点Y1": return 15;
+                case "单目sk1激光点Y2": return 16;
+                case "单目sk2激光点Y1": return 17;
+                case "单目sk2激光点Y2": return 18;
+                case "单目sk3激光点Y1": return 19;
+                case "单目sk3激光点Y2": return 20;
+                case "单目sk4激光点Y1": return 21;
+                case "单目sk4激光点Y2": return 22;
+                case "四目sk1激光点Y1": return 23;
+                case "四目sk1激光点Y2": return 24;
+                case "四目sk1激光点Y3": return 25;
+                case "四目sk1激光点Y4": return 26;
+                case "四目sk2激光点Y1": return 27;
+                case "四目sk2激光点Y2": return 28;
+                case "四目sk2激光点Y3": return 29;
+                case "四目sk2激光点Y4": return 30;
+                case "四目sk3激光点Y1": return 31;
+                case "四目sk3激光点Y2": return 32;
+                case "四目sk3激光点Y3": return 33;
+                case "四目sk3激光点Y4": return 34;
+                case "四目sk4激光点Y1": return 35;
+                case "四目sk4激光点Y2": return 36;
+                case "四目sk4激光点Y3": return 37;
+                case "四目sk4激光点Y4": return 38;
+
+                default: return -1;
+            }
+        }
         #endregion
 
         #region 按钮方法
@@ -242,6 +325,10 @@ namespace FTV2
                         child.SourceControl.MouseDown += Output_MouseDown;
                         child.SourceControl.MouseUp += Output_MouseUp;
                     }
+                    if (child is ComboBoxConfig combo)
+                    {
+                        combo.DataProcessed += Combo_DataProcessed;
+                    }
                     TestInterface.TryAdd(child.SourceControl.Tag.ToString(), child);
                 }
                 if (control is ButtonConfig)
@@ -317,6 +404,15 @@ namespace FTV2
         #endregion
 
         #region 界面按钮事件
+        private void Combo_DataProcessed(object sender, EventArgs e)
+        {
+            if (sender is ComboBoxConfig combo)
+            {
+                FSB状态.Text = $"{combo.SourceControl.Text}:{combo.Address} code:{GetPlcInID(combo.SourceControl.Text)}";
+                com.WriteVariable(GetPlcInID(combo.SourceControl.Text), combo.Address);
+            }
+        }
+
         private void Output_MouseDown(object sender, MouseEventArgs e)
         {
             if (sender is Button button)
