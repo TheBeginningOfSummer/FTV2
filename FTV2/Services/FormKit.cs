@@ -331,6 +331,14 @@ namespace Services
                 Font = new Font(FontName, FontSize)
             };
         }
+
+        public void AutoSizeOff(bool onOff = false)
+        {
+            if (SourceControl is Label label)
+            {
+                label.AutoSize = onOff;
+            }
+        }
     }
 
     public class TextBoxConfig : ControlConfig

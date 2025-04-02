@@ -104,6 +104,18 @@
     <Compile Include="Services\FormKit.cs" />
     <Compile Include="Services\JsonManager.cs" />
     <Compile Include="Services\LogFile.cs" />
+    <Compile Include="View\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\CheckForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\CheckForm.Designer.cs">
+      <DependentUpon>CheckForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\ImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +127,18 @@
     </Compile>
     <Compile Include="View\InitialForm.Designer.cs">
       <DependentUpon>InitialForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\ShowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ShowForm.Designer.cs">
+      <DependentUpon>ShowForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -128,11 +152,23 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\CheckForm.resx">
+      <DependentUpon>CheckForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\ImportForm.resx">
       <DependentUpon>ImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\InitialForm.resx">
       <DependentUpon>InitialForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SettingForm.resx">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ShowForm.resx">
+      <DependentUpon>ShowForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -16,7 +16,7 @@ namespace FTV2
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new LoginForm());
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)

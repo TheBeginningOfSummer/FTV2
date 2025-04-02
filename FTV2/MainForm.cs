@@ -13,18 +13,20 @@ namespace FTV2
 {
     public partial class MainForm : Form
     {
-        //DataRepeater<Message<object>> dataRepeater = new DataRepeater<Message<object>>();
         readonly Communication com = Communication.Singleton;
+        LoginForm loginForm;
 
         #region 加载的控件(地址作为键值更新数据)
         readonly ConcurrentDictionary<string, ControlConfig> UploadInterface = new ConcurrentDictionary<string, ControlConfig>();
         readonly ConcurrentDictionary<string, ControlConfig> CalibInterface = new ConcurrentDictionary<string, ControlConfig>();
         readonly ConcurrentDictionary<string, ControlConfig> TestInterface = new ConcurrentDictionary<string, ControlConfig>();
+        readonly ConcurrentDictionary<string, ControlConfig> IOInterface = new ConcurrentDictionary<string, ControlConfig>();
         #endregion
 
-        public MainForm()
+        public MainForm(LoginForm loginForm)
         {
             InitializeComponent();
+            this.loginForm = loginForm;
 
             LoadControls();
             Task.Run(UpdateInterface);
@@ -41,20 +43,6 @@ namespace FTV2
             {
                 MessageBox.Show(ex.Message);
             }
-            //Task.Run(async () =>
-            //{
-            //    for (int i = 0; i < 100; i++)
-            //    {
-            //        Message<object> d1 = new Message<object>() { Key = i.ToString(), Value = rnd.Next(0, 100), Date = DateTime.Now.ToString() };
-            //        await dataRepeater.WriteDataAsync(d1);
-            //        Thread.Sleep(1000);
-            //    }
-            //});
-            //Task.Run(async () =>
-            //{
-            //    await dataRepeater.ParseMessageAsync(Display);
-            //});
-
         }
 
         #region 方法
@@ -83,8 +71,8 @@ namespace FTV2
 
         public void RecordAndShow(string message, LogType logType, RichTextBox textBox = null, bool isShowUser = true)
         {
-            //if (isShowUser)
-            //    message = $"{loginForm.CurrentUser}  {message}";
+            if (isShowUser)
+                message = $"{loginForm.CurrentUser}  {message}";
             LogManager.WriteLog(message, logType);
             textBox?.Invoke(new Action(() =>
             textBox.AppendText($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}{Environment.NewLine}")));
@@ -338,6 +326,13 @@ namespace FTV2
                 }
                 control.AddTo(TP测试, null, null);
             }
+
+            List<ControlConfig> IOControls = JsonManager.Load<List<ControlConfig>>("Config", "IO界面.json");
+            foreach (var ioItem in IOControls)
+            {
+                ioItem.AddTo(TPIO信息, null, null);
+                IOInterface.TryAdd(ioItem.SourceControl.Tag.ToString(), ioItem);
+            }
         }
 
         public void UpdateData()
@@ -356,11 +351,23 @@ namespace FTV2
             }
         }
 
-        public void UpdateInterface(KeyValuePair<string, double> pair, ConcurrentDictionary<string, ControlConfig> Interface)
+        public void UpdateInterfaceText(KeyValuePair<string, double> pair, ConcurrentDictionary<string, ControlConfig> Interface)
         {
             if (!Interface.ContainsKey(pair.Key)) return;
             Interface.AddOrUpdate(pair.Key, new ControlConfig(new Point(0, 0), pair.Key, pair.Key, pair.Key),
                             (key, oldValue) => { oldValue.SetText(pair.Value.ToString()); return oldValue; });
+        }
+
+        public void UpdateInterfaceColor(KeyValuePair<string, bool> pair, ConcurrentDictionary<string, ControlConfig> Interface)
+        {
+            if (!Interface.ContainsKey(pair.Key)) return;
+            Color color = Color.Gray;
+            if (pair.Value)
+                color = Color.Lime;
+            else
+                color = Color.LightGray;
+            Interface.AddOrUpdate(pair.Key, new ControlConfig(new Point(0, 0), pair.Key, pair.Key, pair.Key),
+                            (key, oldValue) => { oldValue.SetColor(color); return oldValue; });
         }
 
         public void UpdateInterface()
@@ -372,8 +379,12 @@ namespace FTV2
                     Thread.Sleep(100);
                     foreach (var pos in com.Location)
                     {
-                        UpdateInterface(pos, UploadInterface);
-                        UpdateInterface(pos, TestInterface);
+                        UpdateInterfaceText(pos, UploadInterface);
+                        UpdateInterfaceText(pos, TestInterface);
+                    }
+                    foreach (var output in com.PLCOutput)
+                    {
+                        UpdateInterfaceColor(output, IOInterface);
                     }
                 }
                 catch (Exception)
@@ -408,7 +419,7 @@ namespace FTV2
         {
             if (sender is ComboBoxConfig combo)
             {
-                FSB状态.Text = $"{combo.SourceControl.Text}:{combo.Address} code:{GetPlcInID(combo.SourceControl.Text)}";
+                FSB状态.Text = $"{combo.SourceControl.Text}:{combo.Address}  code:{GetPlcInID(combo.SourceControl.Text)}";
                 com.WriteVariable(GetPlcInID(combo.SourceControl.Text), combo.Address);
             }
         }
@@ -521,5 +532,57 @@ namespace FTV2
         }
         #endregion
 
+        #region 登录与窗口
+        private void BTN_SwitchUser_Click(object sender, EventArgs e)
+        {
+            loginForm.Show();
+            this.Hide();
+        }
+
+        private void BTN_Modify_Click(object sender, EventArgs e)
+        {
+            if (loginForm.CB_UserName.Text == "操作员" || loginForm.CB_UserName.Text == "管理员")
+            {
+                MessageBox.Show("未授权用户组", "修改密码");
+                TB_Password.Text = "";
+                TB_NewPassword.Text = "";
+                return;
+            }
+            if (TB_Password.Text == "" || TB_NewPassword.Text == "")
+            {
+                MessageBox.Show("请输入密码", "修改密码");
+                return;
+            }
+            if (TB_Password.Text != TB_NewPassword.Text)
+            {
+                MessageBox.Show("两次输入不一样", "修改密码");
+                TB_Password.Text = "";
+                TB_NewPassword.Text = "";
+                return;
+            }
+            JsonManager.SaveJsonString(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\FTData", "engineerData",
+                new UserData() { UserType = 1, UserName = "工程师", Password = TB_Password.Text });
+            MessageBox.Show("修改成功", "修改密码");
+            TB_Password.Text = "";
+            TB_NewPassword.Text = "";
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            loginForm.Close();
+            //关闭通信端口
+            com.Compolet.Close();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //让用户选择点击
+            DialogResult result = MessageBox.Show("是否确认关闭？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //判断是否取消事件
+            if (result == DialogResult.No)
+                //取消退出
+                e.Cancel = true;
+        }
+        #endregion
     }
 }

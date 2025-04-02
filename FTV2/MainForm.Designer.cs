@@ -110,6 +110,15 @@
             this.TP示教 = new System.Windows.Forms.TabPage();
             this.TP示教2 = new System.Windows.Forms.TabPage();
             this.FSB状态 = new ReaLTaiizor.Controls.ForeverStatusBar();
+            this.GB_Modify = new System.Windows.Forms.GroupBox();
+            this.label100 = new System.Windows.Forms.Label();
+            this.LB_实时权限显示 = new System.Windows.Forms.Label();
+            this.BTN_SwitchUser = new System.Windows.Forms.Button();
+            this.BTN_Modify = new System.Windows.Forms.Button();
+            this.TB_NewPassword = new System.Windows.Forms.TextBox();
+            this.TB_Password = new System.Windows.Forms.TextBox();
+            this.LB_NewPassword = new System.Windows.Forms.Label();
+            this.LB_Password = new System.Windows.Forms.Label();
             this.HTP主界面.SuspendLayout();
             this.TP主界面.SuspendLayout();
             this.groupBox74.SuspendLayout();
@@ -124,6 +133,7 @@
             this.TP报警.SuspendLayout();
             this.TP更改.SuspendLayout();
             this.CTS菜单.SuspendLayout();
+            this.GB_Modify.SuspendLayout();
             this.SuspendLayout();
             // 
             // HTP主界面
@@ -156,6 +166,7 @@
             // 
             // TP主界面
             // 
+            this.TP主界面.Controls.Add(this.GB_Modify);
             this.TP主界面.Controls.Add(this.groupBox74);
             this.TP主界面.Controls.Add(this.groupBox72);
             this.TP主界面.Controls.Add(this.groupBox73);
@@ -187,7 +198,7 @@
             this.groupBox74.Controls.Add(this.btn上料产品对位NG报警跳过);
             this.groupBox74.Controls.Add(this.btn复检报警跳过);
             this.groupBox74.Controls.Add(this.btn穴位报警跳过);
-            this.groupBox74.Location = new System.Drawing.Point(794, 363);
+            this.groupBox74.Location = new System.Drawing.Point(794, 392);
             this.groupBox74.Name = "groupBox74";
             this.groupBox74.Size = new System.Drawing.Size(240, 255);
             this.groupBox74.TabIndex = 226;
@@ -267,7 +278,7 @@
             this.groupBox72.Controls.Add(this.BTN人工上下料);
             this.groupBox72.Controls.Add(this.BTN黑体一键上升主界面);
             this.groupBox72.Controls.Add(this.label97);
-            this.groupBox72.Location = new System.Drawing.Point(548, 363);
+            this.groupBox72.Location = new System.Drawing.Point(548, 392);
             this.groupBox72.Name = "groupBox72";
             this.groupBox72.Size = new System.Drawing.Size(240, 255);
             this.groupBox72.TabIndex = 224;
@@ -385,7 +396,7 @@
             this.groupBox73.Controls.Add(this.LB_自动本地状态);
             this.groupBox73.Controls.Add(this.btn自动模式本地);
             this.groupBox73.Controls.Add(this.label368);
-            this.groupBox73.Location = new System.Drawing.Point(302, 363);
+            this.groupBox73.Location = new System.Drawing.Point(302, 392);
             this.groupBox73.Name = "groupBox73";
             this.groupBox73.Size = new System.Drawing.Size(240, 255);
             this.groupBox73.TabIndex = 225;
@@ -454,7 +465,7 @@
             this.groupBox70.Controls.Add(this.LB_ConnectionStatus);
             this.groupBox70.Controls.Add(this.label249);
             this.groupBox70.Controls.Add(this.label248);
-            this.groupBox70.Location = new System.Drawing.Point(66, 363);
+            this.groupBox70.Location = new System.Drawing.Point(66, 392);
             this.groupBox70.Name = "groupBox70";
             this.groupBox70.Size = new System.Drawing.Size(230, 255);
             this.groupBox70.TabIndex = 223;
@@ -558,7 +569,7 @@
             this.groupBox85.Controls.Add(this.label280);
             this.groupBox85.Controls.Add(this.btn光源开);
             this.groupBox85.Controls.Add(this.btn光源关);
-            this.groupBox85.Location = new System.Drawing.Point(794, 102);
+            this.groupBox85.Location = new System.Drawing.Point(794, 131);
             this.groupBox85.Name = "groupBox85";
             this.groupBox85.Size = new System.Drawing.Size(240, 255);
             this.groupBox85.TabIndex = 222;
@@ -612,7 +623,7 @@
             this.GB_Connection.Controls.Add(this.label253);
             this.GB_Connection.Controls.Add(this.TXB托盘上料个数);
             this.GB_Connection.Controls.Add(this.label251);
-            this.GB_Connection.Location = new System.Drawing.Point(548, 102);
+            this.GB_Connection.Location = new System.Drawing.Point(548, 131);
             this.GB_Connection.Name = "GB_Connection";
             this.GB_Connection.Size = new System.Drawing.Size(240, 255);
             this.GB_Connection.TabIndex = 218;
@@ -686,7 +697,7 @@
             // TSTD_IDImg
             // 
             this.TSTD_IDImg.Image = ((System.Drawing.Image)(resources.GetObject("TSTD_IDImg.Image")));
-            this.TSTD_IDImg.Location = new System.Drawing.Point(11, 43);
+            this.TSTD_IDImg.Location = new System.Drawing.Point(5, 35);
             this.TSTD_IDImg.Margin = new System.Windows.Forms.Padding(2);
             this.TSTD_IDImg.Name = "TSTD_IDImg";
             this.TSTD_IDImg.Size = new System.Drawing.Size(92, 62);
@@ -715,7 +726,7 @@
             this.GB生产配方.Controls.Add(this.LBSocket类);
             this.GB生产配方.Controls.Add(this.CB_TypeOfTray);
             this.GB生产配方.Controls.Add(this.CB_Socket类);
-            this.GB生产配方.Location = new System.Drawing.Point(302, 102);
+            this.GB生产配方.Location = new System.Drawing.Point(302, 131);
             this.GB生产配方.Name = "GB生产配方";
             this.GB生产配方.Size = new System.Drawing.Size(240, 255);
             this.GB生产配方.TabIndex = 17;
@@ -918,7 +929,7 @@
             this.TP更改.Location = new System.Drawing.Point(4, 30);
             this.TP更改.Name = "TP更改";
             this.TP更改.Padding = new System.Windows.Forms.Padding(3);
-            this.TP更改.Size = new System.Drawing.Size(372, 531);
+            this.TP更改.Size = new System.Drawing.Size(424, 561);
             this.TP更改.TabIndex = 1;
             this.TP更改.Text = "更改";
             this.TP更改.UseVisualStyleBackColor = true;
@@ -932,7 +943,7 @@
             this.RTB修改.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RTB修改.Location = new System.Drawing.Point(3, 3);
             this.RTB修改.Name = "RTB修改";
-            this.RTB修改.Size = new System.Drawing.Size(366, 466);
+            this.RTB修改.Size = new System.Drawing.Size(418, 496);
             this.RTB修改.TabIndex = 2;
             this.RTB修改.Text = "";
             // 
@@ -1046,7 +1057,7 @@
             this.TP上料.Location = new System.Drawing.Point(0, 40);
             this.TP上料.Name = "TP上料";
             this.TP上料.Padding = new System.Windows.Forms.Padding(3);
-            this.TP上料.Size = new System.Drawing.Size(1432, 741);
+            this.TP上料.Size = new System.Drawing.Size(1484, 771);
             this.TP上料.TabIndex = 1;
             this.TP上料.Text = "上料";
             this.TP上料.UseVisualStyleBackColor = true;
@@ -1055,7 +1066,7 @@
             // 
             this.TP测试.Location = new System.Drawing.Point(0, 40);
             this.TP测试.Name = "TP测试";
-            this.TP测试.Size = new System.Drawing.Size(1432, 741);
+            this.TP测试.Size = new System.Drawing.Size(1484, 771);
             this.TP测试.TabIndex = 2;
             this.TP测试.Text = "测试";
             this.TP测试.UseVisualStyleBackColor = true;
@@ -1064,7 +1075,7 @@
             // 
             this.TPIO信息.Location = new System.Drawing.Point(0, 40);
             this.TPIO信息.Name = "TPIO信息";
-            this.TPIO信息.Size = new System.Drawing.Size(1432, 741);
+            this.TPIO信息.Size = new System.Drawing.Size(1484, 771);
             this.TPIO信息.TabIndex = 3;
             this.TPIO信息.Text = "I/O信息";
             this.TPIO信息.UseVisualStyleBackColor = true;
@@ -1073,7 +1084,7 @@
             // 
             this.TP示教.Location = new System.Drawing.Point(0, 40);
             this.TP示教.Name = "TP示教";
-            this.TP示教.Size = new System.Drawing.Size(1432, 741);
+            this.TP示教.Size = new System.Drawing.Size(1484, 771);
             this.TP示教.TabIndex = 4;
             this.TP示教.Text = "示教";
             this.TP示教.UseVisualStyleBackColor = true;
@@ -1082,7 +1093,7 @@
             // 
             this.TP示教2.Location = new System.Drawing.Point(0, 40);
             this.TP示教2.Name = "TP示教2";
-            this.TP示教2.Size = new System.Drawing.Size(1432, 741);
+            this.TP示教2.Size = new System.Drawing.Size(1484, 771);
             this.TP示教2.TabIndex = 5;
             this.TP示教2.Text = "示教2";
             this.TP示教2.UseVisualStyleBackColor = true;
@@ -1104,6 +1115,102 @@
             this.FSB状态.TimeColor = System.Drawing.Color.White;
             this.FSB状态.TimeFormat = "yyyy.MM.dd - HH:mm:ss";
             // 
+            // GB_Modify
+            // 
+            this.GB_Modify.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.GB_Modify.Controls.Add(this.label100);
+            this.GB_Modify.Controls.Add(this.LB_实时权限显示);
+            this.GB_Modify.Controls.Add(this.BTN_SwitchUser);
+            this.GB_Modify.Controls.Add(this.BTN_Modify);
+            this.GB_Modify.Controls.Add(this.TB_NewPassword);
+            this.GB_Modify.Controls.Add(this.TB_Password);
+            this.GB_Modify.Controls.Add(this.LB_NewPassword);
+            this.GB_Modify.Controls.Add(this.LB_Password);
+            this.GB_Modify.Location = new System.Drawing.Point(66, 131);
+            this.GB_Modify.Name = "GB_Modify";
+            this.GB_Modify.Size = new System.Drawing.Size(230, 255);
+            this.GB_Modify.TabIndex = 227;
+            this.GB_Modify.TabStop = false;
+            this.GB_Modify.Text = "权限及密码";
+            // 
+            // label100
+            // 
+            this.label100.AutoSize = true;
+            this.label100.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label100.Location = new System.Drawing.Point(11, 47);
+            this.label100.Name = "label100";
+            this.label100.Size = new System.Drawing.Size(83, 21);
+            this.label100.TabIndex = 24;
+            this.label100.Text = "当前用户：";
+            // 
+            // LB_实时权限显示
+            // 
+            this.LB_实时权限显示.AutoSize = true;
+            this.LB_实时权限显示.BackColor = System.Drawing.Color.Lime;
+            this.LB_实时权限显示.Location = new System.Drawing.Point(116, 47);
+            this.LB_实时权限显示.Name = "LB_实时权限显示";
+            this.LB_实时权限显示.Size = new System.Drawing.Size(34, 21);
+            this.LB_实时权限显示.TabIndex = 23;
+            this.LB_实时权限显示.Text = "      ";
+            this.LB_实时权限显示.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // BTN_SwitchUser
+            // 
+            this.BTN_SwitchUser.BackColor = System.Drawing.SystemColors.Control;
+            this.BTN_SwitchUser.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.BTN_SwitchUser.Location = new System.Drawing.Point(11, 173);
+            this.BTN_SwitchUser.Name = "BTN_SwitchUser";
+            this.BTN_SwitchUser.Size = new System.Drawing.Size(86, 34);
+            this.BTN_SwitchUser.TabIndex = 17;
+            this.BTN_SwitchUser.Text = "切换用户";
+            this.BTN_SwitchUser.UseVisualStyleBackColor = false;
+            this.BTN_SwitchUser.Click += new System.EventHandler(this.BTN_SwitchUser_Click);
+            // 
+            // BTN_Modify
+            // 
+            this.BTN_Modify.Location = new System.Drawing.Point(120, 173);
+            this.BTN_Modify.Name = "BTN_Modify";
+            this.BTN_Modify.Size = new System.Drawing.Size(86, 34);
+            this.BTN_Modify.TabIndex = 4;
+            this.BTN_Modify.Text = "确认修改";
+            this.BTN_Modify.UseVisualStyleBackColor = true;
+            this.BTN_Modify.Click += new System.EventHandler(this.BTN_Modify_Click);
+            // 
+            // TB_NewPassword
+            // 
+            this.TB_NewPassword.Location = new System.Drawing.Point(116, 133);
+            this.TB_NewPassword.Name = "TB_NewPassword";
+            this.TB_NewPassword.PasswordChar = '*';
+            this.TB_NewPassword.Size = new System.Drawing.Size(90, 29);
+            this.TB_NewPassword.TabIndex = 3;
+            // 
+            // TB_Password
+            // 
+            this.TB_Password.Location = new System.Drawing.Point(116, 88);
+            this.TB_Password.Name = "TB_Password";
+            this.TB_Password.PasswordChar = '*';
+            this.TB_Password.Size = new System.Drawing.Size(90, 29);
+            this.TB_Password.TabIndex = 2;
+            // 
+            // LB_NewPassword
+            // 
+            this.LB_NewPassword.AutoSize = true;
+            this.LB_NewPassword.Location = new System.Drawing.Point(11, 137);
+            this.LB_NewPassword.Name = "LB_NewPassword";
+            this.LB_NewPassword.Size = new System.Drawing.Size(84, 21);
+            this.LB_NewPassword.TabIndex = 1;
+            this.LB_NewPassword.Text = "确认密码：";
+            // 
+            // LB_Password
+            // 
+            this.LB_Password.AutoSize = true;
+            this.LB_Password.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.LB_Password.Location = new System.Drawing.Point(11, 92);
+            this.LB_Password.Name = "LB_Password";
+            this.LB_Password.Size = new System.Drawing.Size(67, 21);
+            this.LB_Password.TabIndex = 0;
+            this.LB_Password.Text = "新密码：";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1114,6 +1221,8 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FT";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.HTP主界面.ResumeLayout(false);
             this.TP主界面.ResumeLayout(false);
@@ -1137,13 +1246,13 @@
             this.TP更改.ResumeLayout(false);
             this.CTS菜单.ResumeLayout(false);
             this.CTS菜单.PerformLayout();
+            this.GB_Modify.ResumeLayout(false);
+            this.GB_Modify.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private ReaLTaiizor.Controls.HopeTabPage HTP主界面;
         private System.Windows.Forms.TabPage TP主界面;
         private System.Windows.Forms.TabPage TP上料;
         private ReaLTaiizor.Controls.CrownToolStrip CTS菜单;
@@ -1224,6 +1333,16 @@
         private System.Windows.Forms.Label label249;
         private System.Windows.Forms.Label label248;
         private System.Windows.Forms.TabPage TP示教2;
+        private System.Windows.Forms.GroupBox GB_Modify;
+        private System.Windows.Forms.Label label100;
+        public System.Windows.Forms.Label LB_实时权限显示;
+        private System.Windows.Forms.Button BTN_SwitchUser;
+        private System.Windows.Forms.Button BTN_Modify;
+        private System.Windows.Forms.TextBox TB_NewPassword;
+        private System.Windows.Forms.TextBox TB_Password;
+        private System.Windows.Forms.Label LB_NewPassword;
+        private System.Windows.Forms.Label LB_Password;
+        public ReaLTaiizor.Controls.HopeTabPage HTP主界面;
     }
 }
 
