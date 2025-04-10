@@ -4,7 +4,6 @@ using Services;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -1263,8 +1262,8 @@ namespace FTV2
         {
             try
             {
-                trayManager.LoadTraysData(currentTrayType);
-                trayManager.SaveTraysData();
+                //trayManager.LoadTraysData(currentTrayType);
+                //trayManager.SaveTraysData();
             }
             catch (Exception ex)
             {
