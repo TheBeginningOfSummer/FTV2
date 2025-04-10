@@ -4,6 +4,7 @@ using Services;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -439,6 +440,36 @@ namespace FTV2
             }
         }
 
+        //吸嘴使用次数检测
+        public void CheckCount(double count, double times, ref bool isShow, string message = "上料吸嘴1使用次数已达上限，请及时更换")
+        {
+            double Vac1Count = count - times;
+            double Vac1Mod = Vac1Count % 100;//每100次提醒一次
+            if (Vac1Count < 0)
+            {
+                isShow = true;
+            }
+            else
+            {
+                if (Vac1Count != 0 && Vac1Mod != 0)
+                {
+                    isShow = true;
+                }
+            }
+
+            if (isShow)
+            {
+                if (Vac1Count >= 0)
+                {
+                    if (Vac1Count == 0 || Vac1Mod == 0)
+                    {
+                        DialogResult result = MessageBox.Show(message, "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (result == DialogResult.Yes) isShow = false;
+                    }
+                }
+            }
+        }
+
         //更新界面传感器类型下拉列表
         public void UpdateTypeToCOB(TrayManager trayManager)
         {
@@ -739,15 +770,15 @@ namespace FTV2
                     if (com.FlagBits["PLC标志位[1]"])
                     {
                         Sensor sensor = new Sensor(
-                            (string)com.TestInformation["PLC测试信息[0]"],
-                            (string)com.TestInformation["PLC测试信息[1]"],
-                            (string)com.TestInformation["PLC测试信息[2]"],
-                            int.Parse((string)com.TestInformation["PLC测试信息[3]"]),
-                            (string)com.TestInformation["PLC测试信息[4]"],
-                            int.Parse((string)com.TestInformation["PLC测试信息[5]"]),
-                            (string)com.TestInformation["PLC测试信息[6]"],
-                            (string)com.TestInformation["PLC测试信息[7]"],
-                            (string)com.TestInformation["PLC测试信息[8]"]);
+                            com.TestInformation["PLC测试信息[0]"],
+                            com.TestInformation["PLC测试信息[1]"],
+                            com.TestInformation["PLC测试信息[2]"],
+                            int.Parse(com.TestInformation["PLC测试信息[3]"]),
+                            com.TestInformation["PLC测试信息[4]"],
+                            int.Parse(com.TestInformation["PLC测试信息[5]"]),
+                            com.TestInformation["PLC测试信息[6]"],
+                            com.TestInformation["PLC测试信息[7]"],
+                            com.TestInformation["PLC测试信息[8]"]);
                         //Mapping图更新
                         trayManager.UpdateSensorDataInTray(sensor);
                         //数据存储到缓存文件
@@ -1056,25 +1087,26 @@ namespace FTV2
                     DialogResult result = MessageBox.Show($"您是否选择 “{CB_TypeOfTray.Text}” 型号？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
-
                         currentTrayType = CB_TypeOfTray.Text;
                         IsWrite(com.WriteVariable(currentTrayType.Substring(2), "PLC测试信息[55]"), "切换型号中……");
                         IsWrite(com.WriteVariable(currentTrayType.Substring(2).Length, "PlcInPmt[72]"), "切换型号中……");
                         RecordAndShow($"{tempTrayType}切换为{currentTrayType}", LogType.Modification, RTBModify);
                         tempTrayType = currentTrayType;
 
+                        bool isWrite = false;
                         var trayType = trayManager.TrayType[currentTrayType];
-                        IsWrite(com.WriteVariable(trayType.Length, "PLCInPmt[45]"), "型号信息写入中……");
-                        IsWrite(com.WriteVariable(Convert.ToDouble(trayType.Width), "PLCInPmt[46]"), "型号信息写入中……");
-                        IsWrite(com.WriteVariable(trayType.LineSpacing, "PLCInPmt[47]"), "型号信息写入中……");
-                        IsWrite(com.WriteVariable(trayType.ColumnSpacing, "PLCInPmt[48]"), "型号信息写入中……");
-                        IsWrite(com.WriteVariable(trayType.Height, "PLCInPmt[49]"), "型号信息写入中……");
-                        IsWrite(com.WriteVariable(Convert.ToDouble(trayType.Length * trayType.Width), "PLCInPmt[50]"), "型号信息写入中……");
-                        IsWrite(com.WriteVariable(trayType.Index, "PlcInID[1]"), "型号信息写入中……");
-                        IsWrite(com.WriteVariable(GetAngleValue(trayType.VacAngle), "PlcInID[7]"), "角度信息写入中……");
-                        IsWrite(com.WriteVariable(GetAngleValue(trayType.ClawsAngle), "PlcInID[8]"), "角度信息写入中……");
+                        isWrite = com.WriteVariable(trayType.Length, "PLCInPmt[45]");
+                        isWrite = com.WriteVariable(Convert.ToDouble(trayType.Width), "PLCInPmt[46]");
+                        isWrite = com.WriteVariable(trayType.LineSpacing, "PLCInPmt[47]");
+                        isWrite = com.WriteVariable(trayType.ColumnSpacing, "PLCInPmt[48]");
+                        isWrite = com.WriteVariable(trayType.Height, "PLCInPmt[49]");
+                        isWrite = com.WriteVariable(Convert.ToDouble(trayType.Length * trayType.Width), "PLCInPmt[50]");
+                        isWrite = com.WriteVariable(trayType.Index, "PlcInID[1]");
+                        isWrite = com.WriteVariable(GetAngleValue(trayType.VacAngle), "PlcInID[7]");
+                        isWrite = com.WriteVariable(GetAngleValue(trayType.ClawsAngle), "PlcInID[8]");
                         string sensorType = trayType.TrayType.Substring(0, 2);
-                        IsWrite(com.WriteVariable(GetSensorTypeValue(sensorType), "PlcInID[6]"), "型号信息写入中……");
+                        isWrite = com.WriteVariable(GetSensorTypeValue(sensorType), "PlcInID[6]");
+                        IsWrite(isWrite, "信息写入");
                         CB_Socket类.Text = "单目";
                     }
                     else
@@ -1231,7 +1263,8 @@ namespace FTV2
         {
             try
             {
-
+                trayManager.LoadTraysData(currentTrayType);
+                trayManager.SaveTraysData();
             }
             catch (Exception ex)
             {

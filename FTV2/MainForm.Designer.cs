@@ -1390,6 +1390,8 @@
             // 
             // PNMapping
             // 
+            this.PNMapping.AutoScroll = true;
+            this.PNMapping.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.PNMapping.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PNMapping.Location = new System.Drawing.Point(3, 25);
             this.PNMapping.Name = "PNMapping";

@@ -5,9 +5,50 @@ using System.Data.SQLite;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Text.Json.Serialization;
 
 namespace Model
 {
+    public class DisplayLabel
+    {
+        public Label Display = new Label()
+        {
+            Width = 24,
+            Height = 24,
+            ForeColor = Color.Black,
+            Font = new Font("宋体", 9)
+        };
+
+        public DisplayLabel()
+        {
+
+        }
+        /// <summary>
+        /// 设置标签位置并添加到控件上
+        /// </summary>
+        /// <param name="canvasControl"></param>
+        /// <param name="location"></param>
+        public void SetLabel(Control canvasControl, Point location)
+        {
+            FormKit.InvokeOnThread(canvasControl, () =>
+            {
+                Display.Location = location;
+                canvasControl.Controls.Add(Display);
+            });
+        }
+        /// <summary>
+        /// 设置标签内容
+        /// </summary>
+        /// <param name="text">内容</param>
+        public void SetLabelText(string text)
+        {
+            FormKit.InvokeOnThread(Display, () =>
+            {
+                Display.Text = text;
+            });
+        }
+    }
+
     public class Sensor : DisplayLabel
     {
         //探测器编码
@@ -60,7 +101,16 @@ namespace Model
         //所在托盘编号
         public string TrayNumber { get; set; }
         //所在托盘中的位置
-        public int PosInTray { get; set; }
+        private int posInTray;
+        public int PosInTray
+        {
+            get { return posInTray; }
+            set
+            {
+                posInTray = value;
+                FormKit.InvokeOnThread(Display, new Action(() => Display.Text = posInTray.ToString()));
+            }
+        }
         //外观
         public string Appearance { get; set; }
         //开始测试时间
@@ -139,20 +189,20 @@ namespace Model
     public class Tray : DisplayLabel
     {
         //托盘编号
-        private string number;
-        public string Number
+        private string number = "";
+        public string TrayNumber
         {
             get { return number; }
             set
             {
                 number = value;
-                if (TrayLabel.IsHandleCreated)
+                if (Display.IsHandleCreated)
                 {
-                    TrayLabel.Invoke(new Action(() => TrayLabel.Text = number));
+                    Display.Invoke(new Action(() => Display.Text = number));
                 }
                 else
                 {
-                    TrayLabel.Text = number;
+                    Display.Text = number;
                 }
                 if (Sensors != null) UpdateSensorsTrayNumber(number);
             }
@@ -163,37 +213,37 @@ namespace Model
         public int TrayWidth { get; set; }
         //托盘中探测器的数据
         public virtual Dictionary<string, Sensor> Sensors { get; set; } = new Dictionary<string, Sensor>();
-
         //控件位置
         public Point PosOnPanel { get; set; }
-        //显示托盘号的控件
-        public Label TrayLabel = new Label();
 
-        public Tray(int length, int width, Point posOnPanel, string trayNumber = "")
+        //[JsonConstructor]
+        public Tray(string trayNumber, int trayLength, int trayWidth, Point posOnPanel, Dictionary<string, Sensor> sensors = null)
         {
             Display.AutoSize = true;
             Display.Name = trayNumber;
             Display.Text = trayNumber;
 
-            for (int i = 0; i < length * width; i++)
-                Sensors.Add((i + 1).ToString(), new Sensor("noData", trayNumber: trayNumber, posInTray: i + 1));
-
-            Number = trayNumber;
-            TrayLength = length;
-            TrayWidth = width;
+            TrayNumber = trayNumber;
+            TrayLength = trayLength;
+            TrayWidth = trayWidth;
             PosOnPanel = posOnPanel;
+            if (sensors != null && sensors.Count > 0)
+                Sensors = sensors;
+            else
+                for (int i = 0; i < trayLength * trayWidth; i++)
+                    Sensors.Add((i + 1).ToString(), new Sensor("noData", trayNumber: TrayNumber, posInTray: i + 1));
         }
 
         public Tray(Tray trayData)
         {
             Display.AutoSize = true;
-            Display.Name = trayData.Number;
-            Display.Text = trayData.Number;
+            Display.Name = trayData.TrayNumber;
+            Display.Text = trayData.TrayNumber;
 
             foreach (var item in trayData.Sensors)
                 Sensors.Add(item.Value.PosInTray.ToString(), item.Value);
 
-            Number = trayData.Number;
+            TrayNumber = trayData.TrayNumber;
             TrayLength = trayData.TrayLength;
             TrayWidth = trayData.TrayWidth;
             PosOnPanel = trayData.PosOnPanel;
@@ -203,7 +253,10 @@ namespace Model
         {
 
         }
-
+        /// <summary>
+        /// 在指定控件上添加标签控件
+        /// </summary>
+        /// <param name="canvasControl">目标控件</param>
         public void UpdateTrayLabel(Control canvasControl)
         {
             //之前的显示控件清除
@@ -216,7 +269,10 @@ namespace Model
             for (int i = 0; i < Sensors.Count; i++)
                 Sensors[(i + 1).ToString()].SetLabel(canvasControl, location[i]);
         }
-
+        /// <summary>
+        /// 更新此托盘中所有传感器的托盘码
+        /// </summary>
+        /// <param name="trayNumber">托盘码</param>
         public void UpdateSensorsTrayNumber(string trayNumber)
         {
             foreach (var sensor in Sensors)
@@ -289,7 +345,7 @@ namespace Model
             {
                 Trays.Clear();
                 for (int i = 0; i < MappingLayout.Count; i++)
-                    Trays.Add(new Tray(type.Length, type.Width, MappingLayout[i], i.ToString()));
+                    Trays.Add(new Tray(i.ToString(), type.Length, type.Width, MappingLayout[i]));
             }
         }
         /// <summary>
@@ -305,7 +361,7 @@ namespace Model
         /// <param name="trayType">托盘类型</param>
         public void LoadTraysData(string trayType)
         {
-            var trays = JsonManager.ReadJsonString<List<Tray>>(CachePath, "TraysData");
+            var trays = JsonManager.ReadJsonString<List<Tray>>(CachePath, "TraysData.json");
             if (trays == null) InitializeTrays(trayType);
             else Trays = trays;
         }
@@ -320,7 +376,7 @@ namespace Model
             if (CurrentTrayIndex <= 0) return;
             if (Trays == null) return;
             if (CurrentTrayIndex > Trays.Count) return;
-            Trays[CurrentTrayIndex - 1].Number = trayNumber;
+            Trays[CurrentTrayIndex - 1].TrayNumber = trayNumber;
         }
         /// <summary>
         /// 更新托盘类型
@@ -364,45 +420,6 @@ namespace Model
         {
             FormKit.InvokeOnThread(canvasControl, () => canvasControl.Controls.Clear());
             foreach (var tray in Trays) tray.UpdateTrayLabel(canvasControl);
-        }
-    }
-
-    public class DisplayLabel
-    {
-        public Label Display = new Label()
-        {
-            Width = 24,
-            Height = 24,
-            ForeColor = Color.Black,
-        };
-
-        public DisplayLabel()
-        {
-            
-        }
-        /// <summary>
-        /// 设置标签位置并添加到控件上
-        /// </summary>
-        /// <param name="canvasControl"></param>
-        /// <param name="location"></param>
-        public void SetLabel(Control canvasControl, Point location)
-        {
-            FormKit.InvokeOnThread(canvasControl, () =>
-            {
-                Display.Location = location;
-                canvasControl.Controls.Add(Display);
-            });
-        }
-        /// <summary>
-        /// 设置标签内容
-        /// </summary>
-        /// <param name="text">内容</param>
-        public void SetLabelText(string text)
-        {
-            FormKit.InvokeOnThread(Display, () =>
-            {
-                Display.Text = text;
-            });
         }
     }
 
