@@ -1,6 +1,8 @@
 ﻿using Services;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -65,13 +67,6 @@ namespace Model
         public string StartTime { get; set; }
         //测试完成时间
         public string EndTime { get; set; }
-
-        //状态显示控件
-        public Label SensorStatusLabel = new Label()
-        {
-            Width = 24,
-            Height = 24,
-        };
 
         /// <summary>
         /// 此处初始化Sensor的属性值
@@ -231,7 +226,7 @@ namespace Model
 
     public class TrayManager
     {
-        public string ConfigPath = Environment.CurrentDirectory + "\\Configuration";
+        public string ConfigPath = Environment.CurrentDirectory + "\\Config";
         public string CachePath = Environment.CurrentDirectory + "\\Cache";
 
         //Mapping图布局
@@ -262,7 +257,7 @@ namespace Model
         public void Initialze()
         {
             //读取Mapping图布局配置文件
-            MappingLayout = JsonManager.ReadJsonString<List<Point>>(ConfigPath, "MappingLayout");
+            MappingLayout = JsonManager.ReadJsonString<List<Point>>(ConfigPath, "Layout.json");
             if (MappingLayout == null)
             {
                 MappingLayout = new List<Point>
@@ -271,15 +266,15 @@ namespace Model
                     new Point(220, 30),
                     new Point(420, 30)
                 };
-                JsonManager.SaveJsonString(ConfigPath, "MappingLayout", MappingLayout);
+                JsonManager.SaveJsonString(ConfigPath, "Layout.json", MappingLayout);
             }
             //读取托盘种类配置文件
-            TrayType = JsonManager.ReadJsonString<Dictionary<string, TypeOfTray>>(ConfigPath, "TypeOfTray");
+            TrayType = JsonManager.ReadJsonString<Dictionary<string, TypeOfTray>>(ConfigPath, "TypeOfTray.json");
             if (TrayType == null)
             {
                 TrayType = new Dictionary<string, TypeOfTray>();
                 TrayType.Add("Default", new TypeOfTray() { Index = 9999, TrayType = "Default", Length = 5, Width = 5 });
-                JsonManager.SaveJsonString(ConfigPath, "TypeOfTray", TrayType);
+                JsonManager.SaveJsonString(ConfigPath, "TypeOfTray.json", TrayType);
             }
         }
 
@@ -302,7 +297,7 @@ namespace Model
         /// </summary>
         public void SaveTraysData()
         {
-            JsonManager.SaveJsonString(CachePath, "TraysData", Trays);
+            JsonManager.SaveJsonString(CachePath, "TraysData.json", Trays);
         }
         /// <summary>
         /// 加载托盘数据，加载上次保存的托盘数据
@@ -310,8 +305,9 @@ namespace Model
         /// <param name="trayType">托盘类型</param>
         public void LoadTraysData(string trayType)
         {
-            Trays = JsonManager.ReadJsonString<List<Tray>>(CachePath, "TraysData");
-            if (Trays == null) InitializeTrays(trayType);
+            var trays = JsonManager.ReadJsonString<List<Tray>>(CachePath, "TraysData");
+            if (trays == null) InitializeTrays(trayType);
+            else Trays = trays;
         }
 
         /// <summary>
@@ -336,7 +332,7 @@ namespace Model
                 TrayType[typeOfTray.TrayType] = typeOfTray;
             else
                 TrayType.Add(typeOfTray.TrayType, typeOfTray);
-            JsonManager.SaveJsonString(ConfigPath, "TypeOfTray", TrayType);
+            JsonManager.SaveJsonString(ConfigPath, "TypeOfTray.json", TrayType);
         }
         /// <summary>
         /// 设置指定编号的托盘内探测器的数据,参数sensorData包含了托盘探测器在盘中的位置
@@ -384,7 +380,11 @@ namespace Model
         {
             
         }
-
+        /// <summary>
+        /// 设置标签位置并添加到控件上
+        /// </summary>
+        /// <param name="canvasControl"></param>
+        /// <param name="location"></param>
         public void SetLabel(Control canvasControl, Point location)
         {
             FormKit.InvokeOnThread(canvasControl, () =>
@@ -393,8 +393,93 @@ namespace Model
                 canvasControl.Controls.Add(Display);
             });
         }
+        /// <summary>
+        /// 设置标签内容
+        /// </summary>
+        /// <param name="text">内容</param>
+        public void SetLabelText(string text)
+        {
+            FormKit.InvokeOnThread(Display, () =>
+            {
+                Display.Text = text;
+            });
+        }
     }
 
+    public class SensorDataManager
+    {
+        public static string ConnectionString = "Data Source=SensorData.db;Pooling=true;FailIfMissing=false";
+        public static List<string> TableList = new List<string>();
 
+        public static void InitializeDatabase()
+        {
+            //得到数据库表信息
+            DataTable schemaTable = SQLiteTool.GetTableList(ConnectionString);
+            for (int i = 0; i < schemaTable.Rows.Count; i++)
+            {
+                TableList.Add(schemaTable.Rows[i]["TABLE_NAME"].ToString());
+            }
+            //如果表不存在则创建
+            if (!TableList.Contains("Sensors"))
+            {
+                string sql = "create table Sensors (ID INTEGER primary key autoincrement,编码 TEXT,类型 TEXT,测试工位 TEXT,测试结果 INTEGER,托盘编号 TEXT,位置 INTEGER,外观 TEXT,开始时间 TEXT,完成时间 TEXT)";
+                SQLiteTool.ExecuteSQL(ConnectionString, sql);
+            }
+        }
+
+        public static string AddCondition(string tableHeader, string codition)
+        {
+            return " and " + tableHeader + " = '" + codition + "'";
+        }
+        //向数据库添加数据
+        public static bool AddSensor(Sensor sensor)
+        {
+            string sql = "insert into Sensors(编码,类型,测试工位,测试结果,托盘编号,位置,外观,开始时间,完成时间) " +
+                "values(@编码,@类型,@测试工位,@测试结果,@托盘编号,@位置,@外观,@开始时间,@完成时间)";
+            SQLiteParameter[] paras = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@编码",sensor.SensorCode),
+                new SQLiteParameter("@类型",sensor.SensorType),
+                new SQLiteParameter("@测试工位",sensor.TestStation),
+                new SQLiteParameter("@测试结果",sensor.SensorQuality),
+                new SQLiteParameter("@托盘编号",sensor.TrayNumber),
+                new SQLiteParameter("@位置",sensor.PosInTray),
+                new SQLiteParameter("@外观",sensor.Appearance),
+                new SQLiteParameter("@开始时间",sensor.StartTime),
+                new SQLiteParameter("@完成时间",sensor.EndTime)
+            };
+            if (SQLiteTool.ExecuteSQL(ConnectionString, sql, paras))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //查询数据
+        public static DataTable InquireSensor(string sensorCode, string sensorType, string minTime, string maxTime)
+        {
+            string sql;
+            if (sensorCode == "" && sensorType == "")
+            {
+                //sql = "select * from Sensors where 开始时间 between datetime('now','start of day','-1 day') and datetime('now','start of day','1 day')";
+                sql = "select * from Sensors where 开始时间 >='" + minTime + "' and 开始时间<='" + maxTime + "'";
+            }
+            else if (sensorCode != "" && sensorType == "")
+            {
+                sql = "select * from Sensors where 开始时间 >= '" + minTime + "' and 开始时间<= '" + maxTime + "'" + AddCondition("编码", sensorCode);
+            }
+            else if (sensorCode == "" && sensorType != "")
+            {
+                sql = "select * from Sensors where 开始时间 >= '" + minTime + "' and 开始时间<= '" + maxTime + "'" + AddCondition("类型", sensorType);
+            }
+            else
+            {
+                sql = "select * from Sensors where 开始时间 >= '" + minTime + "' and 开始时间<= '" + maxTime + "'" + AddCondition("编码", sensorCode) + AddCondition("类型", sensorType);
+            }
+            return SQLiteTool.ExecuteQuery(SensorDataManager.ConnectionString, sql).Tables[0];
+        }
+    }
 
 }

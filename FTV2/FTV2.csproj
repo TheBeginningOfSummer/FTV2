@@ -104,6 +104,7 @@
     <Compile Include="Services\FormKit.cs" />
     <Compile Include="Services\JsonManager.cs" />
     <Compile Include="Services\LogFile.cs" />
+    <Compile Include="Services\SQLiteTool.cs" />
     <Compile Include="View\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +187,9 @@
   <ItemGroup>
     <PackageReference Include="ReaLTaiizor">
       <Version>3.8.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite">
+      <Version>1.0.119</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Json">
       <Version>9.0.2</Version>
