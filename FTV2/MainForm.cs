@@ -166,7 +166,7 @@ namespace FTV2
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form_Load(object sender, EventArgs e)
         {
             try
             {
@@ -929,6 +929,21 @@ namespace FTV2
             {
                 switch (button.Tag)
                 {
+                    case "modifyhistory":
+                        new CheckForm("更改记录").Show();
+                        break;
+                    case "modifyclear":
+                        RTBModify.Clear();
+                        break;
+                    case "monitorhistory":
+                        new CheckForm("监视记录").Show();
+                        break;
+                    case "monitorclear":
+                        RTBMonitor.Clear();
+                        break;
+                    case "warninghistory":
+                        new CheckForm().Show();
+                        break;
                     case "reset":
                         MainButton("报警复位？", "报警复位", "PlcInIO[0]");
                         break;

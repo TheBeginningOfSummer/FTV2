@@ -141,6 +141,10 @@
             this.LB编码 = new System.Windows.Forms.Label();
             this.DGVData = new System.Windows.Forms.DataGridView();
             this.FSB状态 = new ReaLTaiizor.Controls.ForeverStatusBar();
+            this.BTNModifyHistory = new System.Windows.Forms.Button();
+            this.BTNMonitorHistory = new System.Windows.Forms.Button();
+            this.BTNModifyClear = new System.Windows.Forms.Button();
+            this.BTNMonitorClear = new System.Windows.Forms.Button();
             this.HTP主界面.SuspendLayout();
             this.TP主界面.SuspendLayout();
             this.GB_Modify.SuspendLayout();
@@ -1074,10 +1078,10 @@
             this.BTN报警复位.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN报警复位.BackColor = System.Drawing.Color.Red;
             this.BTN报警复位.ForeColor = System.Drawing.Color.White;
-            this.BTN报警复位.Location = new System.Drawing.Point(299, 493);
+            this.BTN报警复位.Location = new System.Drawing.Point(288, 501);
             this.BTN报警复位.Margin = new System.Windows.Forms.Padding(2);
             this.BTN报警复位.Name = "BTN报警复位";
-            this.BTN报警复位.Size = new System.Drawing.Size(120, 55);
+            this.BTN报警复位.Size = new System.Drawing.Size(125, 55);
             this.BTN报警复位.TabIndex = 5;
             this.BTN报警复位.Tag = "reset";
             this.BTN报警复位.Text = "报警复位";
@@ -1090,10 +1094,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN蜂鸣停止.BackColor = System.Drawing.Color.Yellow;
             this.BTN蜂鸣停止.ForeColor = System.Drawing.Color.Black;
-            this.BTN蜂鸣停止.Location = new System.Drawing.Point(129, 493);
+            this.BTN蜂鸣停止.Location = new System.Drawing.Point(134, 501);
             this.BTN蜂鸣停止.Margin = new System.Windows.Forms.Padding(2);
             this.BTN蜂鸣停止.Name = "BTN蜂鸣停止";
-            this.BTN蜂鸣停止.Size = new System.Drawing.Size(166, 55);
+            this.BTN蜂鸣停止.Size = new System.Drawing.Size(150, 55);
             this.BTN蜂鸣停止.TabIndex = 4;
             this.BTN蜂鸣停止.Tag = "ringstop";
             this.BTN蜂鸣停止.Text = "蜂鸣停止";
@@ -1103,13 +1107,15 @@
             // BTN报警历史
             // 
             this.BTN报警历史.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BTN报警历史.Location = new System.Drawing.Point(5, 493);
+            this.BTN报警历史.Location = new System.Drawing.Point(5, 501);
             this.BTN报警历史.Margin = new System.Windows.Forms.Padding(2);
             this.BTN报警历史.Name = "BTN报警历史";
-            this.BTN报警历史.Size = new System.Drawing.Size(120, 55);
+            this.BTN报警历史.Size = new System.Drawing.Size(125, 55);
             this.BTN报警历史.TabIndex = 3;
+            this.BTN报警历史.Tag = "warninghistory";
             this.BTN报警历史.Text = "报警历史";
             this.BTN报警历史.UseVisualStyleBackColor = true;
+            this.BTN报警历史.Click += new System.EventHandler(this.BTN主界面_Click);
             // 
             // RTBWarning
             // 
@@ -1120,12 +1126,14 @@
             this.RTBWarning.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RTBWarning.Location = new System.Drawing.Point(3, 3);
             this.RTBWarning.Name = "RTBWarning";
-            this.RTBWarning.Size = new System.Drawing.Size(418, 485);
+            this.RTBWarning.Size = new System.Drawing.Size(418, 493);
             this.RTBWarning.TabIndex = 1;
             this.RTBWarning.Text = "";
             // 
             // TP更改
             // 
+            this.TP更改.Controls.Add(this.BTNModifyClear);
+            this.TP更改.Controls.Add(this.BTNModifyHistory);
             this.TP更改.Controls.Add(this.RTBModify);
             this.TP更改.Location = new System.Drawing.Point(4, 30);
             this.TP更改.Name = "TP更改";
@@ -1144,12 +1152,14 @@
             this.RTBModify.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RTBModify.Location = new System.Drawing.Point(3, 3);
             this.RTBModify.Name = "RTBModify";
-            this.RTBModify.Size = new System.Drawing.Size(418, 496);
+            this.RTBModify.Size = new System.Drawing.Size(418, 493);
             this.RTBModify.TabIndex = 2;
             this.RTBModify.Text = "";
             // 
             // TP监视
             // 
+            this.TP监视.Controls.Add(this.BTNMonitorClear);
+            this.TP监视.Controls.Add(this.BTNMonitorHistory);
             this.TP监视.Controls.Add(this.RTBMonitor);
             this.TP监视.Location = new System.Drawing.Point(4, 30);
             this.TP监视.Name = "TP监视";
@@ -1167,7 +1177,7 @@
             this.RTBMonitor.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.RTBMonitor.Location = new System.Drawing.Point(3, 3);
             this.RTBMonitor.Name = "RTBMonitor";
-            this.RTBMonitor.Size = new System.Drawing.Size(418, 496);
+            this.RTBMonitor.Size = new System.Drawing.Size(418, 493);
             this.RTBMonitor.TabIndex = 3;
             this.RTBMonitor.Text = "";
             // 
@@ -1534,6 +1544,58 @@
             this.FSB状态.TimeColor = System.Drawing.Color.White;
             this.FSB状态.TimeFormat = "yyyy.MM.dd - HH:mm:ss";
             // 
+            // BTNModifyHistory
+            // 
+            this.BTNModifyHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTNModifyHistory.Location = new System.Drawing.Point(5, 501);
+            this.BTNModifyHistory.Margin = new System.Windows.Forms.Padding(2);
+            this.BTNModifyHistory.Name = "BTNModifyHistory";
+            this.BTNModifyHistory.Size = new System.Drawing.Size(125, 55);
+            this.BTNModifyHistory.TabIndex = 4;
+            this.BTNModifyHistory.Tag = "modifyhistory";
+            this.BTNModifyHistory.Text = "历史记录";
+            this.BTNModifyHistory.UseVisualStyleBackColor = true;
+            this.BTNModifyHistory.Click += new System.EventHandler(this.BTN主界面_Click);
+            // 
+            // BTNMonitorHistory
+            // 
+            this.BTNMonitorHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTNMonitorHistory.Location = new System.Drawing.Point(5, 501);
+            this.BTNMonitorHistory.Margin = new System.Windows.Forms.Padding(2);
+            this.BTNMonitorHistory.Name = "BTNMonitorHistory";
+            this.BTNMonitorHistory.Size = new System.Drawing.Size(125, 55);
+            this.BTNMonitorHistory.TabIndex = 4;
+            this.BTNMonitorHistory.Tag = "monitorhistory";
+            this.BTNMonitorHistory.Text = "历史记录";
+            this.BTNMonitorHistory.UseVisualStyleBackColor = true;
+            this.BTNMonitorHistory.Click += new System.EventHandler(this.BTN主界面_Click);
+            // 
+            // BTNModifyClear
+            // 
+            this.BTNModifyClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTNModifyClear.Location = new System.Drawing.Point(134, 501);
+            this.BTNModifyClear.Margin = new System.Windows.Forms.Padding(2);
+            this.BTNModifyClear.Name = "BTNModifyClear";
+            this.BTNModifyClear.Size = new System.Drawing.Size(125, 55);
+            this.BTNModifyClear.TabIndex = 5;
+            this.BTNModifyClear.Tag = "modifyclear";
+            this.BTNModifyClear.Text = "清除";
+            this.BTNModifyClear.UseVisualStyleBackColor = true;
+            this.BTNModifyClear.Click += new System.EventHandler(this.BTN主界面_Click);
+            // 
+            // BTNMonitorClear
+            // 
+            this.BTNMonitorClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BTNMonitorClear.Location = new System.Drawing.Point(134, 501);
+            this.BTNMonitorClear.Margin = new System.Windows.Forms.Padding(2);
+            this.BTNMonitorClear.Name = "BTNMonitorClear";
+            this.BTNMonitorClear.Size = new System.Drawing.Size(125, 55);
+            this.BTNMonitorClear.TabIndex = 5;
+            this.BTNMonitorClear.Tag = "monitorclear";
+            this.BTNMonitorClear.Text = "清除";
+            this.BTNMonitorClear.UseVisualStyleBackColor = true;
+            this.BTNMonitorClear.Click += new System.EventHandler(this.BTN主界面_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1546,7 +1608,7 @@
             this.Text = "FT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.Form_Load);
             this.HTP主界面.ResumeLayout(false);
             this.TP主界面.ResumeLayout(false);
             this.TP主界面.PerformLayout();
@@ -1694,6 +1756,10 @@
         private System.Windows.Forms.Button btn门开关功能关;
         private System.Windows.Forms.Label label487;
         private System.Windows.Forms.Button btn门开关功能开;
+        private System.Windows.Forms.Button BTNModifyHistory;
+        private System.Windows.Forms.Button BTNMonitorHistory;
+        private System.Windows.Forms.Button BTNModifyClear;
+        private System.Windows.Forms.Button BTNMonitorClear;
     }
 }
 
