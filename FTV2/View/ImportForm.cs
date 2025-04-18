@@ -289,6 +289,12 @@ namespace FTV2.View
                         if (inputText == "") return;
                         CMS设置右键.SourceControl.Text = inputText;
                         break;
+                    case "tag":
+                        string tag = CMS设置右键.SourceControl.Tag == null ? "" : CMS设置右键.SourceControl.Tag.ToString();
+                        string inputTag = Interaction.InputBox($"请输入要更改的文本：", "提示", tag);
+                        if (inputTag == "") return;
+                        CMS设置右键.SourceControl.Tag = inputTag;
+                        break;
                     case "fontsize":
                         string input = Interaction.InputBox($"请输入要更改的大小：", "提示", CMS设置右键.SourceControl.Font.Size.ToString());
                         if (input == "") return;

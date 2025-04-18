@@ -112,14 +112,14 @@
             // TMI清除
             // 
             this.TMI清除.Name = "TMI清除";
-            this.TMI清除.Size = new System.Drawing.Size(100, 22);
+            this.TMI清除.Size = new System.Drawing.Size(180, 22);
             this.TMI清除.Text = "清除";
             this.TMI清除.Click += new System.EventHandler(this.TMI清除_Click);
             // 
             // TMI选择
             // 
             this.TMI选择.Name = "TMI选择";
-            this.TMI选择.Size = new System.Drawing.Size(100, 22);
+            this.TMI选择.Size = new System.Drawing.Size(180, 22);
             this.TMI选择.Text = "选择";
             this.TMI选择.Click += new System.EventHandler(this.TMI选择_Click);
             // 
@@ -131,7 +131,7 @@
             this.TMI添加文本,
             this.TMI添加分组});
             this.TMI添加.Name = "TMI添加";
-            this.TMI添加.Size = new System.Drawing.Size(100, 22);
+            this.TMI添加.Size = new System.Drawing.Size(180, 22);
             this.TMI添加.Tag = "all";
             this.TMI添加.Text = "添加";
             // 
@@ -175,13 +175,13 @@
             this.TMItag,
             this.TMI字体大小});
             this.TMI设置.Name = "TMI设置";
-            this.TMI设置.Size = new System.Drawing.Size(100, 22);
+            this.TMI设置.Size = new System.Drawing.Size(180, 22);
             this.TMI设置.Text = "设置";
             // 
             // TMI宽高
             // 
             this.TMI宽高.Name = "TMI宽高";
-            this.TMI宽高.Size = new System.Drawing.Size(124, 22);
+            this.TMI宽高.Size = new System.Drawing.Size(180, 22);
             this.TMI宽高.Tag = "size";
             this.TMI宽高.Text = "宽高";
             this.TMI宽高.Click += new System.EventHandler(this.TMI设置_Click);
@@ -189,7 +189,7 @@
             // TMI文本
             // 
             this.TMI文本.Name = "TMI文本";
-            this.TMI文本.Size = new System.Drawing.Size(124, 22);
+            this.TMI文本.Size = new System.Drawing.Size(180, 22);
             this.TMI文本.Tag = "text";
             this.TMI文本.Text = "文本";
             this.TMI文本.Click += new System.EventHandler(this.TMI设置_Click);
@@ -197,14 +197,15 @@
             // TMItag
             // 
             this.TMItag.Name = "TMItag";
-            this.TMItag.Size = new System.Drawing.Size(124, 22);
+            this.TMItag.Size = new System.Drawing.Size(180, 22);
+            this.TMItag.Tag = "tag";
             this.TMItag.Text = "Tag";
             this.TMItag.Click += new System.EventHandler(this.TMI设置_Click);
             // 
             // TMI字体大小
             // 
             this.TMI字体大小.Name = "TMI字体大小";
-            this.TMI字体大小.Size = new System.Drawing.Size(124, 22);
+            this.TMI字体大小.Size = new System.Drawing.Size(180, 22);
             this.TMI字体大小.Tag = "fontsize";
             this.TMI字体大小.Text = "字体大小";
             this.TMI字体大小.Click += new System.EventHandler(this.TMI设置_Click);
